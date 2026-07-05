@@ -56,8 +56,9 @@ export default function MunicipalTable({
         <table className="w-full text-sm font-mono" style={{ borderCollapse: 'collapse' }}>
           <thead>
             <tr style={{ borderBottom: '1px solid #1e293b', backgroundColor: 'rgba(15,23,42,0.6)' }}>
+              {/* ОПШТИНА — sticky left column */}
               <th
-                className="px-4 py-3 text-left text-[10px] uppercase tracking-wider cursor-pointer select-none hover:text-slate-200 transition-colors duration-150 sticky top-0"
+                className="px-4 py-3 text-left align-bottom min-w-[140px] whitespace-nowrap text-[10px] uppercase tracking-wider cursor-pointer select-none hover:text-slate-200 transition-colors duration-150 sticky top-0"
                 style={{ color: '#64748b', zIndex: 4, left: 0, backgroundColor: 'rgb(15,23,42)', isolation: 'isolate', willChange: 'transform' }}
                 onClick={() => handleSort('name')}
                 onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); handleSort('name'); } }}
@@ -65,13 +66,16 @@ export default function MunicipalTable({
                 role="columnheader"
                 aria-sort={getSortDir('name', sortKey, sortAsc)}
               >
+                <div className="flex flex-col items-start justify-end h-full space-y-1">
                   <span className="inline-flex items-center gap-1">
-                  {t('hdr_muni')}
-                  <SortIcon columnKey="name" sortKey={sortKey} sortAsc={sortAsc} />
-                </span>
+                    {t('hdr_muni')}
+                    <SortIcon columnKey="name" sortKey={sortKey} sortAsc={sortAsc} />
+                  </span>
+                </div>
               </th>
+              {/* БАЛАНС ПО ЖИТЕЛ */}
               <th
-                className="px-4 py-3 text-right text-[10px] uppercase tracking-wider cursor-pointer select-none hover:text-slate-200 transition-colors duration-150 sticky top-0"
+                className="px-4 py-3 text-center align-bottom min-w-[140px] whitespace-nowrap text-[10px] uppercase tracking-wider cursor-pointer select-none hover:text-slate-200 transition-colors duration-150 sticky top-0"
                 style={{ color: '#64748b', zIndex: 1 }}
                 onClick={() => handleSort('drain')}
                 onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); handleSort('drain'); } }}
@@ -79,13 +83,16 @@ export default function MunicipalTable({
                 role="columnheader"
                 aria-sort={getSortDir('drain', sortKey, sortAsc)}
               >
-                <span className="inline-flex items-center gap-1 justify-end">
-                  <span className="text-[#F59E0B]">▸</span> {t('hdr_balance')}
-                  <SortIcon columnKey="drain" sortKey={sortKey} sortAsc={sortAsc} />
-                </span>
+                <div className="flex flex-col items-center justify-end h-full space-y-1">
+                  <span className="inline-flex items-center gap-1">
+                    <span className="text-[#F59E0B]">▸</span> {t('hdr_balance')}
+                    <SortIcon columnKey="drain" sortKey={sortKey} sortAsc={sortAsc} />
+                  </span>
+                </div>
               </th>
+              {/* ДАНОЧНО ЗАТАЈУВАЊЕ */}
               <th
-                className="px-4 py-3 text-right text-[10px] uppercase tracking-wider cursor-pointer select-none hover:text-slate-200 transition-colors duration-150 sticky top-0"
+                className="px-4 py-3 text-center align-bottom min-w-[140px] whitespace-nowrap text-[10px] uppercase tracking-wider cursor-pointer select-none hover:text-slate-200 transition-colors duration-150 sticky top-0"
                 style={{ color: '#64748b', zIndex: 1 }}
                 onClick={() => handleSort('leakage')}
                 onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); handleSort('leakage'); } }}
@@ -93,13 +100,16 @@ export default function MunicipalTable({
                 role="columnheader"
                 aria-sort={getSortDir('leakage', sortKey, sortAsc)}
               >
-                <span className="inline-flex items-center gap-1 justify-end">
-                  <span className="text-[#F59E0B]">▸</span> {t('hdr_leakage')}
-                  <SortIcon columnKey="leakage" sortKey={sortKey} sortAsc={sortAsc} />
-                </span>
+                <div className="flex flex-col items-center justify-end h-full space-y-1">
+                  <span className="inline-flex items-center gap-1">
+                    <span className="text-[#F59E0B]">▸</span> {t('hdr_leakage')}
+                    <SortIcon columnKey="leakage" sortKey={sortKey} sortAsc={sortAsc} />
+                  </span>
+                </div>
               </th>
+              {/* СОЦИЈАЛНА ЗАШТИТА */}
               <th
-                className="px-4 py-3 text-right text-[10px] uppercase tracking-wider cursor-pointer select-none hover:text-slate-200 transition-colors duration-150 sticky top-0"
+                className="px-4 py-3 text-center align-bottom min-w-[140px] whitespace-nowrap text-[10px] uppercase tracking-wider cursor-pointer select-none hover:text-slate-200 transition-colors duration-150 sticky top-0"
                 style={{ color: '#64748b', zIndex: 1 }}
                 onClick={() => handleSort('welfare')}
                 onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); handleSort('welfare'); } }}
@@ -107,13 +117,16 @@ export default function MunicipalTable({
                 role="columnheader"
                 aria-sort={getSortDir('welfare', sortKey, sortAsc)}
               >
-                <span className="inline-flex items-center gap-1 justify-end">
-                  <span className="text-[#F43F5E]">▸</span> {t('hdr_welfare')}
-                  <SortIcon columnKey="welfare" sortKey={sortKey} sortAsc={sortAsc} />
-                </span>
+                <div className="flex flex-col items-center justify-end h-full space-y-1">
+                  <span className="inline-flex items-center gap-1">
+                    <span className="text-[#F43F5E]">▸</span> {t('hdr_welfare')}
+                    <SortIcon columnKey="welfare" sortKey={sortKey} sortAsc={sortAsc} />
+                  </span>
+                </div>
               </th>
+              {/* НЕТО РЕГИОНАЛЕН ОДЛИВ */}
               <th
-                className="px-4 py-3 text-right text-[10px] uppercase tracking-wider cursor-pointer select-none hover:text-slate-200 transition-colors duration-150 sticky top-0"
+                className="px-4 py-3 text-center align-bottom min-w-[140px] whitespace-nowrap text-[10px] uppercase tracking-wider cursor-pointer select-none hover:text-slate-200 transition-colors duration-150 sticky top-0"
                 style={{ color: '#64748b', zIndex: 1 }}
                 onClick={() => handleSort('yearly')}
                 onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); handleSort('yearly'); } }}
@@ -121,13 +134,16 @@ export default function MunicipalTable({
                 role="columnheader"
                 aria-sort={getSortDir('yearly', sortKey, sortAsc)}
               >
-                <span className="inline-flex items-center gap-1 justify-end">
-                  <span className="text-[#F43F5E]">▸</span> {t('hdr_drain_yr')}
-                  <SortIcon columnKey="yearly" sortKey={sortKey} sortAsc={sortAsc} />
-                </span>
+                <div className="flex flex-col items-center justify-end h-full space-y-1">
+                  <span className="inline-flex items-center gap-1">
+                    <span className="text-[#F43F5E]">▸</span> {t('hdr_drain_yr')}
+                    <SortIcon columnKey="yearly" sortKey={sortKey} sortAsc={sortAsc} />
+                  </span>
+                </div>
               </th>
+              {/* ЗАДОЛЖУВАЊА */}
               <th
-                className="px-4 py-3 text-right text-[10px] uppercase tracking-wider cursor-pointer select-none hover:text-slate-200 transition-colors duration-150 sticky top-0"
+                className="px-4 py-3 text-center align-bottom min-w-[140px] whitespace-nowrap text-[10px] uppercase tracking-wider cursor-pointer select-none hover:text-slate-200 transition-colors duration-150 sticky top-0"
                 style={{ color: '#64748b', zIndex: 1 }}
                 onClick={() => handleSort('arrears')}
                 onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); handleSort('arrears'); } }}
@@ -135,13 +151,16 @@ export default function MunicipalTable({
                 role="columnheader"
                 aria-sort={getSortDir('arrears', sortKey, sortAsc)}
               >
-                <span className="inline-flex items-center gap-1 justify-end">
-                  <span className="text-[#64748b]">▸</span> {t('hdr_arrears')}
-                  <SortIcon columnKey="arrears" sortKey={sortKey} sortAsc={sortAsc} />
-                </span>
+                <div className="flex flex-col items-center justify-end h-full space-y-1">
+                  <span className="inline-flex items-center gap-1">
+                    <span className="text-[#64748b]">▸</span> {t('hdr_arrears')}
+                    <SortIcon columnKey="arrears" sortKey={sortKey} sortAsc={sortAsc} />
+                  </span>
+                </div>
               </th>
+              {/* НЕВРАБОТЕНИ */}
               <th
-                className="px-4 py-3 text-left text-[10px] uppercase tracking-wider cursor-pointer select-none hover:text-slate-200 transition-colors duration-150 sticky top-0"
+                className="px-4 py-3 text-center align-bottom min-w-[140px] whitespace-nowrap text-[10px] uppercase tracking-wider cursor-pointer select-none hover:text-slate-200 transition-colors duration-150 sticky top-0"
                 style={{ color: '#64748b', zIndex: 1 }}
                 onClick={() => handleSort('unemployment')}
                 onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); handleSort('unemployment'); } }}
@@ -149,22 +168,30 @@ export default function MunicipalTable({
                 role="columnheader"
                 aria-sort={getSortDir('unemployment', sortKey, sortAsc)}
               >
-                <span className="inline-flex items-center gap-1">
-                  <span className="text-[#38bdf8]">▸</span> {t('hdr_unemployed')}
-                  <SortIcon columnKey="unemployment" sortKey={sortKey} sortAsc={sortAsc} />
-                </span>
+                <div className="flex flex-col items-center justify-end h-full space-y-1">
+                  <span className="inline-flex items-center gap-1">
+                    <span className="text-[#38bdf8]">▸</span> {t('hdr_unemployed')}
+                    <SortIcon columnKey="unemployment" sortKey={sortKey} sortAsc={sortAsc} />
+                  </span>
+                </div>
               </th>
+              {/* СТРУКТУРНИ */}
               <th
-                className="px-4 py-3 text-left text-[10px] uppercase tracking-wider sticky top-0"
+                className="px-4 py-3 text-center align-bottom min-w-[140px] whitespace-nowrap text-[10px] uppercase tracking-wider sticky top-0"
                 style={{ color: '#64748b', zIndex: 1, backgroundColor: 'rgb(15,23,42)' }}
               >
-                {t('hdr_structural')}
+                <div className="flex flex-col items-center justify-end h-full">
+                  {t('hdr_structural')}
+                </div>
               </th>
+              {/* КОРЕКЦИЈА */}
               <th
-                className="px-4 py-3 text-right text-[10px] uppercase tracking-wider sticky top-0"
+                className="px-4 py-3 text-center align-bottom min-w-[140px] whitespace-nowrap text-[10px] uppercase tracking-wider sticky top-0"
                 style={{ color: '#64748b', zIndex: 1, backgroundColor: 'rgb(15,23,42)' }}
               >
-                {t('hdr_correction')}
+                <div className="flex flex-col items-center justify-end h-full">
+                  {t('hdr_correction')}
+                </div>
               </th>
             </tr>
           </thead>

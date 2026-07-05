@@ -1,5 +1,10 @@
+import { LocaleProvider } from './context/LocaleContext.jsx';
 import NakedBudget from '../NakedBudget.jsx';
 
 export default function App() {
-  return <NakedBudget />;
+  return (
+    <LocaleProvider>
+      <NakedBudget />
+    </LocaleProvider>
+  );
 }

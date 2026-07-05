@@ -1,0 +1,104 @@
+import { useLocale } from '../../context/LocaleContext.jsx';
+
+export default function MethodologyPanel({ showMethodology, setShowMethodology }) {
+  const { t } = useLocale();
+  return (
+    <div>
+      <div className="flex items-center justify-between mb-4">
+        <h2 className="text-xs font-mono uppercase tracking-widest" style={{ color: '#94a3b8' }}>
+          {t('method_title')}
+        </h2>
+        <button
+          type="button"
+          onClick={() => setShowMethodology(!showMethodology)}
+          className="flex items-center gap-1.5 px-2 py-0.5 rounded text-[10px] font-mono uppercase tracking-wider border transition-all duration-200 hover:brightness-125"
+          style={{
+            backgroundColor: showMethodology ? 'rgba(245,158,11,0.1)' : '#243047',
+            borderColor: showMethodology ? 'rgba(245,158,11,0.25)' : 'rgba(100,116,139,0.2)',
+            color: showMethodology ? '#F59E0B' : '#64748b',
+          }}
+          aria-expanded={showMethodology}
+          aria-controls="methodology-panel"
+        >
+          <svg width="10" height="10" viewBox="0 0 10 10" className={`transition-transform duration-200 ${showMethodology ? '' : '-rotate-90'}`} style={{ fill: 'currentColor' }}>
+            <polygon points="2,3 5,7 8,3" />
+          </svg>
+          Methodology
+        </button>
+      </div>
+
+      {/* Collapsible panel */}
+      <div id="methodology-panel" className={`grid overflow-hidden transition-all duration-300 ease-in-out ${showMethodology ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]'}`} role="region" aria-label="Model methodology">
+        <div className="rounded-xl border p-3.5" style={{ backgroundColor: 'rgba(15,23,42,0.5)', borderColor: 'rgba(51,65,85,0.4)', boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.04)' }}>
+          <div className="flex items-center gap-2 mb-3 pb-2.5 border-b" style={{ borderColor: 'rgba(51,65,85,0.3)' }}>
+            <span className="text-[10px] font-mono uppercase tracking-widest font-semibold" style={{ color: '#F59E0B' }}>{t('method_how')}</span>
+            <span className="text-[10px] font-mono" style={{ color: '#94a3b8' }}>({t('method_collapse')})</span>
+          </div>
+
+          <div className="space-y-2.5">
+            {/* Tax Leakage */}
+            <div className="flex items-start gap-2.5">
+              <span className="mt-1.5 w-1.5 h-1.5 rounded-full flex-shrink-0" style={{ backgroundColor: '#F59E0B' }} />
+              <div className="min-w-0 flex-1">
+                <div className="flex items-baseline gap-2 flex-wrap">
+                  <span className="text-[10px] font-mono font-semibold uppercase tracking-wide" style={{ color: '#d4d4d8' }}>{t('chart_leakage')}</span>
+                  <code className="text-[10px] font-mono" style={{ color: '#94a3b8', backgroundColor: 'rgba(245,158,11,0.18)', padding: '1px 5px', borderRadius: 3 }}>$1,200 &times; shadowEcon &times; (1 − compliance&times;0.4)</code>
+                </div>
+                <p className="text-[10px] leading-relaxed mt-0.5" style={{ color: '#94a3b8' }}>
+                  Revenue shortfall from unreported economic activity. Per-capita revenue target × shadow economy share, reduced by tax compliance rate.
+                </p>
+              </div>
+            </div>
+
+            {/* Welfare Burden */}
+            <div className="flex items-start gap-2.5">
+              <span className="mt-1.5 w-1.5 h-1.5 rounded-full flex-shrink-0" style={{ backgroundColor: '#F43F5E' }} />
+              <div className="min-w-0 flex-1">
+                <div className="flex items-baseline gap-2 flex-wrap">
+                  <span className="text-[10px] font-mono font-semibold uppercase tracking-wide" style={{ color: '#d4d4d8' }}>Welfare Burden</span>
+                  <code className="text-[10px] font-mono" style={{ color: '#94a3b8', backgroundColor: 'rgba(244,63,94,0.18)', padding: '1px 5px', borderRadius: 3 }}>welfareRate &times; $800</code>
+                </div>
+                <p className="text-[10px] leading-relaxed mt-0.5" style={{ color: '#94a3b8' }}>
+                  Social safety net costs based on the share of residents receiving welfare benefits.
+                </p>
+              </div>
+            </div>
+
+            {/* Overhead & Credits */}
+            <div className="flex items-start gap-2.5">
+              <span className="mt-1.5 w-1.5 h-1.5 rounded-full flex-shrink-0" style={{ backgroundColor: '#818CF8' }} />
+              <div className="min-w-0 flex-1">
+                <div className="flex items-baseline gap-2 flex-wrap">
+                  <span className="text-[10px] font-mono font-semibold uppercase tracking-wide" style={{ color: '#d4d4d8' }}>Overhead &amp; Credits</span>
+                  <code className="text-[10px] font-mono" style={{ color: '#94a3b8', backgroundColor: 'rgba(129,140,248,0.18)', padding: '1px 5px', borderRadius: 3 }}>$600 + (1−compliance)&times;$400 − corporate correction</code>
+                </div>
+                <p className="text-[10px] leading-relaxed mt-0.5" style={{ color: '#94a3b8' }}>
+                  Fixed administrative overhead plus enforcement gap cost, reduced by a Bayesian correction for corporate tax HQ distortion.
+                </p>
+              </div>
+            </div>
+
+            {/* Net Fiscal Balance */}
+            <div className="flex items-start gap-2.5">
+              <span className="mt-1.5 w-1.5 h-1.5 rounded-full flex-shrink-0" style={{ backgroundColor: '#a78bfa' }} />
+              <div className="min-w-0 flex-1">
+                <div className="flex items-baseline gap-2 flex-wrap">
+                  <span className="text-[10px] font-mono font-semibold uppercase tracking-wide" style={{ color: '#d4d4d8' }}>Net Fiscal Balance</span>
+                  <code className="text-[10px] font-mono" style={{ color: '#94a3b8', backgroundColor: 'rgba(167,139,250,0.18)', padding: '1px 5px', borderRadius: 3 }}>revenueInflow − budgetOutflow</code>
+                </div>
+                <p className="text-[10px] leading-relaxed mt-0.5" style={{ color: '#94a3b8' }}>
+                  Actual Treasury data: positive means self-sufficient; negative indicates dependence on central government grants.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div className="mt-3 pt-2.5 border-t flex flex-col sm:flex-row sm:items-center justify-between gap-1.5" style={{ borderColor: 'rgba(51,65,85,0.3)' }}>
+            <span className="text-[10px] font-mono" style={{ color: '#94a3b8' }}>All constants are model assumptions — adjustable via Policy Parameters</span>
+            <span className="text-[10px] font-mono" style={{ color: '#94a3b8' }}>Sources: Census pops · Treasury 2025 (open.finance.gov.mk) · AVRM unemployment</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}

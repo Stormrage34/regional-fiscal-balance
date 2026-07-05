@@ -151,7 +151,7 @@ export const translations = {
     hdr_correction: 'Корекција',
     hdr_arrears: 'Задолжувања',
     footer: 'Отворен Фискален Матрикс за Северна Македонија · Извори: Трезор 2025 (open.finance.gov.mk) · ДЗС Попис 2021 · АВРМ Регистар · Finance Think PS#50',
-    buy_coffee: 'Чај за авторот',
+    buy_coffee: 'Кафе за авторот',
     chart_leakage: 'ДАНОЧНО ЗАТАЈУВАЊЕ',
     chart_welfare: 'СОЦИЈАЛНА ЗАШТИТА',
     chart_overhead: 'РЕЖИСКИ ТРОШОЦИ И КРЕДИТИ',

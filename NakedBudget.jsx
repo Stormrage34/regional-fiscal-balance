@@ -144,7 +144,17 @@ export default function NakedBudget() {
     const totalOut = Object.values(NET_FISCAL).reduce((s, n) => s + n.budgetOutflow, 0);
     const totalNet = totalRev - totalOut;
     const totalArrears = Object.values(NET_FISCAL).reduce((s, n) => s + n.arrears, 0);
-    return { gainers, losers, totalRev, totalOut, totalNet, totalArrears };
+    // ── Skopje aggregate (10 municipalities) ──
+    const skopjeIds = ['aerodrom','butel','cair','centar','gazi-baba','gjorce-petrov','karpos','kisela-voda','saraj','suto-orizari'];
+    const skopjeRev = skopjeIds.reduce((s, id) => s + (NET_FISCAL[id]?.revenueInflow || 0), 0);
+    const skopjeOut = skopjeIds.reduce((s, id) => s + (NET_FISCAL[id]?.budgetOutflow || 0), 0);
+    const skopjePop = skopjeIds.reduce((s, id) => {
+      const m = results.find(r => r.id === id);
+      return s + (m?.workingAgePop || 0);
+    }, 0);
+    const skopjeNet = skopjeRev - skopjeOut;
+    const skopjeNetPC = skopjePop > 0 ? Math.round(skopjeNet / MKD_PER_EUR / skopjePop) : 0;
+    return { gainers, losers, totalRev, totalOut, totalNet, totalArrears, skopjeRev, skopjeOut, skopjePop, skopjeNet, skopjeNetPC };
   }, [results]);
 
   const gainerCount = results.filter(r => NET_FISCAL[r.id] && (NET_FISCAL[r.id].revenueInflow - NET_FISCAL[r.id].budgetOutflow) > 0).length;
@@ -346,7 +356,7 @@ export default function NakedBudget() {
             </span>
           </div>
 
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-4">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3 mb-4">
             <div className="rounded-lg px-4 py-3 border hover:shadow-[0_0_12px_rgba(99,102,241,0.04)] transition-shadow duration-300" style={{ backgroundColor: '#243047', borderColor: '#1F3050' }}>
               <span className="text-xs font-mono" style={{ color: '#64748b' }}>{t('net_gainers')}</span>
               <span className="block text-2xl font-bold font-mono mt-0.5" style={{ color: '#10B981' }}>{netFiscalAggs.gainers.length}</span>
@@ -366,6 +376,11 @@ export default function NakedBudget() {
               <span className="text-xs font-mono" style={{ color: '#64748b' }}>{t('net_arrears')}</span>
               <span className="block text-2xl font-bold font-mono mt-0.5" style={{ color: '#F43F5E' }}>{fmt(netFiscalAggs.totalArrears / MKD_PER_EUR / 1_000_000)}</span>
               <span className="text-xs font-mono" style={{ color: '#94a3b8' }}>{t('net_arrears').toLowerCase()}</span>
+            </div>
+            <div className="rounded-lg px-4 py-3 border hover:shadow-[0_0_12px_rgba(99,102,241,0.04)] transition-shadow duration-300" style={{ backgroundColor: '#243047', borderColor: '#1F3050' }}>
+              <span className="text-xs font-mono" style={{ color: '#64748b' }}>Скопје</span>
+              <span className="block text-2xl font-bold font-mono mt-0.5" style={{ color: '#10B981' }}>+{fmt(netFiscalAggs.skopjeNetPC, true)}</span>
+              <span className="text-xs font-mono" style={{ color: '#94a3b8' }}>{t('net_gainers').toLowerCase()} · 10 општини</span>
             </div>
           </div>
 

@@ -1,5 +1,6 @@
 import { UNEMPLOYMENT_DATA, FISCAL_LOSS_PER_UNEMPLOYED, NET_FISCAL, MKD_PER_EUR, getMuniName } from '../../data/fiscalData.js';
 import { useLocale } from '../../context/LocaleContext.jsx';
+import { useMemo } from 'react';
 
 function SortIcon({ columnKey, sortKey, sortAsc }) {
   if (sortKey !== columnKey) {
@@ -36,6 +37,27 @@ export default function MunicipalTable({
   handleSort,
 }) {
   const { t, locale } = useLocale();
+
+  // ── National macro averages for twin-row header ──
+  const totals = useMemo(() => {
+    const totalPop = sortedResults.reduce((s, r) => s + r.workingAgePop, 0);
+    const wBalance = sortedResults.reduce((s, r) => s + r.totalPerCapitaDrain * r.workingAgePop, 0);
+    const wLeakage = sortedResults.reduce((s, r) => s + r.uncollectedLeakage * r.workingAgePop, 0);
+    const wWelfare = sortedResults.reduce((s, r) => s + r.welfareBurden * r.workingAgePop, 0);
+    const totalDrain = sortedResults.reduce((s, r) => s + r.totalYearlyDrain, 0);
+    const totalArrears = sortedResults.reduce((s, r) => {
+      const nf = NET_FISCAL[r.id];
+      return s + (nf?.arrears || 0);
+    }, 0);
+    return {
+      avgBalance: totalPop > 0 ? Math.round(wBalance / totalPop) : 0,
+      avgLeakage: totalPop > 0 ? Math.round(wLeakage / totalPop) : 0,
+      avgWelfare: totalPop > 0 ? Math.round(wWelfare / totalPop) : 0,
+      totalDrainMillions: Math.round(totalDrain / 1_000_000),
+      totalArrearsMillions: Math.round(totalArrears / MKD_PER_EUR / 1_000_000),
+    };
+  }, [sortedResults]);
+
   return (
     <section
       className="rounded-xl relative mb-10 transition-all duration-300"
@@ -52,146 +74,168 @@ export default function MunicipalTable({
         </span>
       </div>
 
-      <div className="overflow-x-auto overflow-y-auto max-h-[520px]">
-        <table className="w-full text-sm font-mono" style={{ borderCollapse: 'collapse' }}>
+      <div className="w-full overflow-x-auto overflow-y-auto max-h-[520px] rounded-lg border border-slate-800/60">
+        <table className="w-full text-sm font-mono border-collapse table-auto">
           <thead>
-            <tr style={{ borderBottom: '1px solid #1e293b', backgroundColor: 'rgba(15,23,42,0.6)' }}>
-              {/* ОПШТИНА — sticky left column */}
+            {/* ═══ ROW 1: National Macro Averages ═══ */}
+            <tr className="border-b border-slate-800/40 bg-slate-900/40 select-none">
+              {/* Sticky empty cell above Municipality header */}
+              <th className="sticky top-0 left-0 z-20 bg-[#0f172a] p-0 m-0 border-b border-slate-800/40" />
+
+              {/* Balance macro */}
+              <th className="sticky top-0 z-10 px-4 pt-3 pb-1 text-center align-middle bg-[#0f172a] border-b border-slate-800/40">
+                <span className="text-xs font-bold text-[#F59E0B] font-mono tracking-tight block">
+                  {fmt(totals.avgBalance, true)}
+                </span>
+              </th>
+
+              {/* Leakage macro */}
+              <th className="sticky top-0 z-10 px-4 pt-3 pb-1 text-center align-middle bg-[#0f172a] border-b border-slate-800/40">
+                <span className="text-xs font-bold text-[#F59E0B] font-mono tracking-tight block">
+                  {fmt(totals.avgLeakage, true)}
+                </span>
+              </th>
+
+              {/* Welfare macro */}
+              <th className="sticky top-0 z-10 px-4 pt-3 pb-1 text-center align-middle bg-[#0f172a] border-b border-slate-800/40">
+                <span className="text-xs font-bold text-[#F43F5E] font-mono tracking-tight block">
+                  {fmt(totals.avgWelfare, true)}
+                </span>
+              </th>
+
+              {/* Annual drain macro */}
+              <th className="sticky top-0 z-10 px-4 pt-3 pb-1 text-center align-middle bg-[#0f172a] border-b border-slate-800/40">
+                <span className="text-xs font-bold text-[#F43F5E] font-mono tracking-tight block">
+                  {fmt(totals.totalDrainMillions, false)}
+                </span>
+              </th>
+
+              {/* Arrears macro */}
+              <th className="sticky top-0 z-10 px-4 pt-3 pb-1 text-center align-middle bg-[#0f172a] border-b border-slate-800/40">
+                <span className="text-xs font-bold text-slate-400 font-mono tracking-tight block">
+                  {fmt(totals.totalArrearsMillions, false)}
+                </span>
+              </th>
+
+              {/* Spans remaining columns (unemployed, structural, correction) */}
+              <th className="sticky top-0 z-10 bg-[#0f172a] border-b border-slate-800/40" colSpan={3} />
+            </tr>
+
+            {/* ═══ ROW 2: Column Labels + Sort Triggers ═══ */}
+            <tr className="border-b border-slate-800 bg-[#0f172a]">
+              {/* ОПШТИНА — sticky left */}
               <th
-                className="px-4 py-3 text-left align-bottom min-w-[140px] whitespace-nowrap text-[10px] uppercase tracking-wider cursor-pointer select-none hover:text-slate-200 transition-colors duration-150 sticky top-0"
-                style={{ color: '#64748b', zIndex: 4, left: 0, backgroundColor: 'rgb(15,23,42)', isolation: 'isolate', willChange: 'transform' }}
+                className="px-4 py-3 text-left align-middle min-w-[150px] whitespace-nowrap text-[10px] font-sans font-bold uppercase tracking-widest text-slate-400 cursor-pointer select-none hover:text-slate-200 transition-colors sticky top-[32px] left-0 z-20 bg-[#0f172a] border-b border-slate-800"
                 onClick={() => handleSort('name')}
                 onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); handleSort('name'); } }}
                 tabIndex={0}
                 role="columnheader"
                 aria-sort={getSortDir('name', sortKey, sortAsc)}
               >
-                <div className="flex flex-col items-start justify-end h-full space-y-1">
-                  <span className="inline-flex items-center gap-1">
-                    {t('hdr_muni')}
-                    <SortIcon columnKey="name" sortKey={sortKey} sortAsc={sortAsc} />
-                  </span>
-                </div>
+                <span className="inline-flex items-center gap-1.5">
+                  {t('hdr_muni')}
+                  <SortIcon columnKey="name" sortKey={sortKey} sortAsc={sortAsc} />
+                </span>
               </th>
+
               {/* БАЛАНС ПО ЖИТЕЛ */}
               <th
-                className="px-4 py-3 text-center align-bottom min-w-[140px] whitespace-nowrap text-[10px] uppercase tracking-wider cursor-pointer select-none hover:text-slate-200 transition-colors duration-150 sticky top-0"
-                style={{ color: '#64748b', zIndex: 1 }}
+                className="px-4 py-3 text-center align-middle min-w-[160px] whitespace-nowrap text-[10px] font-sans font-bold uppercase tracking-widest text-slate-400 cursor-pointer select-none hover:text-slate-200 transition-colors sticky top-[32px] z-10 bg-[#0f172a] border-b border-slate-800"
                 onClick={() => handleSort('drain')}
                 onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); handleSort('drain'); } }}
                 tabIndex={0}
                 role="columnheader"
                 aria-sort={getSortDir('drain', sortKey, sortAsc)}
               >
-                <div className="flex flex-col items-center justify-end h-full space-y-1">
-                  <span className="inline-flex items-center gap-1">
-                    <span className="text-[#F59E0B]">▸</span> {t('hdr_balance')}
-                    <SortIcon columnKey="drain" sortKey={sortKey} sortAsc={sortAsc} />
-                  </span>
-                </div>
+                <span className="inline-flex items-center gap-1.5">
+                  <span className="text-[#F59E0B]">▸</span> {t('hdr_balance')}
+                  <SortIcon columnKey="drain" sortKey={sortKey} sortAsc={sortAsc} />
+                </span>
               </th>
+
               {/* ДАНОЧНО ЗАТАЈУВАЊЕ */}
               <th
-                className="px-4 py-3 text-center align-bottom min-w-[140px] whitespace-nowrap text-[10px] uppercase tracking-wider cursor-pointer select-none hover:text-slate-200 transition-colors duration-150 sticky top-0"
-                style={{ color: '#64748b', zIndex: 1 }}
+                className="px-4 py-3 text-center align-middle min-w-[160px] whitespace-nowrap text-[10px] font-sans font-bold uppercase tracking-widest text-slate-400 cursor-pointer select-none hover:text-slate-200 transition-colors sticky top-[32px] z-10 bg-[#0f172a] border-b border-slate-800"
                 onClick={() => handleSort('leakage')}
                 onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); handleSort('leakage'); } }}
                 tabIndex={0}
                 role="columnheader"
                 aria-sort={getSortDir('leakage', sortKey, sortAsc)}
               >
-                <div className="flex flex-col items-center justify-end h-full space-y-1">
-                  <span className="inline-flex items-center gap-1">
-                    <span className="text-[#F59E0B]">▸</span> {t('hdr_leakage')}
-                    <SortIcon columnKey="leakage" sortKey={sortKey} sortAsc={sortAsc} />
-                  </span>
-                </div>
+                <span className="inline-flex items-center gap-1.5">
+                  <span className="text-[#F59E0B]">▸</span> {t('hdr_leakage')}
+                  <SortIcon columnKey="leakage" sortKey={sortKey} sortAsc={sortAsc} />
+                </span>
               </th>
+
               {/* СОЦИЈАЛНА ЗАШТИТА */}
               <th
-                className="px-4 py-3 text-center align-bottom min-w-[140px] whitespace-nowrap text-[10px] uppercase tracking-wider cursor-pointer select-none hover:text-slate-200 transition-colors duration-150 sticky top-0"
-                style={{ color: '#64748b', zIndex: 1 }}
+                className="px-4 py-3 text-center align-middle min-w-[160px] whitespace-nowrap text-[10px] font-sans font-bold uppercase tracking-widest text-slate-400 cursor-pointer select-none hover:text-slate-200 transition-colors sticky top-[32px] z-10 bg-[#0f172a] border-b border-slate-800"
                 onClick={() => handleSort('welfare')}
                 onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); handleSort('welfare'); } }}
                 tabIndex={0}
                 role="columnheader"
                 aria-sort={getSortDir('welfare', sortKey, sortAsc)}
               >
-                <div className="flex flex-col items-center justify-end h-full space-y-1">
-                  <span className="inline-flex items-center gap-1">
-                    <span className="text-[#F43F5E]">▸</span> {t('hdr_welfare')}
-                    <SortIcon columnKey="welfare" sortKey={sortKey} sortAsc={sortAsc} />
-                  </span>
-                </div>
+                <span className="inline-flex items-center gap-1.5">
+                  <span className="text-[#F43F5E]">▸</span> {t('hdr_welfare')}
+                  <SortIcon columnKey="welfare" sortKey={sortKey} sortAsc={sortAsc} />
+                </span>
               </th>
+
               {/* НЕТО РЕГИОНАЛЕН ОДЛИВ */}
               <th
-                className="px-4 py-3 text-center align-bottom min-w-[140px] whitespace-nowrap text-[10px] uppercase tracking-wider cursor-pointer select-none hover:text-slate-200 transition-colors duration-150 sticky top-0"
-                style={{ color: '#64748b', zIndex: 1 }}
+                className="px-4 py-3 text-center align-middle min-w-[160px] whitespace-nowrap text-[10px] font-sans font-bold uppercase tracking-widest text-slate-400 cursor-pointer select-none hover:text-slate-200 transition-colors sticky top-[32px] z-10 bg-[#0f172a] border-b border-slate-800"
                 onClick={() => handleSort('yearly')}
                 onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); handleSort('yearly'); } }}
                 tabIndex={0}
                 role="columnheader"
                 aria-sort={getSortDir('yearly', sortKey, sortAsc)}
               >
-                <div className="flex flex-col items-center justify-end h-full space-y-1">
-                  <span className="inline-flex items-center gap-1">
-                    <span className="text-[#F43F5E]">▸</span> {t('hdr_drain_yr')}
-                    <SortIcon columnKey="yearly" sortKey={sortKey} sortAsc={sortAsc} />
-                  </span>
-                </div>
+                <span className="inline-flex items-center gap-1.5">
+                  <span className="text-[#F43F5E]">▸</span> {t('hdr_drain_yr')}
+                  <SortIcon columnKey="yearly" sortKey={sortKey} sortAsc={sortAsc} />
+                </span>
               </th>
+
               {/* ЗАДОЛЖУВАЊА */}
               <th
-                className="px-4 py-3 text-center align-bottom min-w-[140px] whitespace-nowrap text-[10px] uppercase tracking-wider cursor-pointer select-none hover:text-slate-200 transition-colors duration-150 sticky top-0"
-                style={{ color: '#64748b', zIndex: 1 }}
+                className="px-4 py-3 text-center align-middle min-w-[160px] whitespace-nowrap text-[10px] font-sans font-bold uppercase tracking-widest text-slate-400 cursor-pointer select-none hover:text-slate-200 transition-colors sticky top-[32px] z-10 bg-[#0f172a] border-b border-slate-800"
                 onClick={() => handleSort('arrears')}
                 onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); handleSort('arrears'); } }}
                 tabIndex={0}
                 role="columnheader"
                 aria-sort={getSortDir('arrears', sortKey, sortAsc)}
               >
-                <div className="flex flex-col items-center justify-end h-full space-y-1">
-                  <span className="inline-flex items-center gap-1">
-                    <span className="text-[#64748b]">▸</span> {t('hdr_arrears')}
-                    <SortIcon columnKey="arrears" sortKey={sortKey} sortAsc={sortAsc} />
-                  </span>
-                </div>
+                <span className="inline-flex items-center gap-1.5">
+                  <span className="text-[#64748b]">▸</span> {t('hdr_arrears')}
+                  <SortIcon columnKey="arrears" sortKey={sortKey} sortAsc={sortAsc} />
+                </span>
               </th>
+
               {/* НЕВРАБОТЕНИ */}
               <th
-                className="px-4 py-3 text-center align-bottom min-w-[140px] whitespace-nowrap text-[10px] uppercase tracking-wider cursor-pointer select-none hover:text-slate-200 transition-colors duration-150 sticky top-0"
-                style={{ color: '#64748b', zIndex: 1 }}
+                className="px-4 py-3 text-center align-middle min-w-[160px] whitespace-nowrap text-[10px] font-sans font-bold uppercase tracking-widest text-slate-400 cursor-pointer select-none hover:text-slate-200 transition-colors sticky top-[32px] z-10 bg-[#0f172a] border-b border-slate-800"
                 onClick={() => handleSort('unemployment')}
                 onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); handleSort('unemployment'); } }}
                 tabIndex={0}
                 role="columnheader"
                 aria-sort={getSortDir('unemployment', sortKey, sortAsc)}
               >
-                <div className="flex flex-col items-center justify-end h-full space-y-1">
-                  <span className="inline-flex items-center gap-1">
-                    <span className="text-[#38bdf8]">▸</span> {t('hdr_unemployed')}
-                    <SortIcon columnKey="unemployment" sortKey={sortKey} sortAsc={sortAsc} />
-                  </span>
-                </div>
+                <span className="inline-flex items-center gap-1.5">
+                  <span className="text-[#38bdf8]">▸</span> {t('hdr_unemployed')}
+                  <SortIcon columnKey="unemployment" sortKey={sortKey} sortAsc={sortAsc} />
+                </span>
               </th>
+
               {/* СТРУКТУРНИ */}
-              <th
-                className="px-4 py-3 text-center align-bottom min-w-[140px] whitespace-nowrap text-[10px] uppercase tracking-wider sticky top-0"
-                style={{ color: '#64748b', zIndex: 1, backgroundColor: 'rgb(15,23,42)' }}
-              >
-                <div className="flex flex-col items-center justify-end h-full">
-                  {t('hdr_structural')}
-                </div>
+              <th className="px-4 py-3 text-center align-middle min-w-[160px] whitespace-nowrap text-[10px] font-sans font-bold uppercase tracking-widest text-slate-400 sticky top-[32px] z-10 bg-[#0f172a] border-b border-slate-800">
+                {t('hdr_structural')}
               </th>
+
               {/* КОРЕКЦИЈА */}
-              <th
-                className="px-4 py-3 text-center align-bottom min-w-[140px] whitespace-nowrap text-[10px] uppercase tracking-wider sticky top-0"
-                style={{ color: '#64748b', zIndex: 1, backgroundColor: 'rgb(15,23,42)' }}
-              >
-                <div className="flex flex-col items-center justify-end h-full">
-                  {t('hdr_correction')}
-                </div>
+              <th className="px-4 py-3 text-center align-middle min-w-[160px] whitespace-nowrap text-[10px] font-sans font-bold uppercase tracking-widest text-slate-400 sticky top-[32px] z-10 bg-[#0f172a] border-b border-slate-800">
+                {t('hdr_correction')}
               </th>
             </tr>
           </thead>

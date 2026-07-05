@@ -524,16 +524,31 @@ export default function NakedBudget() {
               href="https://buymeacoffee.com/stefangel9b"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 font-mono text-xs text-slate-500 hover:text-amber-400 transition-colors duration-200 group"
+              className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full font-mono text-sm font-semibold text-white transition-all duration-200 group border"
+              style={{
+                backgroundColor: 'rgba(245,158,11,0.12)',
+                borderColor: 'rgba(245,158,11,0.35)',
+                boxShadow: '0 0 12px rgba(245,158,11,0.15)',
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.backgroundColor = 'rgba(245,158,11,0.22)';
+                e.currentTarget.style.borderColor = 'rgba(245,158,11,0.6)';
+                e.currentTarget.style.boxShadow = '0 0 20px rgba(245,158,11,0.25)';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.backgroundColor = 'rgba(245,158,11,0.12)';
+                e.currentTarget.style.borderColor = 'rgba(245,158,11,0.35)';
+                e.currentTarget.style.boxShadow = '0 0 12px rgba(245,158,11,0.15)';
+              }}
             >
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="opacity-60 group-hover:opacity-100 transition-opacity">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" strokeWidth="1.5" className="flex-shrink-0">
                 <path d="M18 8h1a4 4 0 0 1 0 8h-1" />
                 <path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z" />
                 <line x1="6" y1="1" x2="6" y2="4" />
                 <line x1="10" y1="1" x2="10" y2="4" />
                 <line x1="14" y1="1" x2="14" y2="4" />
               </svg>
-              {t('buy_coffee') || 'Buy me a coffee'}
+              <span className="text-amber-300 group-hover:text-amber-200 transition-colors">Buy me a coffee</span>
             </a>
           </p>
           <p className="mt-4 font-mono text-[11px] text-slate-600 tracking-wide">

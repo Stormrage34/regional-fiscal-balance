@@ -258,6 +258,22 @@ export default function NakedBudget() {
               <h1 className="text-lg font-bold tracking-tight text-white font-mono leading-none">
                 {t('brand_title')}
               </h1>
+              <a
+                href="https://buymeacoffee.com/stefangel9b"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1.5 font-mono text-[11px] text-slate-500 hover:text-amber-400 transition-colors duration-200 group ml-4"
+                title={t('buy_coffee')}
+              >
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="opacity-50 group-hover:opacity-100 transition-opacity">
+                  <path d="M18 8h1a4 4 0 0 1 0 8h-1" />
+                  <path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z" />
+                  <line x1="6" y1="1" x2="6" y2="4" />
+                  <line x1="10" y1="1" x2="10" y2="4" />
+                  <line x1="14" y1="1" x2="14" y2="4" />
+                </svg>
+                <span>{t('buy_coffee')}</span>
+              </a>
             </div>
             <p className="text-xs font-mono" style={{ color: '#94a3b8' }}>
               {t('brand_sub')}

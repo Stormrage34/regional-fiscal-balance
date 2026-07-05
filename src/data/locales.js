@@ -98,6 +98,8 @@ export const translations = {
     pc_abbr: 'pc',
     sidebar_close: 'Close sidebar',
     sidebar_open: 'Open sidebar',
+    panel_close_label: 'Close {name} panel',
+    method_btn: 'Methodology',
   },
   mk: {
     brand_title: 'Отворен Фискален Матрикс',
@@ -197,6 +199,8 @@ export const translations = {
     pc_abbr: 'жит',
     sidebar_close: 'Затвори странична лента',
     sidebar_open: 'Отвори странична лента',
+    panel_close_label: 'Затвори панел за {name}',
+    method_btn: 'Методологија',
   },
   sq: {
     brand_title: 'Matrica Fiskale e Hapur',
@@ -296,5 +300,7 @@ export const translations = {
     pc_abbr: 'frymë',
     sidebar_close: 'Mbyll panelin anësor',
     sidebar_open: 'Hap panelin anësor',
+    panel_close_label: 'Mbyll panelin e {name}',
+    method_btn: 'Metodologjia',
   },
 };

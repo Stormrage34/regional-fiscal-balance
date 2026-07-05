@@ -292,13 +292,9 @@ export default function NakedBudget() {
         {/* ═══ KPI RIBBON ═══ */}
         <KpiRibbon
           aggregates={aggregates}
-          results={results}
           gainerCount={gainerCount}
           loserCount={loserCount}
-          NET_FISCAL={NET_FISCAL}
           MUNICIPALITIES={MUNICIPALITIES}
-          UNEMPLOYMENT_DATA={UNEMPLOYMENT_DATA}
-          FISCAL_LOSS_PER_UNEMPLOYED={FISCAL_LOSS_PER_UNEMPLOYED}
           AnimatedNumber={AnimatedNumber}
           fmt={fmt}
           showMkd={showMkd}
@@ -384,7 +380,7 @@ export default function NakedBudget() {
                     <div className="flex-1 min-w-0">
                       <div className="flex items-baseline justify-between">
                         <span className="text-sm font-mono truncate" style={{ color: '#e2e8f0' }}>{getMuniName(m, locale)}</span>
-                        <span className="text-sm font-bold font-mono ml-2 flex-shrink-0" style={{ color: '#ef4444' }}>-€{Math.abs(m.netFiscalPC).toLocaleString()}</span>
+                        <span className="text-sm font-bold font-mono ml-2 flex-shrink-0" style={{ color: '#ef4444' }}>{fmt(m.netFiscalPC, true)}</span>
                       </div>
                       <div className="flex items-center gap-2 mt-1">
                         <div className="flex-1 h-1 rounded-full bg-slate-800 overflow-hidden">
@@ -426,7 +422,7 @@ export default function NakedBudget() {
                     <div className="flex-1 min-w-0">
                       <div className="flex items-baseline justify-between">
                         <span className="text-sm font-mono truncate" style={{ color: '#e2e8f0' }}>{getMuniName(m, locale)}</span>
-                        <span className="text-sm font-bold font-mono ml-2 flex-shrink-0" style={{ color: '#10b981' }}>+€{m.netFiscalPC.toLocaleString()}</span>
+                        <span className="text-sm font-bold font-mono ml-2 flex-shrink-0" style={{ color: '#10b981' }}>{fmt(m.netFiscalPC, true)}</span>
                       </div>
                       <div className="flex items-center gap-2 mt-1">
                         <div className="flex-1 h-1 rounded-full bg-slate-800 overflow-hidden">
@@ -515,7 +511,7 @@ export default function NakedBudget() {
               data-close-panel
               onClick={closePanel}
               className="absolute top-4 right-4 z-10 flex items-center justify-center w-8 h-8 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 transition-all duration-200 focus:shadow-[0_0_0_3px_rgba(99,102,241,0.3)] focus:outline-none"
-              aria-label={`Close ${getMuniName(focusedMuni, locale)} detail panel`}
+              aria-label={t('panel_close_label').replace('{name}', getMuniName(focusedMuni, locale))}
             >
               <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
                 <path d="M4 4L12 12M12 4L4 12" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
@@ -616,7 +612,7 @@ export default function NakedBudget() {
                         <span className="text-xs font-mono text-slate-400">{item.label}</span>
                       </div>
                       <span className="text-xs font-semibold font-mono" style={{ color: item.color }}>
-                        {showMkd ? 'MKD ' + Math.round(Math.abs(item.value) * 61.66).toLocaleString() : (item.value >= 0 ? '€' : '-€') + Math.abs(item.value).toLocaleString()}
+                        {showMkd ? 'MKD ' + Math.round(Math.abs(item.value) * MKD_PER_EUR).toLocaleString() : (item.value >= 0 ? '€' : '-€') + Math.abs(item.value).toLocaleString()}
                       </span>
                     </div>
                   ))}
@@ -628,7 +624,7 @@ export default function NakedBudget() {
               <div className="flex items-center justify-between">
                 <span className="text-sm font-mono text-slate-400">{t('panel_total_drain')}</span>
                 <span className="text-lg font-bold font-mono" style={{ color: '#F59E0B' }}>
-                  {`€${focusedMuni.totalPerCapitaDrain.toLocaleString()}`}
+                  {fmt(focusedMuni.totalPerCapitaDrain, true)}
                 </span>
               </div>
             </div>

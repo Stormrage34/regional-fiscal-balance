@@ -3,13 +3,9 @@ import { useLocale } from '../../context/LocaleContext.jsx';
 
 export default function KpiRibbon({
   aggregates,
-  results,
   gainerCount,
   loserCount,
-  NET_FISCAL,
   MUNICIPALITIES,
-  UNEMPLOYMENT_DATA,
-  FISCAL_LOSS_PER_UNEMPLOYED,
   AnimatedNumber,
   fmt,
   showMkd,

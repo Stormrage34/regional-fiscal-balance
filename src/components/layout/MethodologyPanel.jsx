@@ -23,7 +23,7 @@ export default function MethodologyPanel({ showMethodology, setShowMethodology }
           <svg width="10" height="10" viewBox="0 0 10 10" className={`transition-transform duration-200 ${showMethodology ? '' : '-rotate-90'}`} style={{ fill: 'currentColor' }}>
             <polygon points="2,3 5,7 8,3" />
           </svg>
-          Methodology
+          {t('method_btn')}
         </button>
       </div>
 
@@ -42,7 +42,7 @@ export default function MethodologyPanel({ showMethodology, setShowMethodology }
               <div className="min-w-0 flex-1">
                 <div className="flex items-baseline gap-2 flex-wrap">
                   <span className="text-[10px] font-mono font-semibold uppercase tracking-wide" style={{ color: '#d4d4d8' }}>{t('chart_leakage')}</span>
-                  <code className="text-[10px] font-mono" style={{ color: '#94a3b8', backgroundColor: 'rgba(245,158,11,0.18)', padding: '1px 5px', borderRadius: 3 }}>$1,200 &times; shadowEcon &times; (1 − compliance&times;0.4)</code>
+                  <code className="text-[10px] font-mono" style={{ color: '#94a3b8', backgroundColor: 'rgba(245,158,11,0.18)', padding: '1px 5px', borderRadius: 3 }}>€1,200 &times; shadowEcon &times; (1 − compliance&times;0.4)</code>
                 </div>
                 <p className="text-[10px] leading-relaxed mt-0.5" style={{ color: '#94a3b8' }}>
                   {t('method_leakage_desc')}
@@ -56,7 +56,7 @@ export default function MethodologyPanel({ showMethodology, setShowMethodology }
               <div className="min-w-0 flex-1">
                 <div className="flex items-baseline gap-2 flex-wrap">
                   <span className="text-[10px] font-mono font-semibold uppercase tracking-wide" style={{ color: '#d4d4d8' }}>{t('chart_welfare')}</span>
-                  <code className="text-[10px] font-mono" style={{ color: '#94a3b8', backgroundColor: 'rgba(244,63,94,0.18)', padding: '1px 5px', borderRadius: 3 }}>welfareRate &times; $800</code>
+                  <code className="text-[10px] font-mono" style={{ color: '#94a3b8', backgroundColor: 'rgba(244,63,94,0.18)', padding: '1px 5px', borderRadius: 3 }}>welfareRate &times; €800</code>
                 </div>
                 <p className="text-[10px] leading-relaxed mt-0.5" style={{ color: '#94a3b8' }}>
                   {t('method_welfare_desc')}
@@ -70,7 +70,7 @@ export default function MethodologyPanel({ showMethodology, setShowMethodology }
               <div className="min-w-0 flex-1">
                 <div className="flex items-baseline gap-2 flex-wrap">
                   <span className="text-[10px] font-mono font-semibold uppercase tracking-wide" style={{ color: '#d4d4d8' }}>{t('chart_overhead')}</span>
-                  <code className="text-[10px] font-mono" style={{ color: '#94a3b8', backgroundColor: 'rgba(129,140,248,0.18)', padding: '1px 5px', borderRadius: 3 }}>$600 + (1−compliance)&times;$400 − corporate correction</code>
+                  <code className="text-[10px] font-mono" style={{ color: '#94a3b8', backgroundColor: 'rgba(129,140,248,0.18)', padding: '1px 5px', borderRadius: 3 }}>€600 + (1−compliance)&times;€400 − corporate correction</code>
                 </div>
                 <p className="text-[10px] leading-relaxed mt-0.5" style={{ color: '#94a3b8' }}>
                   {t('method_overhead_desc')}

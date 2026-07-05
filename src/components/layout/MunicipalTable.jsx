@@ -223,7 +223,7 @@ export default function MunicipalTable({
                       const ud = UNEMPLOYMENT_DATA[muni.id];
                       if (!ud) return '—';
                       const fiscalLoss = ud.registered * FISCAL_LOSS_PER_UNEMPLOYED.totalAnnual;
-                      return <>{ud.registered.toLocaleString()} <span className="text-[10px] text-slate-600">/ €{Math.round(fiscalLoss / muni.workingAgePop).toLocaleString()}pc</span></>;
+                      return <>{ud.registered.toLocaleString()} <span className="text-[10px] text-slate-600">/ €{Math.round(fiscalLoss / muni.workingAgePop).toLocaleString()}{t('pc_abbr')}</span></>;
                     })()}
                   </td>
 

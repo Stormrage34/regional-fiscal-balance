@@ -31,7 +31,7 @@ export default function StackedBarChart({ data, onMuniClick, focusedMuniId }) {
       className="w-full h-auto"
       preserveAspectRatio="xMidYMid meet"
       role="img"
-      aria-label="Stacked bar chart of municipal fiscal drain: leakage, welfare, and overhead components"
+      aria-label={t('chart_aria_stacked')}
     >
       <defs>
         <linearGradient id="amberBarGrad" x1="0%" y1="0%" x2="100%" y2="0%">

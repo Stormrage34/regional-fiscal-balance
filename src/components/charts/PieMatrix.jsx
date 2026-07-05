@@ -3,7 +3,7 @@ import { CONSTANTS, getMuniName } from '../../data/fiscalData.js';
 import { useLocale } from '../../context/LocaleContext.jsx';
 
 export default function PieMatrix({ data, onMuniClick }) {
-  const { locale } = useLocale();
+  const { t, locale } = useLocale();
   const sortedWithSegs = useMemo(() => {
     const items = [...data].sort((a, b) => (b.totalPerCapitaDrain || 0) - (a.totalPerCapitaDrain || 0));
     return items.map(muni => {
@@ -12,9 +12,9 @@ export default function PieMatrix({ data, onMuniClick }) {
       const overhead = Math.max(0, muni.complianceGapCost + CONSTANTS.fixedOverhead - muni.corporateRetraction);
       const t = leakage + welfare + overhead || 1;
       const segs = [
-        { value: leakage, label: 'Uncollected Leakage', color: '#F59E0B' },
-        { value: welfare, label: 'Welfare Burden', color: '#F43F5E' },
-        { value: overhead, label: 'Overhead & Credits', color: '#8B5CF6' },
+        { value: leakage, label: t('chart_legend_leakage'), color: '#F59E0B' },
+        { value: welfare, label: t('chart_legend_welfare'), color: '#F43F5E' },
+        { value: overhead, label: t('chart_legend_overhead'), color: '#8B5CF6' },
       ];
       let startAngle = -Math.PI / 2;
       const outerR = 48, innerR = 29;
@@ -39,7 +39,7 @@ export default function PieMatrix({ data, onMuniClick }) {
   if (!data || data.length === 0) return null;
 
   return (
-    <div role="img" aria-label="Pie matrix showing drain composition for each municipality">
+    <div role="img" aria-label={t('chart_aria_matrix')}>
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
         {sortedWithSegs.map((muni) => {
           return (
@@ -49,7 +49,7 @@ export default function PieMatrix({ data, onMuniClick }) {
               onClick={() => onMuniClick?.(muni.id)}
               className={`flex flex-col items-center p-2 rounded-lg cursor-pointer hover:bg-white/[0.08] transition-all duration-200 group odd:bg-white/[0.05] bg-gradient-to-b from-transparent to-black/[0.02]`}
             >
-              <svg viewBox="0 0 100 100" width="112" height="112" role="img" aria-label={`${getMuniName(muni, locale)}: €${muni.t} drain per capita`}>
+              <svg viewBox="0 0 100 100" width="112" height="112" role="img" aria-label={`${getMuniName(muni, locale)}: €${muni.t} ${t('modal_drain')} ${t('suffix_capita')}`}>
                 {(() => {
                   const hid = `pm-hole-${muni.id}`;
                   return (

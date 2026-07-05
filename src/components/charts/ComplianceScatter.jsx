@@ -24,7 +24,7 @@ export default function ComplianceScatter({ data, onMuniClick, focusedId }) {
 
   return (
     <div className="relative">
-      <svg viewBox={`0 0 ${width} ${height}`} className="w-full h-auto" role="img" aria-label="Compliance scatter plot: tax compliance rate vs uncollected leakage per capita">
+      <svg viewBox={`0 0 ${width} ${height}`} className="w-full h-auto" role="img" aria-label={t('chart_aria_scatter')}>
         {/* Axes */}
         <line x1={margin.left} y1={margin.top + plotH} x2={margin.left + plotW} y2={margin.top + plotH} stroke="#334155" strokeWidth="1" />
         <line x1={margin.left} y1={margin.top} x2={margin.left} y2={margin.top + plotH} stroke="#334155" strokeWidth="1" />
@@ -73,7 +73,7 @@ export default function ComplianceScatter({ data, onMuniClick, focusedId }) {
           const dotColor = p.isGainer ? '#10B981' : '#F59E0B';
           return (
             <g key={p.id} onClick={() => onMuniClick && onMuniClick(p.id)} className="cursor-pointer">
-              <title>{`${getMuniName(p, locale)}: ${p.adjustedCompliance}% compliance, €${p.uncollectedLeakage} leakage per capita${p.isGainer ? ' (surplus)' : ' (deficit)'}`}</title>
+              <title>{`${getMuniName(p, locale)}: ${p.adjustedCompliance}% compliance, €${p.uncollectedLeakage} leakage per capita${p.isGainer ? ` (${t('surplus')})` : ` (${t('deficit')})`}`}</title>
               {/* Glow halo */}
               <circle cx={cx} cy={cy} r={r + 2} fill={dotColor} fillOpacity={0.15} stroke="none" />
               {/* Hit target */}
@@ -92,13 +92,13 @@ export default function ComplianceScatter({ data, onMuniClick, focusedId }) {
       <div className="flex items-center gap-4 mt-2 justify-center">
         <div className="flex items-center gap-1.5">
           <span className="w-2.5 h-2.5 rounded-full bg-[#10b981]" />
-          <span className="text-[10px] font-mono text-slate-400">Net Gainer</span>
+          <span className="text-[10px] font-mono text-slate-400">{t('scatter_gainer')}</span>
         </div>
         <div className="flex items-center gap-1.5">
           <span className="w-2.5 h-2.5 rounded-full bg-[#f59e0b]" />
-          <span className="text-[10px] font-mono text-slate-400">Net Loser</span>
+          <span className="text-[10px] font-mono text-slate-400">{t('scatter_loser')}</span>
         </div>
-        <span className="text-[10px] font-mono text-slate-500">· Dot size = working-age population</span>
+        <span className="text-[10px] font-mono text-slate-500">{t('scatter_size')}</span>
       </div>
     </div>
   );

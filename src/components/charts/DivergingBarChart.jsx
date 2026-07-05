@@ -19,7 +19,7 @@ export default function DivergingBarChart({ results, maxAbsNetPCEUR, fmt }) {
   }, [results]);
 
   return (
-    <div role="img" aria-label="Diverging bar chart of net fiscal balance per municipality">
+    <div role="img" aria-label={t('chart_aria_diverging')}>
       <div className="mt-2 space-y-1 max-h-[400px] overflow-y-auto pr-3">
         {sortedMunis.map(muni => {
           const nf = NET_FISCAL[muni.id];

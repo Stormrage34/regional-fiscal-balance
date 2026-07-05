@@ -45,7 +45,7 @@ export default function MethodologyPanel({ showMethodology, setShowMethodology }
                   <code className="text-[10px] font-mono" style={{ color: '#94a3b8', backgroundColor: 'rgba(245,158,11,0.18)', padding: '1px 5px', borderRadius: 3 }}>$1,200 &times; shadowEcon &times; (1 − compliance&times;0.4)</code>
                 </div>
                 <p className="text-[10px] leading-relaxed mt-0.5" style={{ color: '#94a3b8' }}>
-                  Revenue shortfall from unreported economic activity. Per-capita revenue target × shadow economy share, reduced by tax compliance rate.
+                  {t('method_leakage_desc')}
                 </p>
               </div>
             </div>
@@ -55,11 +55,11 @@ export default function MethodologyPanel({ showMethodology, setShowMethodology }
               <span className="mt-1.5 w-1.5 h-1.5 rounded-full flex-shrink-0" style={{ backgroundColor: '#F43F5E' }} />
               <div className="min-w-0 flex-1">
                 <div className="flex items-baseline gap-2 flex-wrap">
-                  <span className="text-[10px] font-mono font-semibold uppercase tracking-wide" style={{ color: '#d4d4d8' }}>Welfare Burden</span>
+                  <span className="text-[10px] font-mono font-semibold uppercase tracking-wide" style={{ color: '#d4d4d8' }}>{t('chart_welfare')}</span>
                   <code className="text-[10px] font-mono" style={{ color: '#94a3b8', backgroundColor: 'rgba(244,63,94,0.18)', padding: '1px 5px', borderRadius: 3 }}>welfareRate &times; $800</code>
                 </div>
                 <p className="text-[10px] leading-relaxed mt-0.5" style={{ color: '#94a3b8' }}>
-                  Social safety net costs based on the share of residents receiving welfare benefits.
+                  {t('method_welfare_desc')}
                 </p>
               </div>
             </div>
@@ -69,11 +69,11 @@ export default function MethodologyPanel({ showMethodology, setShowMethodology }
               <span className="mt-1.5 w-1.5 h-1.5 rounded-full flex-shrink-0" style={{ backgroundColor: '#818CF8' }} />
               <div className="min-w-0 flex-1">
                 <div className="flex items-baseline gap-2 flex-wrap">
-                  <span className="text-[10px] font-mono font-semibold uppercase tracking-wide" style={{ color: '#d4d4d8' }}>Overhead &amp; Credits</span>
+                  <span className="text-[10px] font-mono font-semibold uppercase tracking-wide" style={{ color: '#d4d4d8' }}>{t('chart_overhead')}</span>
                   <code className="text-[10px] font-mono" style={{ color: '#94a3b8', backgroundColor: 'rgba(129,140,248,0.18)', padding: '1px 5px', borderRadius: 3 }}>$600 + (1−compliance)&times;$400 − corporate correction</code>
                 </div>
                 <p className="text-[10px] leading-relaxed mt-0.5" style={{ color: '#94a3b8' }}>
-                  Fixed administrative overhead plus enforcement gap cost, reduced by a Bayesian correction for corporate tax HQ distortion.
+                  {t('method_overhead_desc')}
                 </p>
               </div>
             </div>
@@ -83,19 +83,19 @@ export default function MethodologyPanel({ showMethodology, setShowMethodology }
               <span className="mt-1.5 w-1.5 h-1.5 rounded-full flex-shrink-0" style={{ backgroundColor: '#a78bfa' }} />
               <div className="min-w-0 flex-1">
                 <div className="flex items-baseline gap-2 flex-wrap">
-                  <span className="text-[10px] font-mono font-semibold uppercase tracking-wide" style={{ color: '#d4d4d8' }}>Net Fiscal Balance</span>
+                  <span className="text-[10px] font-mono font-semibold uppercase tracking-wide" style={{ color: '#d4d4d8' }}>{t('net_fiscal')}</span>
                   <code className="text-[10px] font-mono" style={{ color: '#94a3b8', backgroundColor: 'rgba(167,139,250,0.18)', padding: '1px 5px', borderRadius: 3 }}>revenueInflow − budgetOutflow</code>
                 </div>
                 <p className="text-[10px] leading-relaxed mt-0.5" style={{ color: '#94a3b8' }}>
-                  Actual Treasury data: positive means self-sufficient; negative indicates dependence on central government grants.
+                  {t('method_fiscal_desc')}
                 </p>
               </div>
             </div>
           </div>
 
           <div className="mt-3 pt-2.5 border-t flex flex-col sm:flex-row sm:items-center justify-between gap-1.5" style={{ borderColor: 'rgba(51,65,85,0.3)' }}>
-            <span className="text-[10px] font-mono" style={{ color: '#94a3b8' }}>All constants are model assumptions — adjustable via Policy Parameters</span>
-            <span className="text-[10px] font-mono" style={{ color: '#94a3b8' }}>Sources: Census pops · Treasury 2025 (open.finance.gov.mk) · AVRM unemployment</span>
+            <span className="text-[10px] font-mono" style={{ color: '#94a3b8' }}>{t('method_footer')}</span>
+            <span className="text-[10px] font-mono" style={{ color: '#94a3b8' }}>{t('method_sources')}</span>
           </div>
         </div>
       </div>

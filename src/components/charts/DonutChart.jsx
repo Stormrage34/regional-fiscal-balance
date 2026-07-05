@@ -15,9 +15,9 @@ export default function DonutChart({ data, size = 200 }) {
   const total = leakage + welfare + overhead || 1;
 
   const segments = [
-    { value: leakage, label: 'Uncollected Leakage', color: '#F59E0B' },
-    { value: welfare, label: 'Welfare Burden', color: '#F43F5E' },
-    { value: overhead, label: 'Overhead & Credits', color: '#8B5CF6' },
+    { value: leakage, label: t('chart_legend_leakage'), color: '#F59E0B' },
+    { value: welfare, label: t('chart_legend_welfare'), color: '#F43F5E' },
+    { value: overhead, label: t('chart_legend_overhead'), color: '#8B5CF6' },
   ];
 
   let startAngle = -Math.PI / 2;
@@ -46,7 +46,7 @@ export default function DonutChart({ data, size = 200 }) {
   });
 
   return (
-    <svg viewBox="0 0 100 100" width={size} height={size} role="img" aria-label={`Drain breakdown: ${segments.map(s => `${s.label} ${s.percentage}%`).join(', ')}`}>
+    <svg viewBox="0 0 100 100" width={size} height={size} role="img" aria-label={`${t('modal_drain')} breakdown: ${segments.map(s => `${s.label} ${s.percentage}%`).join(', ')}`}>
       <defs>
         <mask id={holeId}>
           <rect width="100" height="100" fill="white" />

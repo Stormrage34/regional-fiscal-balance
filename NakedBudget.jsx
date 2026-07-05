@@ -261,7 +261,7 @@ export default function NakedBudget() {
               type="button"
               onClick={() => setSidebarOpen(!sidebarOpen)}
               className="md:hidden flex items-center justify-center w-8 h-8 rounded-lg border border-slate-700/50 hover:bg-slate-800 transition-colors ml-auto"
-              aria-label={sidebarOpen ? 'Close sidebar' : 'Open sidebar'}
+              aria-label={sidebarOpen ? t('sidebar_close') : t('sidebar_open')}
             >
               <svg width="16" height="16" viewBox="0 0 16 16" fill="none" style={{ color: '#94a3b8' }} aria-hidden="true">
                 {sidebarOpen
@@ -329,7 +329,7 @@ export default function NakedBudget() {
             <div className="rounded-lg px-4 py-3 border hover:shadow-[0_0_12px_rgba(99,102,241,0.04)] transition-shadow duration-300" style={{ backgroundColor: '#243047', borderColor: '#1F3050' }}>
               <span className="text-xs font-mono" style={{ color: '#64748b' }}>{t('net_deficit')}</span>
               <span className="block text-2xl font-bold font-mono mt-0.5" style={{ color: '#F59E0B' }}>{fmt(Math.abs(netFiscalAggs.totalNet) / MKD_PER_EUR / 1_000_000)}</span>
-              <span className="text-xs font-mono" style={{ color: '#94a3b8' }}>aggregate (MKD {Math.abs(Math.round(netFiscalAggs.totalNet/1000)).toLocaleString()}K)</span>
+              <span className="text-xs font-mono" style={{ color: '#94a3b8' }}>{t('aggregate_text')} (MKD {Math.abs(Math.round(netFiscalAggs.totalNet/1000)).toLocaleString()}K)</span>
             </div>
             <div className="rounded-lg px-4 py-3 border hover:shadow-[0_0_12px_rgba(99,102,241,0.04)] transition-shadow duration-300" style={{ backgroundColor: '#243047', borderColor: '#1F3050' }}>
               <span className="text-xs font-mono" style={{ color: '#64748b' }}>{t('net_arrears')}</span>
@@ -530,10 +530,10 @@ export default function NakedBudget() {
                 <p className="text-xs font-mono mt-1" style={{ color: '#64748b' }}>
                   {(() => {
                     const c = focusedMuni.adjustedCompliance;
-                    if (c >= 70) return 'High Compliance — Central City Profile';
-                    if (c >= 55) return 'Moderate Compliance — Regional Center';
-                    if (c >= 40) return 'Below Average — Secondary Settlement';
-                    return 'Low Compliance — High-Leakage Municipality';
+                    if (c >= 70) return t('panel_compliance_high');
+                    if (c >= 55) return t('panel_compliance_moderate');
+                    if (c >= 40) return t('panel_compliance_below');
+                    return t('panel_compliance_low');
                   })()}
                 </p>
 
@@ -541,11 +541,11 @@ export default function NakedBudget() {
                 {(() => {
                   const flags = [];
                   if (['aerodrom','karpos'].includes(focusedMuni.id)) {
-                    flags.push('⚠️ Centralized Accounting Distortion — HQ registration inflates revenue');
+                    flags.push(`⚠️ ${t('panel_flag_hq')}`);
                   }
                   const nf = NET_FISCAL[focusedMuni.id];
                   if (nf && nf.utilityDebt > 0) {
-                    flags.push('⚠️ Off-Balance-Sheet Utility Debt — see detail below');
+                    flags.push(`⚠️ ${t('panel_flag_debt')}`);
                   }
                   if (!flags.length) return null;
                   return (
@@ -571,24 +571,24 @@ export default function NakedBudget() {
                 const isGainer = net > 0;
                 return (
                   <div className="mb-6">
-                    <span className="text-xs font-mono uppercase tracking-wider" style={{ color: '#64748b' }}>Net Fiscal Balance</span>
+                    <span className="text-xs font-mono uppercase tracking-wider" style={{ color: '#64748b' }}>{t('net_fiscal')}</span>
                     <div className="text-2xl font-bold font-mono mt-1" style={{ color: isGainer ? '#10B981' : '#F59E0B' }}>
                       {fmt(net / MKD_PER_EUR / 1_000_000)}
                     </div>
                     <div className="text-[10px] font-mono" style={{ color: '#94a3b8' }}>
-                      open.finance.gov.mk — Treasury 2025
+                      {t('panel_source')}
                     </div>
                     <div className="mt-2 space-y-1 text-[11px] font-mono">
                       <div className="flex justify-between">
-                        <span style={{ color: '#94a3b8' }}>Revenue Inflow</span>
+                        <span style={{ color: '#94a3b8' }}>{t('panel_revenue')}</span>
                         <span style={{ color: '#F43F5E' }}>{fmt(nf.revenueInflow / MKD_PER_EUR / 1_000_000)}</span>
                       </div>
                       <div className="flex justify-between">
-                        <span style={{ color: '#94a3b8' }}>Budget Outflow</span>
+                        <span style={{ color: '#94a3b8' }}>{t('panel_outflow')}</span>
                         <span style={{ color: '#F59E0B' }}>{fmt(nf.budgetOutflow / MKD_PER_EUR / 1_000_000)}</span>
                       </div>
                       <div className="flex justify-between">
-                        <span style={{ color: '#94a3b8' }}>Arrears</span>
+                        <span style={{ color: '#94a3b8' }}>{t('panel_arrears')}</span>
                         <span style={{ color: '#ea580c' }}>{fmt(nf.arrears / MKD_PER_EUR / 1_000_000)}</span>
                       </div>
                     </div>
@@ -599,15 +599,15 @@ export default function NakedBudget() {
               {/* Breakdown Legend */}
               <div className="mb-5">
                 <span className="text-[10px] font-mono uppercase tracking-widest" style={{ color: '#64748b' }}>
-                  Breakdown
+                  {t('breakdown_label')}
                 </span>
                 <div className="mt-2 space-y-1.5">
                   {[
-                    { label: 'Leakage', value: focusedMuni.uncollectedLeakage, color: '#F59E0B' },
-                    { label: 'Welfare', value: focusedMuni.welfareBurden, color: '#F43F5E' },
-                    { label: 'Overhead', value: focusedMuni.complianceGapCost, color: '#3B82F6' },
+                    { label: t('chart_legend_leakage'), value: focusedMuni.uncollectedLeakage, color: '#F59E0B' },
+                    { label: t('chart_legend_welfare'), value: focusedMuni.welfareBurden, color: '#F43F5E' },
+                    { label: t('chart_legend_overhead'), value: focusedMuni.complianceGapCost, color: '#3B82F6' },
                     ...(applyCorrection && focusedMuni.corporateRetraction > 0
-                      ? [{ label: 'Correction', value: -focusedMuni.corporateRetraction, color: '#10B981' }]
+                      ? [{ label: t('chart_legend_correction'), value: -focusedMuni.corporateRetraction, color: '#10B981' }]
                       : []),
                   ].map((item) => (
                     <div key={item.label} className="flex items-center justify-between py-1 border-b border-slate-800/40 last:border-b-0">
@@ -626,7 +626,7 @@ export default function NakedBudget() {
               <div className="h-[1px] bg-gradient-to-r from-transparent via-slate-700/50 to-transparent mb-4" />
 
               <div className="flex items-center justify-between">
-                <span className="text-sm font-mono text-slate-400">Total Drain</span>
+                <span className="text-sm font-mono text-slate-400">{t('panel_total_drain')}</span>
                 <span className="text-lg font-bold font-mono" style={{ color: '#F59E0B' }}>
                   {`€${focusedMuni.totalPerCapitaDrain.toLocaleString()}`}
                 </span>

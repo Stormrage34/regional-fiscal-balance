@@ -53,12 +53,12 @@ export default function MunicipalTable({
       </div>
 
       <div className="overflow-x-auto overflow-y-auto max-h-[520px]">
-        <table className="w-full text-sm font-mono">
+        <table className="w-full text-sm font-mono" style={{ borderCollapse: 'collapse' }}>
           <thead>
             <tr style={{ borderBottom: '1px solid #1e293b', backgroundColor: 'rgba(15,23,42,0.6)' }}>
               <th
                 className="px-4 py-3 text-left text-[10px] uppercase tracking-wider cursor-pointer select-none hover:text-slate-200 transition-colors duration-150 sticky top-0"
-                style={{ color: '#64748b', zIndex: 4, left: 0, backgroundColor: 'rgb(15,23,42)', isolation: 'isolate' }}
+                style={{ color: '#64748b', zIndex: 4, left: 0, backgroundColor: 'rgb(15,23,42)', isolation: 'isolate', willChange: 'transform' }}
                 onClick={() => handleSort('name')}
                 onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); handleSort('name'); } }}
                 tabIndex={0}
@@ -196,6 +196,7 @@ export default function MunicipalTable({
                     style={{
                       zIndex: 3,
                       isolation: 'isolate',
+                      willChange: 'transform',
                       backgroundColor: isFocused ? 'rgb(30,41,59)' : (i % 2 === 0 ? 'rgb(15,23,42)' : 'rgb(11,17,32)'),
                     }}
                   >

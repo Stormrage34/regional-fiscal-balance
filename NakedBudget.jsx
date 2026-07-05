@@ -4,7 +4,7 @@ import React, { useState, useMemo, useCallback, useRef, useEffect } from 'react'
 import { useLocale } from './src/context/LocaleContext.jsx';
 
 // ── Data & Model ──
-import { CONSTANTS, MUNICIPALITIES, NET_FISCAL, UNEMPLOYMENT_DATA, FISCAL_LOSS_PER_UNEMPLOYED, MKD_PER_EUR, formatCurrency as baseFormatCurrency } from './src/data/fiscalData.js';
+import { CONSTANTS, MUNICIPALITIES, NET_FISCAL, UNEMPLOYMENT_DATA, FISCAL_LOSS_PER_UNEMPLOYED, MKD_PER_EUR, formatCurrency as baseFormatCurrency, getMuniName } from './src/data/fiscalData.js';
 import { computeMunicipalMetrics } from './src/models/bayesianInference.js';
 
 // ── UI Primitives ──
@@ -59,7 +59,7 @@ function useFocusTrap(active, containerRef) {
 // ───────────────────────────────────────────────────────────────
 
 export default function NakedBudget() {
-  const { t } = useLocale();
+  const { t, locale } = useLocale();
 
   // ── Slider State ──
   const [enforcementStrength, setEnforcementStrength] = useState(50);
@@ -301,6 +301,7 @@ export default function NakedBudget() {
           FISCAL_LOSS_PER_UNEMPLOYED={FISCAL_LOSS_PER_UNEMPLOYED}
           AnimatedNumber={AnimatedNumber}
           fmt={fmt}
+          showMkd={showMkd}
         />
 
         {/* ═══ NET FISCAL IMPACT ═══ */}
@@ -382,7 +383,7 @@ export default function NakedBudget() {
                     }}>{i + 1}</span>
                     <div className="flex-1 min-w-0">
                       <div className="flex items-baseline justify-between">
-                        <span className="text-sm font-mono truncate" style={{ color: '#e2e8f0' }}>{m.name}</span>
+                        <span className="text-sm font-mono truncate" style={{ color: '#e2e8f0' }}>{getMuniName(m, locale)}</span>
                         <span className="text-sm font-bold font-mono ml-2 flex-shrink-0" style={{ color: '#ef4444' }}>-€{Math.abs(m.netFiscalPC).toLocaleString()}</span>
                       </div>
                       <div className="flex items-center gap-2 mt-1">
@@ -424,7 +425,7 @@ export default function NakedBudget() {
                     }}>{i + 1}</span>
                     <div className="flex-1 min-w-0">
                       <div className="flex items-baseline justify-between">
-                        <span className="text-sm font-mono truncate" style={{ color: '#e2e8f0' }}>{m.name}</span>
+                        <span className="text-sm font-mono truncate" style={{ color: '#e2e8f0' }}>{getMuniName(m, locale)}</span>
                         <span className="text-sm font-bold font-mono ml-2 flex-shrink-0" style={{ color: '#10b981' }}>+€{m.netFiscalPC.toLocaleString()}</span>
                       </div>
                       <div className="flex items-center gap-2 mt-1">
@@ -514,7 +515,7 @@ export default function NakedBudget() {
               data-close-panel
               onClick={closePanel}
               className="absolute top-4 right-4 z-10 flex items-center justify-center w-8 h-8 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 transition-all duration-200 focus:shadow-[0_0_0_3px_rgba(99,102,241,0.3)] focus:outline-none"
-              aria-label={`Close ${focusedMuni.name} detail panel`}
+              aria-label={`Close ${getMuniName(focusedMuni, locale)} detail panel`}
             >
               <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
                 <path d="M4 4L12 12M12 4L4 12" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
@@ -524,7 +525,7 @@ export default function NakedBudget() {
             <div className="p-6 pt-12">
               <div className="mb-6">
                 <h3 id="panel-title" className="text-xl font-bold font-mono text-white tracking-tight">
-                  {focusedMuni.name}
+                  {getMuniName(focusedMuni, locale)}
                 </h3>
                 <p className="text-xs font-mono mt-1" style={{ color: '#64748b' }}>
                   {(() => {

@@ -1,7 +1,8 @@
 import { useLocale } from '../../context/LocaleContext.jsx';
+import { getMuniName } from '../../data/fiscalData.js';
 
 export default function StackedBarChart({ data, onMuniClick }) {
-  const { t } = useLocale();
+  const { t, locale } = useLocale();
   if (!data || data.length === 0) return null;
 
   const maxVal = Math.max(...data.map((d) => d.totalPerCapitaDrain), 1);
@@ -78,7 +79,7 @@ export default function StackedBarChart({ data, onMuniClick }) {
               fontSize="11"
               fontFamily="ui-monospace,monospace"
             >
-              {muni.name}
+              {getMuniName(muni, locale)}
             </text>
 
             {barFullW < 6 && (

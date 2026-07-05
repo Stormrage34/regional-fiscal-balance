@@ -1,8 +1,8 @@
 import { useLocale } from '../../context/LocaleContext.jsx';
-import { NET_FISCAL } from '../../data/fiscalData.js';
+import { NET_FISCAL, getMuniName } from '../../data/fiscalData.js';
 
 export default function ComplianceScatter({ data, onMuniClick, focusedId }) {
-  const { t } = useLocale();
+  const { t, locale } = useLocale();
   if (!data || data.length === 0) return null;
 
   const margin = { top: 20, right: 20, bottom: 50, left: 60 };
@@ -73,7 +73,7 @@ export default function ComplianceScatter({ data, onMuniClick, focusedId }) {
           const dotColor = p.isGainer ? '#10B981' : '#F59E0B';
           return (
             <g key={p.id} onClick={() => onMuniClick && onMuniClick(p.id)} className="cursor-pointer">
-              <title>{`${p.name}: ${p.adjustedCompliance}% compliance, €${p.uncollectedLeakage} leakage per capita${p.isGainer ? ' (surplus)' : ' (deficit)'}`}</title>
+              <title>{`${getMuniName(p, locale)}: ${p.adjustedCompliance}% compliance, €${p.uncollectedLeakage} leakage per capita${p.isGainer ? ' (surplus)' : ' (deficit)'}`}</title>
               {/* Glow halo */}
               <circle cx={cx} cy={cy} r={r + 2} fill={dotColor} fillOpacity={0.15} stroke="none" />
               {/* Hit target */}
@@ -82,7 +82,7 @@ export default function ComplianceScatter({ data, onMuniClick, focusedId }) {
               <circle cx={cx} cy={cy} r={r + (isFocused ? 4 : 0)} fill={dotColor} fillOpacity={isFocused ? 1 : 0.85} stroke={isFocused ? '#fff' : dotColor} strokeWidth={isFocused ? 2 : 0.5} strokeOpacity={0.4} />
               {isFocused && (
                 <text x={cx + r + 8} y={cy + 4} fill="#e2e8f0" fontSize="11" fontFamily="monospace" fontWeight="bold">
-                  {p.name}
+                  {getMuniName(p, locale)}
                 </text>
               )}
             </g>

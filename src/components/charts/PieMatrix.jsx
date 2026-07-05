@@ -1,7 +1,9 @@
 import { useMemo } from 'react';
-import { CONSTANTS } from '../../data/fiscalData.js';
+import { CONSTANTS, getMuniName } from '../../data/fiscalData.js';
+import { useLocale } from '../../context/LocaleContext.jsx';
 
 export default function PieMatrix({ data, onMuniClick }) {
+  const { locale } = useLocale();
   const sortedWithSegs = useMemo(() => {
     const items = [...data].sort((a, b) => (b.totalPerCapitaDrain || 0) - (a.totalPerCapitaDrain || 0));
     return items.map(muni => {
@@ -47,7 +49,7 @@ export default function PieMatrix({ data, onMuniClick }) {
               onClick={() => onMuniClick?.(muni.id)}
               className={`flex flex-col items-center p-2 rounded-lg cursor-pointer hover:bg-white/[0.08] transition-all duration-200 group odd:bg-white/[0.05] bg-gradient-to-b from-transparent to-black/[0.02]`}
             >
-              <svg viewBox="0 0 100 100" width="112" height="112" role="img" aria-label={`${muni.name}: €${muni.t} drain per capita`}>
+              <svg viewBox="0 0 100 100" width="112" height="112" role="img" aria-label={`${getMuniName(muni, locale)}: €${muni.t} drain per capita`}>
                 {(() => {
                   const hid = `pm-hole-${muni.id}`;
                   return (
@@ -85,7 +87,7 @@ export default function PieMatrix({ data, onMuniClick }) {
                 })()}
               </svg>
               <div className="flex flex-col items-center mt-2 w-full px-1">
-                <span className="text-[10px] font-mono truncate text-slate-300 group-hover:text-slate-100 transition-colors duration-200 w-full text-center">{muni.name}</span>
+                <span className="text-[10px] font-mono truncate text-slate-300 group-hover:text-slate-100 transition-colors duration-200 w-full text-center">{getMuniName(muni, locale)}</span>
                 <div className="flex items-center justify-center gap-1.5 mt-1">
                   {muni.paths.map((seg, i) => (
                     <span key={i} className="flex items-center gap-0.5 text-[10px] font-mono" style={{ color: '#94a3b8' }}>

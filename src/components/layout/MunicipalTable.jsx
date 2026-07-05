@@ -1,4 +1,4 @@
-import { UNEMPLOYMENT_DATA, FISCAL_LOSS_PER_UNEMPLOYED } from '../../data/fiscalData.js';
+import { UNEMPLOYMENT_DATA, FISCAL_LOSS_PER_UNEMPLOYED, getMuniName } from '../../data/fiscalData.js';
 import { useLocale } from '../../context/LocaleContext.jsx';
 
 function SortIcon({ columnKey, sortKey, sortAsc }) {
@@ -35,7 +35,7 @@ export default function MunicipalTable({
   sortAsc,
   handleSort,
 }) {
-  const { t } = useLocale();
+  const { t, locale } = useLocale();
   return (
     <section
       className="rounded-xl relative overflow-hidden mb-10 transition-all duration-300"
@@ -186,7 +186,7 @@ export default function MunicipalTable({
                   >
                     <div className="flex items-center gap-2">
                       <span className={`font-semibold whitespace-nowrap transition-colors duration-200 ${isFocused ? 'text-amber-300' : 'text-slate-200 group-hover:text-white'}`}>
-                        {muni.name}
+                        {getMuniName(muni, locale)}
                       </span>
                       <div className="hidden sm:block h-1 w-10 rounded-full bg-slate-800 overflow-hidden">
                         <div className="h-full rounded-full transition-all duration-300" style={{ width: `${(sparkWidth / 60) * 100}%`, backgroundColor: '#F59E0B' }} />

@@ -12,6 +12,7 @@ export default function KpiRibbon({
   FISCAL_LOSS_PER_UNEMPLOYED,
   AnimatedNumber,
   fmt,
+  showMkd,
 }) {
   const { t } = useLocale();
   return (
@@ -33,14 +34,14 @@ export default function KpiRibbon({
         </span>
         <div className="mt-2 flex items-baseline gap-1">
           <AnimatedNumber
-            value={aggregates.weightedAvgDrain}
-            prefix="$"
+            value={showMkd ? Math.round(aggregates.weightedAvgDrain * MKD_PER_EUR) : aggregates.weightedAvgDrain}
+            prefix={showMkd ? 'MKD ' : '€'}
             size="text-[2.8rem] sm:text-[3.2rem]"
             color="#f59e0b"
           />
         </div>
         <span className="text-[10px] font-mono mt-1 block" style={{ color: '#94a3b8' }}>
-          Population-weighted &middot; {MUNICIPALITIES.length} {t('municipalities')} &middot; {aggregates.totalPop.toLocaleString()} {t('pop')}
+          {t('pop_weighted')} &middot; {MUNICIPALITIES.length} {t('municipalities')} &middot; {aggregates.totalPop.toLocaleString()} {t('pop')}
         </span>
       </div>
 

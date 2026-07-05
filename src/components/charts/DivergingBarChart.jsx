@@ -1,9 +1,9 @@
 import { useMemo } from 'react';
-import { NET_FISCAL, MKD_PER_EUR } from '../../data/fiscalData.js';
+import { NET_FISCAL, MKD_PER_EUR, getMuniName } from '../../data/fiscalData.js';
 import { useLocale } from '../../context/LocaleContext.jsx';
 
 export default function DivergingBarChart({ results, maxAbsNetPCEUR, fmt }) {
-  const { t } = useLocale();
+  const { t, locale } = useLocale();
   const sortedMunis = useMemo(() => {
     const netPCResults = results.filter(m => NET_FISCAL[m.id]).map(m => {
       const nf = NET_FISCAL[m.id];
@@ -33,7 +33,7 @@ export default function DivergingBarChart({ results, maxAbsNetPCEUR, fmt }) {
 
           return (
             <div key={muni.id} className="grid grid-cols-[120px_1fr_120px] gap-2 text-[11px] font-mono items-center">
-              <span className="text-left truncate" style={{ color: '#94a3b8' }}>{muni.name}</span>
+              <span className="text-left truncate" style={{ color: '#94a3b8' }}>{getMuniName(muni, locale)}</span>
               <div className="relative h-5">
                 <div
                   className="absolute h-full rounded-sm transition-all duration-300"

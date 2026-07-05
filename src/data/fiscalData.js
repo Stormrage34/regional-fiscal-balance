@@ -25,59 +25,59 @@ export const formatCurrency = (value, isPerCapita = false) => {
 };
 
 export const MUNICIPALITIES = [
-  { id: 'lipkovo',    name: 'Lipkovo',    workingAgePop: 14950, baseShadowEcon: 0.45, baseCompliance: 0.26, corporateDistortion: 0.10, welfareRate: 0.32 },
+  { id: 'lipkovo',       name: 'Lipkovo',       name_mk: 'Липково',       name_sq: 'Likovë',        workingAgePop: 14950, baseShadowEcon: 0.45, baseCompliance: 0.26, corporateDistortion: 0.10, welfareRate: 0.32 },
   // workingAgePop: 22308 total × 67% = ~14950 (was 18500 — pre-2021 estimate)
   // baseCompliance: 0.26 — CEA study range floor (26-83%, cea.org.mk, was 0.22)
-  { id: 'aracinovo',  name: 'Aračinovo',  workingAgePop: 8500,  baseShadowEcon: 0.52, baseCompliance: 0.26, corporateDistortion: 0.05, welfareRate: 0.40 },
+  { id: 'aracinovo',     name: 'Aračinovo',     name_mk: 'Арачиново',     name_sq: 'Araçinovë',     workingAgePop: 8500,  baseShadowEcon: 0.52, baseCompliance: 0.26, corporateDistortion: 0.05, welfareRate: 0.40 },
   // workingAgePop: 12676 total × 67% = ~8500 (was 8200)
   // baseCompliance: 0.26 — CEA study range floor (26-83%, cea.org.mk, was 0.15)
-  { id: 'tetovo',     name: 'Tetovo',     workingAgePop: 56800, baseShadowEcon: 0.38, baseCompliance: 0.40, corporateDistortion: 0.65, welfareRate: 0.18 },
+  { id: 'tetovo',        name: 'Tetovo',        name_mk: 'Тетово',        name_sq: 'Tetovë',        workingAgePop: 56800, baseShadowEcon: 0.38, baseCompliance: 0.40, corporateDistortion: 0.65, welfareRate: 0.18 },
   // workingAgePop: 84770 total × 67% = ~56800 (was 56000)
   // baseCompliance: 0.40 — unchanged within CEA range
-  { id: 'gostivar',   name: 'Gostivar',   workingAgePop: 40000, baseShadowEcon: 0.36, baseCompliance: 0.45, corporateDistortion: 0.55, welfareRate: 0.16 },
+  { id: 'gostivar',      name: 'Gostivar',      name_mk: 'Гостивар',      name_sq: 'Gostivar',      workingAgePop: 40000, baseShadowEcon: 0.36, baseCompliance: 0.45, corporateDistortion: 0.55, welfareRate: 0.16 },
   // workingAgePop: 59770 total × 67% = ~40000 (was 42000)
   // baseCompliance: 0.45 — unchanged within CEA range
-  { id: 'aerodrom',   name: 'Aerodrom',   workingAgePop: 52100, baseShadowEcon: 0.15, baseCompliance: 0.83, corporateDistortion: 0.90, welfareRate: 0.04 },
+  { id: 'aerodrom',      name: 'Aerodrom',      name_mk: 'Аеродром',      name_sq: 'Aerodrom',      workingAgePop: 52100, baseShadowEcon: 0.15, baseCompliance: 0.83, corporateDistortion: 0.90, welfareRate: 0.04 },
   // workingAgePop: 77735 total × 67% = ~52100 (was 52000)
   // baseCompliance: 0.83 — CEA observed ceiling is 83% (cea.org.mk), was 0.88
-  { id: 'karpos',     name: 'Karpoš',     workingAgePop: 42700, baseShadowEcon: 0.14, baseCompliance: 0.83, corporateDistortion: 0.95, welfareRate: 0.03 },
+  { id: 'karpos',        name: 'Karpoš',        name_mk: 'Карпош',        name_sq: 'Karposh',       workingAgePop: 42700, baseShadowEcon: 0.14, baseCompliance: 0.83, corporateDistortion: 0.95, welfareRate: 0.03 },
   // workingAgePop: 63760 total × 67% = ~42700 (was 44000)
   // baseCompliance: 0.83 — CEA observed ceiling is 83% (cea.org.mk), was 0.90
-  { id: 'bitola',     name: 'Bitola',     workingAgePop: 57100, baseShadowEcon: 0.22, baseCompliance: 0.65, corporateDistortion: 0.45, welfareRate: 0.08 },
+  { id: 'bitola',        name: 'Bitola',        name_mk: 'Битола',        name_sq: 'Bitolë',        workingAgePop: 57100, baseShadowEcon: 0.22, baseCompliance: 0.65, corporateDistortion: 0.45, welfareRate: 0.08 },
   // workingAgePop: 85164 total × 67% = ~57100 (was 61000)
   // baseCompliance: 0.65 — CEA mid-upper range (26-83%, was 0.78)
-  { id: 'stip',       name: 'Štip',       workingAgePop: 30100, baseShadowEcon: 0.20, baseCompliance: 0.60, corporateDistortion: 0.40, welfareRate: 0.07 },
+  { id: 'stip',          name: 'Štip',          name_mk: 'Штип',          name_sq: 'Shtip',         workingAgePop: 30100, baseShadowEcon: 0.20, baseCompliance: 0.60, corporateDistortion: 0.40, welfareRate: 0.07 },
   // workingAgePop: 44866 total × 67% = ~30100 (was 34000)
   // baseCompliance: 0.60 — CEA mid-upper range (was 0.82)
   // ── New municipalities ──
-  { id: 'kumanovo',   name: 'Kumanovo',   workingAgePop: 65700, baseShadowEcon: 0.28, baseCompliance: 0.52, corporateDistortion: 0.40, welfareRate: 0.14 },
-  { id: 'prilep',     name: 'Prilep',     workingAgePop: 46247, baseShadowEcon: 0.26, baseCompliance: 0.55, corporateDistortion: 0.35, welfareRate: 0.12 },
-  { id: 'ohrid',      name: 'Ohrid',      workingAgePop: 34500, baseShadowEcon: 0.18, baseCompliance: 0.72, corporateDistortion: 0.50, welfareRate: 0.06 },
-  { id: 'struga',     name: 'Struga',     workingAgePop: 34157, baseShadowEcon: 0.24, baseCompliance: 0.62, corporateDistortion: 0.35, welfareRate: 0.10 },
-  { id: 'veles',      name: 'Veles',      workingAgePop: 32000, baseShadowEcon: 0.25, baseCompliance: 0.58, corporateDistortion: 0.30, welfareRate: 0.11 },
-  { id: 'strumica',   name: 'Strumica',   workingAgePop: 33497, baseShadowEcon: 0.29, baseCompliance: 0.55, corporateDistortion: 0.25, welfareRate: 0.11 },
-  { id: 'kavadarci',  name: 'Kavadarci',  workingAgePop: 23600, baseShadowEcon: 0.23, baseCompliance: 0.60, corporateDistortion: 0.30, welfareRate: 0.09 },
-  { id: 'kocani',     name: 'Kočani',     workingAgePop: 20500, baseShadowEcon: 0.31, baseCompliance: 0.48, corporateDistortion: 0.22, welfareRate: 0.13 },
-  { id: 'kicevo',     name: 'Kičevo',     workingAgePop: 26500, baseShadowEcon: 0.33, baseCompliance: 0.42, corporateDistortion: 0.25, welfareRate: 0.16 },
-  { id: 'radovis',    name: 'Radoviš',    workingAgePop: 16162, baseShadowEcon: 0.34, baseCompliance: 0.45, corporateDistortion: 0.18, welfareRate: 0.15 },
-  { id: 'gevgelija',  name: 'Gevgelija',  workingAgePop: 14200, baseShadowEcon: 0.22, baseCompliance: 0.65, corporateDistortion: 0.40, welfareRate: 0.08 },
-  { id: 'debar',      name: 'Debar',      workingAgePop:  10326, baseShadowEcon: 0.36, baseCompliance: 0.32, corporateDistortion: 0.12, welfareRate: 0.22 },
+  { id: 'kumanovo',      name: 'Kumanovo',      name_mk: 'Куманово',      name_sq: 'Kumanovë',      workingAgePop: 65700, baseShadowEcon: 0.28, baseCompliance: 0.52, corporateDistortion: 0.40, welfareRate: 0.14 },
+  { id: 'prilep',        name: 'Prilep',        name_mk: 'Прилеп',        name_sq: 'Prilep',        workingAgePop: 46247, baseShadowEcon: 0.26, baseCompliance: 0.55, corporateDistortion: 0.35, welfareRate: 0.12 },
+  { id: 'ohrid',         name: 'Ohrid',         name_mk: 'Охрид',         name_sq: 'Ohër',          workingAgePop: 34500, baseShadowEcon: 0.18, baseCompliance: 0.72, corporateDistortion: 0.50, welfareRate: 0.06 },
+  { id: 'struga',        name: 'Struga',        name_mk: 'Струга',        name_sq: 'Strugë',        workingAgePop: 34157, baseShadowEcon: 0.24, baseCompliance: 0.62, corporateDistortion: 0.35, welfareRate: 0.10 },
+  { id: 'veles',         name: 'Veles',         name_mk: 'Велес',         name_sq: 'Veles',         workingAgePop: 32000, baseShadowEcon: 0.25, baseCompliance: 0.58, corporateDistortion: 0.30, welfareRate: 0.11 },
+  { id: 'strumica',      name: 'Strumica',      name_mk: 'Струмица',      name_sq: 'Strumicë',      workingAgePop: 33497, baseShadowEcon: 0.29, baseCompliance: 0.55, corporateDistortion: 0.25, welfareRate: 0.11 },
+  { id: 'kavadarci',     name: 'Kavadarci',     name_mk: 'Кавадарци',     name_sq: 'Kavadarc',      workingAgePop: 23600, baseShadowEcon: 0.23, baseCompliance: 0.60, corporateDistortion: 0.30, welfareRate: 0.09 },
+  { id: 'kocani',        name: 'Kočani',        name_mk: 'Кочани',        name_sq: 'Koçan',         workingAgePop: 20500, baseShadowEcon: 0.31, baseCompliance: 0.48, corporateDistortion: 0.22, welfareRate: 0.13 },
+  { id: 'kicevo',        name: 'Kičevo',        name_mk: 'Кичево',        name_sq: 'Kërçovë',       workingAgePop: 26500, baseShadowEcon: 0.33, baseCompliance: 0.42, corporateDistortion: 0.25, welfareRate: 0.16 },
+  { id: 'radovis',       name: 'Radoviš',       name_mk: 'Радовиш',       name_sq: 'Radovish',      workingAgePop: 16162, baseShadowEcon: 0.34, baseCompliance: 0.45, corporateDistortion: 0.18, welfareRate: 0.15 },
+  { id: 'gevgelija',     name: 'Gevgelija',     name_mk: 'Гевгелија',     name_sq: 'Gjevgjeli',     workingAgePop: 14200, baseShadowEcon: 0.22, baseCompliance: 0.65, corporateDistortion: 0.40, welfareRate: 0.08 },
+  { id: 'debar',         name: 'Debar',         name_mk: 'Дебар',         name_sq: 'Dibër',         workingAgePop: 10326, baseShadowEcon: 0.36, baseCompliance: 0.32, corporateDistortion: 0.12, welfareRate: 0.22 },
   // ── Skopje municipalities ──
-  { id: 'centar',     name: 'Centar',     workingAgePop: 29408, baseShadowEcon: 0.10, baseCompliance: 0.90, corporateDistortion: 0.95, welfareRate: 0.02 },
+  { id: 'centar',        name: 'Centar',        name_mk: 'Центар',        name_sq: 'Qendër',        workingAgePop: 29408, baseShadowEcon: 0.10, baseCompliance: 0.90, corporateDistortion: 0.95, welfareRate: 0.02 },
   // pop=43893 × 67% = 29408; business/administrative center of Skopje
-  { id: 'gazi-baba',  name: 'Gazi Baba',  workingAgePop: 46650, baseShadowEcon: 0.16, baseCompliance: 0.80, corporateDistortion: 0.82, welfareRate: 0.04 },
+  { id: 'gazi-baba',     name: 'Gazi Baba',     name_mk: 'Гази Баба',     name_sq: 'Gazi Babë',     workingAgePop: 46650, baseShadowEcon: 0.16, baseCompliance: 0.80, corporateDistortion: 0.82, welfareRate: 0.04 },
   // pop=69626 × 67% = 46650; industrial zone east of Skopje
-  { id: 'kisela-voda',name: 'Kisela Voda',workingAgePop: 41517, baseShadowEcon: 0.15, baseCompliance: 0.82, corporateDistortion: 0.88, welfareRate: 0.04 },
+  { id: 'kisela-voda',   name: 'Kisela Voda',   name_mk: 'Кисела Вода',   name_sq: 'Kiselë Vodë',   workingAgePop: 41517, baseShadowEcon: 0.15, baseCompliance: 0.82, corporateDistortion: 0.88, welfareRate: 0.04 },
   // pop=61965 × 67% = 41517; residential suburb south of Skopje
-  { id: 'butel',      name: 'Butel',      workingAgePop: 25439, baseShadowEcon: 0.18, baseCompliance: 0.78, corporateDistortion: 0.75, welfareRate: 0.05 },
+  { id: 'butel',         name: 'Butel',         name_mk: 'Бутел',         name_sq: 'Butel',         workingAgePop: 25439, baseShadowEcon: 0.18, baseCompliance: 0.78, corporateDistortion: 0.75, welfareRate: 0.05 },
   // pop=37968 × 67% = 25439; northern Skopje suburb
-  { id: 'cair',       name: 'Čair',       workingAgePop: 41933, baseShadowEcon: 0.22, baseCompliance: 0.65, corporateDistortion: 0.45, welfareRate: 0.10 },
+  { id: 'cair',          name: 'Čair',          name_mk: 'Чаир',          name_sq: 'Çair',          workingAgePop: 41933, baseShadowEcon: 0.22, baseCompliance: 0.65, corporateDistortion: 0.45, welfareRate: 0.10 },
   // pop=62586 × 67% = 41933; old bazaar area, mixed residential
-  { id: 'gjorce-petrov', name: 'Gjorče Petrov', workingAgePop: 30045, baseShadowEcon: 0.16, baseCompliance: 0.80, corporateDistortion: 0.80, welfareRate: 0.04 },
+  { id: 'gjorce-petrov', name: 'Gjorče Petrov', name_mk: 'Ѓорче Петров',  name_sq: 'Gjorçe Petrov', workingAgePop: 30045, baseShadowEcon: 0.16, baseCompliance: 0.80, corporateDistortion: 0.80, welfareRate: 0.04 },
   // pop=44844 × 67% = 30045; western Skopje suburb
-  { id: 'saraj',      name: 'Saraj',      workingAgePop: 25727, baseShadowEcon: 0.28, baseCompliance: 0.55, corporateDistortion: 0.35, welfareRate: 0.12 },
+  { id: 'saraj',         name: 'Saraj',         name_mk: 'Сарај',         name_sq: 'Saraj',         workingAgePop: 25727, baseShadowEcon: 0.28, baseCompliance: 0.55, corporateDistortion: 0.35, welfareRate: 0.12 },
   // pop=38399 × 67% = 25727; western rural Skopje
-  { id: 'suto-orizari', name: 'Šuto Orizari', workingAgePop: 17236, baseShadowEcon: 0.32, baseCompliance: 0.42, corporateDistortion: 0.20, welfareRate: 0.18 },
+  { id: 'suto-orizari',  name: 'Šuto Orizari',  name_mk: 'Шуто Оризари',  name_sq: 'Shuto Orizar',  workingAgePop: 17236, baseShadowEcon: 0.32, baseCompliance: 0.42, corporateDistortion: 0.20, welfareRate: 0.18 },
   // pop=25726 × 67% = 17236; northern Roma-majority suburb
 ];
 
@@ -161,3 +161,10 @@ export const FISCAL_LOSS_PER_UNEMPLOYED = {
   healthCoverage: 552,        // USD/year (health insurance 7.5% of gross salary)
   totalAnnual: 5810,          // USD/year per unemployed person
 };
+
+// ── Locale-aware municipality name ──
+export function getMuniName(muni, locale) {
+  if (locale === 'mk' && muni.name_mk) return muni.name_mk;
+  if (locale === 'sq' && muni.name_sq) return muni.name_sq;
+  return muni.name;
+}

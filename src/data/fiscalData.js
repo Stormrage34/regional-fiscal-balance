@@ -20,9 +20,16 @@ export const EUR_USD = 1.15;
 export const formatCurrency = (value, isPerCapita = false) => {
   if (value === undefined || value === null) return '—';
   const absValue = Math.abs(value);
-  const formatted = new Intl.NumberFormat('en-US', { minimumFractionDigits: 0, maximumFractionDigits: 0 }).format(absValue);
   const sign = value < 0 ? '-' : '';
-  if (isPerCapita) return `${sign}€${formatted}`;
+  if (isPerCapita) {
+    const formatted = new Intl.NumberFormat('en-US', { minimumFractionDigits: 0, maximumFractionDigits: 0 }).format(absValue);
+    return `${sign}€${formatted}`;
+  }
+  // Values in millions: show decimals when < 1 to avoid €0M
+  const formatted = new Intl.NumberFormat('en-US', {
+    minimumFractionDigits: 0,
+    maximumFractionDigits: absValue < 1 ? 2 : 0
+  }).format(absValue);
   return `${sign}€${formatted}M`;
 };
 

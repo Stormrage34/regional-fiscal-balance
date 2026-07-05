@@ -10,7 +10,7 @@ export default function PieMatrix({ data, onMuniClick }) {
       const leakage = muni.uncollectedLeakage;
       const welfare = muni.welfareBurden;
       const overhead = Math.max(0, muni.complianceGapCost + CONSTANTS.fixedOverhead - muni.corporateRetraction);
-      const t = leakage + welfare + overhead || 1;
+      const totalDrain = leakage + welfare + overhead || 1;
       const segs = [
         { value: leakage, label: t('chart_legend_leakage'), color: '#F59E0B' },
         { value: welfare, label: t('chart_legend_welfare'), color: '#F43F5E' },
@@ -32,7 +32,7 @@ export default function PieMatrix({ data, onMuniClick }) {
         startAngle = endAngle;
         return { ...seg, d, percentage };
       });
-      return { ...muni, t, paths };
+      return { ...muni, totalDrain: totalDrain, paths };
     });
   }, [data]);
 
@@ -49,7 +49,7 @@ export default function PieMatrix({ data, onMuniClick }) {
               onClick={() => onMuniClick?.(muni.id)}
               className={`flex flex-col items-center p-2 rounded-lg cursor-pointer hover:bg-white/[0.08] transition-all duration-200 group odd:bg-white/[0.05] bg-gradient-to-b from-transparent to-black/[0.02]`}
             >
-              <svg viewBox="0 0 100 100" width="112" height="112" role="img" aria-label={`${getMuniName(muni, locale)}: €${muni.t} ${t('modal_drain')} ${t('suffix_capita')}`}>
+              <svg viewBox="0 0 100 100" width="112" height="112" role="img" aria-label={`${getMuniName(muni, locale)}: €${muni.totalDrain} ${t('modal_drain')} ${t('suffix_capita')}`}>
                 {(() => {
                   const hid = `pm-hole-${muni.id}`;
                   return (
@@ -80,7 +80,7 @@ export default function PieMatrix({ data, onMuniClick }) {
                       </defs>
                       <circle cx="50" cy="50" r="22" fill="rgba(2,6,23,0.9)" />
                       <text x="50" y="57" textAnchor="middle" fill="#e2e8f0" fontSize="11" fontWeight="bold" fontFamily="ui-monospace,monospace" filter={`url(#pm-glow-${muni.id})`}>
-                        {`€${muni.t.toLocaleString()}`}
+                        {`€${muni.totalDrain.toLocaleString()}`}
                       </text>
                     </>
                   );

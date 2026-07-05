@@ -38,8 +38,8 @@ export default function MunicipalTable({
   const { t, locale } = useLocale();
   return (
     <section
-      className="rounded-xl relative overflow-hidden mb-10 transition-all duration-300"
-      style={{ backgroundColor: 'rgba(11,17,32,0.4)', borderColor: '#1F3050', borderWidth: 1 }}
+      className="rounded-xl relative mb-10 transition-all duration-300"
+      style={{ backgroundColor: 'rgba(11,17,32,0.4)', borderColor: '#1F3050', borderWidth: 1, overflow: 'clip' }}
     >
       <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-slate-600/25 to-transparent" />
 

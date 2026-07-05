@@ -1,4 +1,4 @@
-import { UNEMPLOYMENT_DATA, FISCAL_LOSS_PER_UNEMPLOYED, getMuniName } from '../../data/fiscalData.js';
+import { UNEMPLOYMENT_DATA, FISCAL_LOSS_PER_UNEMPLOYED, NET_FISCAL, MKD_PER_EUR, getMuniName } from '../../data/fiscalData.js';
 import { useLocale } from '../../context/LocaleContext.jsx';
 
 function SortIcon({ columnKey, sortKey, sortAsc }) {
@@ -58,7 +58,7 @@ export default function MunicipalTable({
             <tr style={{ borderBottom: '1px solid #1e293b', backgroundColor: 'rgba(15,23,42,0.6)' }}>
               <th
                 className="px-4 py-3 text-left text-[10px] uppercase tracking-wider cursor-pointer select-none hover:text-slate-200 transition-colors duration-150 sticky top-0"
-                style={{ color: '#64748b', zIndex: 2, left: 0, backgroundColor: 'rgba(15,23,42,0.6)' }}
+                style={{ color: '#64748b', zIndex: 2, left: 0, backgroundColor: 'rgb(15,23,42)' }}
                 onClick={() => handleSort('name')}
                 onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); handleSort('name'); } }}
                 tabIndex={0}
@@ -127,6 +127,20 @@ export default function MunicipalTable({
                 </span>
               </th>
               <th
+                className="px-4 py-3 text-right text-[10px] uppercase tracking-wider cursor-pointer select-none hover:text-slate-200 transition-colors duration-150 sticky top-0"
+                style={{ color: '#64748b', zIndex: 1 }}
+                onClick={() => handleSort('arrears')}
+                onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); handleSort('arrears'); } }}
+                tabIndex={0}
+                role="columnheader"
+                aria-sort={getSortDir('arrears', sortKey, sortAsc)}
+              >
+                <span className="inline-flex items-center gap-1 justify-end">
+                  <span className="text-[#64748b]">▸</span> {t('hdr_arrears')}
+                  <SortIcon columnKey="arrears" sortKey={sortKey} sortAsc={sortAsc} />
+                </span>
+              </th>
+              <th
                 className="px-4 py-3 text-left text-[10px] uppercase tracking-wider cursor-pointer select-none hover:text-slate-200 transition-colors duration-150 sticky top-0"
                 style={{ color: '#64748b', zIndex: 1 }}
                 onClick={() => handleSort('unemployment')}
@@ -142,13 +156,13 @@ export default function MunicipalTable({
               </th>
               <th
                 className="px-4 py-3 text-left text-[10px] uppercase tracking-wider sticky top-0"
-                style={{ color: '#64748b', zIndex: 1, backgroundColor: 'rgba(15,23,42,0.6)' }}
+                style={{ color: '#64748b', zIndex: 1, backgroundColor: 'rgb(15,23,42)' }}
               >
                 {t('hdr_structural')}
               </th>
               <th
                 className="px-4 py-3 text-right text-[10px] uppercase tracking-wider sticky top-0"
-                style={{ color: '#64748b', zIndex: 1, backgroundColor: 'rgba(15,23,42,0.6)' }}
+                style={{ color: '#64748b', zIndex: 1, backgroundColor: 'rgb(15,23,42)' }}
               >
                 {t('hdr_correction')}
               </th>
@@ -181,7 +195,7 @@ export default function MunicipalTable({
                     className="px-4 py-2.5 sticky left-0"
                     style={{
                       zIndex: 1,
-                      backgroundColor: isFocused ? 'rgba(30,41,59,0.98)' : (i % 2 === 0 ? 'rgba(15,23,42,0.97)' : 'rgba(11,17,32,0.97)'),
+                      backgroundColor: isFocused ? 'rgb(30,41,59)' : (i % 2 === 0 ? 'rgb(15,23,42)' : 'rgb(11,17,32)'),
                     }}
                   >
                     <div className="flex items-center gap-2">
@@ -215,6 +229,15 @@ export default function MunicipalTable({
                   {/* Annual Drain */}
                   <td className="px-4 py-2.5 text-right font-semibold tabular-nums" style={{ color: '#F43F5E' }}>
                     {fmt(muni.totalYearlyDrain / 1_000_000, false)}
+                  </td>
+
+                  {/* Arrears */}
+                  <td className="px-4 py-2.5 text-right tabular-nums" style={{ color: '#64748b' }}>
+                    {(() => {
+                      const nf = NET_FISCAL[muni.id];
+                      if (!nf || !nf.arrears) return '—';
+                      return fmt(nf.arrears / MKD_PER_EUR / 1_000_000, false);
+                    })()}
                   </td>
 
                   {/* Unemployed */}

@@ -107,6 +107,11 @@ export default function NakedBudget() {
         const ub = UNEMPLOYMENT_DATA[b.id]?.registered || 0;
         cmp = ua - ub;
       }
+      else if (sortKey === 'arrears') {
+        const aa = NET_FISCAL[a.id]?.arrears || 0;
+        const ab = NET_FISCAL[b.id]?.arrears || 0;
+        cmp = aa - ab;
+      }
       return sortAsc ? cmp : -cmp;
     });
     return copy;

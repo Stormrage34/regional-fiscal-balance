@@ -506,6 +506,17 @@ export default function NakedBudget() {
               {t('buy_coffee') || 'Buy me a coffee'}
             </a>
           </p>
+          <p className="mt-4 font-mono text-[11px] text-slate-600 tracking-wide">
+            Built with{' '}
+            <a
+              href="https://opencode.ai/go?ref=PZBFA3PEMJ"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-slate-500 hover:text-amber-400 transition-colors duration-200"
+            >
+              OpenCode Go
+            </a>
+          </p>
         </footer>
       </main>
 

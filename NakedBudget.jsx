@@ -489,6 +489,16 @@ export default function NakedBudget() {
           <p className="font-mono text-xs text-slate-500 tracking-wide">
             {t('footer')}
           </p>
+          <p className="mt-4">
+            <a
+              href="https://buymeacoffee.com/stefangel9b"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-block font-mono text-xs text-slate-600 hover:text-amber-400 transition-colors duration-200"
+            >
+              ☕ {t('buy_coffee') || 'Buy me a coffee'}
+            </a>
+          </p>
         </footer>
       </main>
 

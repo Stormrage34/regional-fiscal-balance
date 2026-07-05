@@ -88,38 +88,39 @@ export const MUNICIPALITIES = [
 // Source: Ministry of Finance — Open Finance Portal Treasury archives
 // revenueInflow = total realized expenditure from basic budget (own-source + VAT grants balancing)
 // budgetOutflow = total realized expenditure from central government grants
-// Arrears: Ministry of Finance Q1 2026 quarterly report (доспеани а неплатени обврски), published May 2026
-// Confirmed values for top debtors; estimates for others based on revenue ratio (~2%) per WB methodology
+// Arrears: Ministry of Finance, ESPEO Q1 2026 (март 2026)
+// Source: portal.mdt.gov.mk — Извештај за пријавени обврски по субјекти, март 2026
+// Previously: estimates based on revenue ratio (~2%) per WB methodology
 // utilityDebt: not available at municipal level in public reports
 export const NET_FISCAL = {
-  aerodrom:  { revenueInflow: 3619850750, budgetOutflow: 2694405380, arrears: 129974100, utilityDebt: 0 },
-  aracinovo: { revenueInflow: 491464104,  budgetOutflow: 613796452, arrears: 24664000, utilityDebt: 0 },
-  bitola:    { revenueInflow: 6295381280, budgetOutflow: 4997170208, arrears: 147203600, utilityDebt: 0 },
-  veles:     { revenueInflow: 2627722974, budgetOutflow: 2711150416, arrears: 61660000, utilityDebt: 0 },
-  gevgelija: { revenueInflow: 2716642872, budgetOutflow: 1398558022, arrears: 61660000, utilityDebt: 0 },
-  gostivar:  { revenueInflow: 3147388072, budgetOutflow: 4284910072, arrears: 882447900, utilityDebt: 0 },
-  debar:     { revenueInflow: 1071562614, budgetOutflow: 1220598080, arrears: 61660000, utilityDebt: 0 },
-  kavadarci: { revenueInflow: 3552455784, budgetOutflow: 2851774640, arrears: 154669500, utilityDebt: 0 },
-  karpos:    { revenueInflow: 4386023570, budgetOutflow: 2670568812, arrears: 277934500, utilityDebt: 0 },
-  kicevo:    { revenueInflow: 2170716672, budgetOutflow: 2901465068, arrears: 61660000, utilityDebt: 0 },
-  kocani:    { revenueInflow: 1605844008, budgetOutflow: 1917384436, arrears: 92446800, utilityDebt: 0 },
-  kumanovo:  { revenueInflow: 6272120432, budgetOutflow: 6017243964, arrears: 184591500, utilityDebt: 0 },
-  lipkovo:   { revenueInflow: 1027167936, budgetOutflow: 1497336002, arrears: 37000000, utilityDebt: 0 },
-  ohrid:     { revenueInflow: 6221997238, budgetOutflow: 2790189614, arrears: 425762800, utilityDebt: 0 },
-  prilep:    { revenueInflow: 3957487308, budgetOutflow: 4554312312, arrears: 61660000, utilityDebt: 0 },
-  radovis:   { revenueInflow: 1538785870, budgetOutflow: 1515211340, arrears: 37000000, utilityDebt: 0 },
-  struga:    { revenueInflow: 2976496884, budgetOutflow: 3480035652, arrears: 91584900, utilityDebt: 0 },
-  strumica:  { revenueInflow: 3427632024, budgetOutflow: 3148534600, arrears: 49328000, utilityDebt: 0 },
-  tetovo:    { revenueInflow: 4344329886, budgetOutflow: 6076385642, arrears: 733733940, utilityDebt: 0 },
-  stip:      { revenueInflow: 6475157418, budgetOutflow: 2750261092, arrears: 49328000, utilityDebt: 0 },
-  centar:    { revenueInflow: 4823769540, budgetOutflow: 2201989136, arrears: 111520700, utilityDebt: 0 },
-  'gazi-baba':  { revenueInflow: 4967650144, budgetOutflow: 2881391016, arrears: 24664000, utilityDebt: 0 },
-  'kisela-voda': { revenueInflow: 3384588830, budgetOutflow: 2344078852, arrears: 110903800, utilityDebt: 0 },
-  butel:     { revenueInflow: 1782363422, budgetOutflow: 1886666012, arrears: 24664000, utilityDebt: 0 },
-  cair:      { revenueInflow: 2190145344, budgetOutflow: 3026554988, arrears: 69391600, utilityDebt: 0 },
-  'gjorce-petrov': { revenueInflow: 2526570174, budgetOutflow: 1418076944, arrears: 24664000, utilityDebt: 0 },
-  saraj:     { revenueInflow: 1169331348, budgetOutflow: 1747901616, arrears: 90722900, utilityDebt: 0 },
-  'suto-orizari': { revenueInflow: 618380118,  budgetOutflow: 988598896, arrears: 18498000, utilityDebt: 0 },
+  aerodrom:  { revenueInflow: 3619850750, budgetOutflow: 2694405380, arrears: 122991256, utilityDebt: 0 },
+  aracinovo: { revenueInflow: 491464104,  budgetOutflow: 613796452, arrears: 85317036, utilityDebt: 0 },
+  bitola:    { revenueInflow: 6295381280, budgetOutflow: 4997170208, arrears: 137377072, utilityDebt: 0 },
+  veles:     { revenueInflow: 2627722974, budgetOutflow: 2711150416, arrears: 77188443, utilityDebt: 0 },
+  gevgelija: { revenueInflow: 2716642872, budgetOutflow: 1398558022, arrears: 44442042, utilityDebt: 0 },
+  gostivar:  { revenueInflow: 3147388072, budgetOutflow: 4284910072, arrears: 879906898, utilityDebt: 0 },
+  debar:     { revenueInflow: 1071562614, budgetOutflow: 1220598080, arrears: 38236977, utilityDebt: 0 },
+  kavadarci: { revenueInflow: 3552455784, budgetOutflow: 2851774640, arrears: 327577104, utilityDebt: 0 },
+  karpos:    { revenueInflow: 4386023570, budgetOutflow: 2670568812, arrears: 233971583, utilityDebt: 0 },
+  kicevo:    { revenueInflow: 2170716672, budgetOutflow: 2901465068, arrears: 60334955, utilityDebt: 0 },
+  kocani:    { revenueInflow: 1605844008, budgetOutflow: 1917384436, arrears: 68295276, utilityDebt: 0 },
+  kumanovo:  { revenueInflow: 6272120432, budgetOutflow: 6017243964, arrears: 16223788, utilityDebt: 0 },
+  lipkovo:   { revenueInflow: 1027167936, budgetOutflow: 1497336002, arrears: 61886470, utilityDebt: 0 },
+  ohrid:     { revenueInflow: 6221997238, budgetOutflow: 2790189614, arrears: 79067718, utilityDebt: 0 },
+  prilep:    { revenueInflow: 3957487308, budgetOutflow: 4554312312, arrears: 28487349, utilityDebt: 0 },
+  radovis:   { revenueInflow: 1538785870, budgetOutflow: 1515211340, arrears: 645746, utilityDebt: 0 },
+  struga:    { revenueInflow: 2976496884, budgetOutflow: 3480035652, arrears: 111816877, utilityDebt: 0 },
+  strumica:  { revenueInflow: 3427632024, budgetOutflow: 3148534600, arrears: 102942544, utilityDebt: 0 },
+  tetovo:    { revenueInflow: 4344329886, budgetOutflow: 6076385642, arrears: 737602226, utilityDebt: 0 },
+  stip:      { revenueInflow: 6475157418, budgetOutflow: 2750261092, arrears: 14516785, utilityDebt: 0 },
+  centar:    { revenueInflow: 4823769540, budgetOutflow: 2201989136, arrears: 1952213, utilityDebt: 0 },
+  'gazi-baba':  { revenueInflow: 4967650144, budgetOutflow: 2881391016, arrears: 14416667, utilityDebt: 0 },
+  'kisela-voda': { revenueInflow: 3384588830, budgetOutflow: 2344078852, arrears: 209773557, utilityDebt: 0 },
+  butel:     { revenueInflow: 1782363422, budgetOutflow: 1886666012, arrears: 55127832, utilityDebt: 0 },
+  cair:      { revenueInflow: 2190145344, budgetOutflow: 3026554988, arrears: 130537650, utilityDebt: 0 },
+  'gjorce-petrov': { revenueInflow: 2526570174, budgetOutflow: 1418076944, arrears: 90158638, utilityDebt: 0 },
+  saraj:     { revenueInflow: 1169331348, budgetOutflow: 1747901616, arrears: 169169134, utilityDebt: 0 },
+  'suto-orizari': { revenueInflow: 618380118,  budgetOutflow: 988598896, arrears: 7659092, utilityDebt: 0 },
 };
 
 // ── EMPLOYMENT & UNEMPLOYMENT DATA (AVRM Nov 2025 / SSO Q4 2024) ──

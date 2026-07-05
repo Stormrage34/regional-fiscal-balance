@@ -45,7 +45,7 @@ export default function DivergingBarChart({ results, maxAbsNetPCEUR, fmt }) {
                 />
               </div>
               <span className="text-right font-semibold whitespace-nowrap" style={{ color: isGainer ? '#10B981' : '#F43F5E' }}>
-                {isGainer ? '+' : '-'}€{Math.round(Math.abs(netPC)).toLocaleString()} {t('suffix_capita')} <span className="sr-only">{isGainer ? t('surplus') : t('deficit')}</span>
+                {isGainer ? '+' : '-'}€{Math.round(Math.abs(netPC)).toLocaleString()} {t('suffix_capita')}{' '}<span className="sr-only" style={{ position: 'absolute', width: '1px', height: '1px', padding: 0, margin: '-1px', overflow: 'hidden', clip: 'rect(0,0,0,0)', whiteSpace: 'nowrap', border: 0 }}>{isGainer ? t('surplus') : t('deficit')}</span>
               </span>
             </div>
           );

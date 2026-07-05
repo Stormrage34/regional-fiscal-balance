@@ -80,7 +80,7 @@ export default function KpiRibbon({
             {loserCount}
           </span>
         </div>
-        <span className="text-[10px] font-mono mt-0.5 block" style={{ color: '#94a3b8' }}>{t('surplus')} <span className="sr-only">{t('surplus')}</span> / {t('deficit')} <span className="sr-only">{t('deficit')}</span></span>
+        <span className="text-[10px] font-mono mt-0.5 block" style={{ color: '#94a3b8' }}>{t('surplus')} / {t('deficit')}</span>
       </div>
 
       {/* Employment Fiscal Loss */}

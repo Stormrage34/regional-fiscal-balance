@@ -1,8 +1,10 @@
+import { useState } from 'react';
 import { useLocale } from '../../context/LocaleContext.jsx';
 import { getMuniName } from '../../data/fiscalData.js';
 
-export default function StackedBarChart({ data, onMuniClick }) {
+export default function StackedBarChart({ data, onMuniClick, focusedMuniId }) {
   const { t, locale } = useLocale();
+  const [hoveredId, setHoveredId] = useState(null);
   if (!data || data.length === 0) return null;
 
   const maxVal = Math.max(...data.map((d) => d.totalPerCapitaDrain), 1);
@@ -19,6 +21,9 @@ export default function StackedBarChart({ data, onMuniClick }) {
   const amberGrad = 'url(#amberBarGrad)';
   const cyanGrad = 'url(#cyanBarGrad)';
   const indigoGrad = 'url(#indigoBarGrad)';
+
+  // Glow filter for focused bar
+  const glowFilter = 'url(#barGlow)';
 
   return (
     <svg
@@ -41,6 +46,9 @@ export default function StackedBarChart({ data, onMuniClick }) {
           <stop offset="0%" stopColor="#3B82F6" />
           <stop offset="100%" stopColor="#8b5cf6" />
         </linearGradient>
+        <filter id="barGlow" x="-2px" y="-4px" width="calc(100% + 4px)" height="calc(100% + 8px)">
+          <feDropShadow dx="0" dy="0" stdDeviation="3" floodColor="rgba(255,255,255,0.25)" floodOpacity="1" />
+        </filter>
       </defs>
 
       {/* Header row */}
@@ -68,6 +76,13 @@ export default function StackedBarChart({ data, onMuniClick }) {
         const seg3W = barFullW * seg3;
 
         const x0 = labelW;
+        const isFocused = focusedMuniId === muni.id;
+        const isDimmed = focusedMuniId !== null && !isFocused;
+        // Opacity: focused=1, hovered=1, dimmed=0.3, otherwise full opacity
+        const barOpacity = isFocused ? 1 : hoveredId === muni.id ? 0.95 : isDimmed ? 0.3 : 1;
+        // Focused bar gets white border glow via filter + stroke
+        const barStroke = isFocused ? '1px solid rgba(255,255,255,0.5)' : 'none';
+        const barFilter = isFocused ? glowFilter : undefined;
 
         return (
           <g key={muni.id}>
@@ -78,20 +93,25 @@ export default function StackedBarChart({ data, onMuniClick }) {
               fill="#cbd5e1"
               fontSize="11"
               fontFamily="ui-monospace,monospace"
+              opacity={isDimmed ? 0.3 : 1}
+              style={{ transition: 'opacity 300ms ease' }}
             >
               {getMuniName(muni, locale)}
             </text>
 
             {barFullW < 6 && (
-              <rect x={x0} y={y} width={Math.max(barFullW, 2)} height={barHeight} fill="#334155" rx="2" />
+              <rect x={x0} y={y} width={Math.max(barFullW, 2)} height={barHeight} fill="#334155" rx="2"
+                opacity={barOpacity} style={{ transition: 'opacity 300ms ease' }} />
             )}
 
             {seg1W > 1 && (
-              <rect x={x0} y={y} width={seg1W} height={barHeight} fill={amberGrad} rx={seg1W < 6 ? 0 : 2} />
+              <rect x={x0} y={y} width={seg1W} height={barHeight} fill={amberGrad} rx={seg1W < 6 ? 0 : 2}
+                stroke={barStroke} filter={barFilter} opacity={barOpacity} style={{ transition: 'opacity 300ms ease' }} />
             )}
 
             {seg2W > 1 && (
-              <rect x={x0 + seg1W} y={y} width={seg2W} height={barHeight} fill={cyanGrad} rx={0} />
+              <rect x={x0 + seg1W} y={y} width={seg2W} height={barHeight} fill={cyanGrad} rx={0}
+                stroke={barStroke} filter={barFilter} opacity={barOpacity} style={{ transition: 'opacity 300ms ease' }} />
             )}
 
             {seg3W > 1 && (
@@ -102,6 +122,7 @@ export default function StackedBarChart({ data, onMuniClick }) {
                 height={barHeight}
                 fill={indigoGrad}
                 rx={seg3W < 6 ? 0 : 2}
+                stroke={barStroke} filter={barFilter} opacity={barOpacity} style={{ transition: 'opacity 300ms ease' }}
               />
             )}
 
@@ -113,6 +134,7 @@ export default function StackedBarChart({ data, onMuniClick }) {
                 height={barHeight - 4}
                 fill="#10b981"
                 rx="1"
+                opacity={barOpacity} style={{ transition: 'opacity 300ms ease' }}
               />
             )}
 
@@ -124,6 +146,8 @@ export default function StackedBarChart({ data, onMuniClick }) {
               fill="transparent"
               className="cursor-pointer"
               onClick={() => onMuniClick?.(muni.id)}
+              onMouseEnter={() => setHoveredId(muni.id)}
+              onMouseLeave={() => setHoveredId(null)}
             />
 
             <text
@@ -133,6 +157,8 @@ export default function StackedBarChart({ data, onMuniClick }) {
               fontSize="12"
               fontFamily="ui-monospace,monospace"
               fontWeight="600"
+              opacity={isDimmed ? 0.3 : 1}
+              style={{ transition: 'opacity 300ms ease' }}
             >
               {`€${total.toLocaleString()}`}
             </text>

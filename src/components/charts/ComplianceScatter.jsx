@@ -92,11 +92,11 @@ export default function ComplianceScatter({ data, onMuniClick, focusedId }) {
       <div className="flex items-center gap-4 mt-2 justify-center">
         <div className="flex items-center gap-1.5">
           <span className="w-2.5 h-2.5 rounded-full bg-[#10b981]" />
-          <span className="text-[10px] font-mono text-slate-400">Net Gainer <span className="sr-only">(surplus)</span></span>
+          <span className="text-[10px] font-mono text-slate-400">Net Gainer</span>
         </div>
         <div className="flex items-center gap-1.5">
           <span className="w-2.5 h-2.5 rounded-full bg-[#f59e0b]" />
-          <span className="text-[10px] font-mono text-slate-400">Net Loser <span className="sr-only">(deficit)</span></span>
+          <span className="text-[10px] font-mono text-slate-400">Net Loser</span>
         </div>
         <span className="text-[10px] font-mono text-slate-500">· Dot size = working-age population</span>
       </div>

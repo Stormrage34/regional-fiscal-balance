@@ -319,12 +319,12 @@ export default function NakedBudget() {
             <div className="rounded-lg px-4 py-3 border hover:shadow-[0_0_12px_rgba(99,102,241,0.04)] transition-shadow duration-300" style={{ backgroundColor: '#243047', borderColor: '#1F3050' }}>
               <span className="text-xs font-mono" style={{ color: '#64748b' }}>{t('net_gainers')}</span>
               <span className="block text-2xl font-bold font-mono mt-0.5" style={{ color: '#10B981' }}>{netFiscalAggs.gainers.length}</span>
-              <span className="text-xs font-mono" style={{ color: '#94a3b8' }}>{t('net_gainers').toLowerCase()} {t('surplus')} <span className="sr-only">{t('surplus')}</span></span>
+              <span className="text-xs font-mono" style={{ color: '#94a3b8' }}>{t('net_gainers').toLowerCase()} {t('surplus')}</span>
             </div>
             <div className="rounded-lg px-4 py-3 border hover:shadow-[0_0_12px_rgba(99,102,241,0.04)] transition-shadow duration-300" style={{ backgroundColor: '#243047', borderColor: '#1F3050' }}>
               <span className="text-xs font-mono" style={{ color: '#64748b' }}>{t('net_losers')}</span>
               <span className="block text-2xl font-bold font-mono mt-0.5" style={{ color: '#F59E0B' }}>{netFiscalAggs.losers.length}</span>
-              <span className="text-xs font-mono" style={{ color: '#94a3b8' }}>{t('net_losers').toLowerCase()} {t('deficit')} <span className="sr-only">{t('deficit')}</span></span>
+              <span className="text-xs font-mono" style={{ color: '#94a3b8' }}>{t('net_losers').toLowerCase()} {t('deficit')}</span>
             </div>
             <div className="rounded-lg px-4 py-3 border hover:shadow-[0_0_12px_rgba(99,102,241,0.04)] transition-shadow duration-300" style={{ backgroundColor: '#243047', borderColor: '#1F3050' }}>
               <span className="text-xs font-mono" style={{ color: '#64748b' }}>{t('net_deficit')}</span>
@@ -347,11 +347,11 @@ export default function NakedBudget() {
               <div className="flex items-center gap-3">
                 <div className="flex items-center gap-1.5">
                   <span className="w-2 h-2 rounded-sm" style={{ backgroundColor: '#10B981' }}/>
-                  <span className="text-[10px] font-mono" style={{ color: '#94a3b8' }}>{t('gainer_label')} <span className="sr-only">{t('surplus')}</span></span>
+                  <span className="text-[10px] font-mono" style={{ color: '#94a3b8' }}>{t('gainer_label')}</span>
                 </div>
                 <div className="flex items-center gap-1.5">
                   <span className="w-2 h-2 rounded-sm" style={{ backgroundColor: '#F43F5E' }}/>
-                  <span className="text-[10px] font-mono" style={{ color: '#94a3b8' }}>{t('loser_label')} <span className="sr-only">{t('deficit')}</span></span>
+                  <span className="text-[10px] font-mono" style={{ color: '#94a3b8' }}>{t('loser_label')}</span>
                 </div>
               </div>
             </div>
@@ -459,7 +459,7 @@ export default function NakedBudget() {
 
             {chartView === 'stacked' && (
               <div className="max-h-[600px] overflow-y-auto">
-                <StackedBarChart data={sortedResults} onMuniClick={handleMuniFocus} />
+                <StackedBarChart data={sortedResults} onMuniClick={handleMuniFocus} focusedMuniId={focusedMuniId} />
               </div>
             )}
             {chartView === 'pie' && (
@@ -573,7 +573,7 @@ export default function NakedBudget() {
                   <div className="mb-6">
                     <span className="text-xs font-mono uppercase tracking-wider" style={{ color: '#64748b' }}>Net Fiscal Balance</span>
                     <div className="text-2xl font-bold font-mono mt-1" style={{ color: isGainer ? '#10B981' : '#F59E0B' }}>
-                      {fmt(net / MKD_PER_EUR / 1_000_000)} <span className="sr-only">{isGainer ? '(surplus)' : '(deficit)'}</span>
+                      {fmt(net / MKD_PER_EUR / 1_000_000)}
                     </div>
                     <div className="text-[10px] font-mono" style={{ color: '#94a3b8' }}>
                       open.finance.gov.mk — Treasury 2025

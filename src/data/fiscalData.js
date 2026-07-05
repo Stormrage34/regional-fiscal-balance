@@ -13,6 +13,8 @@ export const CONSTANTS = {
 
 // MKD per EUR — NBM mid-rate, stable peg (~61.5)
 export const MKD_PER_EUR = 61.66;
+// EUR per USD — current spot rate
+export const EUR_USD = 1.15;
 
 // ── Currency Formatting Utility ──
 export const formatCurrency = (value, isPerCapita = false) => {

@@ -1,4 +1,4 @@
-import { MKD_PER_EUR } from '../../data/fiscalData.js';
+import { MKD_PER_EUR, EUR_USD } from '../../data/fiscalData.js';
 import { useLocale } from '../../context/LocaleContext.jsx';
 
 export default function KpiRibbon({
@@ -56,7 +56,7 @@ export default function KpiRibbon({
           {t('kpi_total_drain')}
         </span>
         <span className="block text-xl font-bold font-mono mt-1" style={{ color: '#F43F5E' }}>
-          {fmt(aggregates.totalYearlyDrain / MKD_PER_EUR / 1_000_000)}
+          {fmt(aggregates.totalYearlyDrain / 1_000_000)}
         </span>
         <span className="text-[10px] font-mono mt-0.5 block" style={{ color: '#94a3b8' }}>{t('annual_aggregate')}</span>
       </div>
@@ -94,9 +94,9 @@ export default function KpiRibbon({
           {t('kpi_emp_loss')}
         </span>
         <span className="block text-xl font-bold font-mono mt-1" style={{ color: '#F59E0B' }}>
-          {fmt(aggregates.totalUnemploymentFiscalLoss / MKD_PER_EUR / 1_000_000)}
+          {fmt(aggregates.totalUnemploymentFiscalLoss / EUR_USD / 1_000_000)}
         </span>
-        <span className="text-[10px] font-mono mt-0.5 block" style={{ color: '#94a3b8' }}>{aggregates.totalUnemployed.toLocaleString()} registered unemployed</span>
+        <span className="text-[10px] font-mono mt-0.5 block" style={{ color: '#94a3b8' }}>{aggregates.totalUnemployed.toLocaleString()} {t('hdr_unemployed').toLowerCase()}</span>
       </div>
     </section>
   );

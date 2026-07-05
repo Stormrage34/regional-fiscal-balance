@@ -74,58 +74,14 @@ export default function MunicipalTable({
         </span>
       </div>
 
-      <div className="w-full overflow-x-auto overflow-y-auto max-h-[520px] rounded-lg border border-slate-800/60">
+      <div className="w-full overflow-x-auto overflow-y-auto max-h-[520px]">
         <table className="w-full text-sm font-mono border-collapse table-auto">
           <thead>
-            {/* ═══ ROW 1: National Macro Averages ═══ */}
-            <tr className="border-b border-slate-800/40 bg-slate-900/40 select-none">
-              {/* Sticky empty cell above Municipality header */}
-              <th className="sticky top-0 left-0 z-20 bg-[#0f172a] p-0 m-0 border-b border-slate-800/40" />
-
-              {/* Balance macro */}
-              <th className="sticky top-0 z-10 px-4 pt-3 pb-1 text-center align-middle bg-[#0f172a] border-b border-slate-800/40">
-                <span className="text-xs font-bold text-[#F59E0B] font-mono tracking-tight block">
-                  {fmt(totals.avgBalance, true)}
-                </span>
-              </th>
-
-              {/* Leakage macro */}
-              <th className="sticky top-0 z-10 px-4 pt-3 pb-1 text-center align-middle bg-[#0f172a] border-b border-slate-800/40">
-                <span className="text-xs font-bold text-[#F59E0B] font-mono tracking-tight block">
-                  {fmt(totals.avgLeakage, true)}
-                </span>
-              </th>
-
-              {/* Welfare macro */}
-              <th className="sticky top-0 z-10 px-4 pt-3 pb-1 text-center align-middle bg-[#0f172a] border-b border-slate-800/40">
-                <span className="text-xs font-bold text-[#F43F5E] font-mono tracking-tight block">
-                  {fmt(totals.avgWelfare, true)}
-                </span>
-              </th>
-
-              {/* Annual drain macro */}
-              <th className="sticky top-0 z-10 px-4 pt-3 pb-1 text-center align-middle bg-[#0f172a] border-b border-slate-800/40">
-                <span className="text-xs font-bold text-[#F43F5E] font-mono tracking-tight block">
-                  {fmt(totals.totalDrainMillions, false)}
-                </span>
-              </th>
-
-              {/* Arrears macro */}
-              <th className="sticky top-0 z-10 px-4 pt-3 pb-1 text-center align-middle bg-[#0f172a] border-b border-slate-800/40">
-                <span className="text-xs font-bold text-slate-400 font-mono tracking-tight block">
-                  {fmt(totals.totalArrearsMillions, false)}
-                </span>
-              </th>
-
-              {/* Spans remaining columns (unemployed, structural, correction) */}
-              <th className="sticky top-0 z-10 bg-[#0f172a] border-b border-slate-800/40" colSpan={3} />
-            </tr>
-
-            {/* ═══ ROW 2: Column Labels + Sort Triggers ═══ */}
-            <tr className="border-b border-slate-800 bg-[#0f172a]">
-              {/* ОПШТИНА — sticky left */}
+            {/* ═══ Single Row Header with Macro Averages inline ═══ */}
+            <tr className="border-b border-slate-700/50 bg-[#0f172a]">
+              {/* Municipality header — sticky left */}
               <th
-                className="px-4 py-3 text-left align-middle min-w-[150px] whitespace-nowrap text-[10px] font-sans font-bold uppercase tracking-widest text-slate-400 cursor-pointer select-none hover:text-slate-200 transition-colors sticky top-[32px] left-0 z-20 bg-[#0f172a] border-b border-slate-800"
+                className="px-4 py-2.5 text-left align-middle min-w-[150px] whitespace-nowrap text-[10px] font-sans font-bold uppercase tracking-widest text-slate-400 cursor-pointer select-none hover:text-slate-200 transition-colors sticky top-0 left-0 z-30 bg-[#0f172a]"
                 onClick={() => handleSort('name')}
                 onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); handleSort('name'); } }}
                 tabIndex={0}
@@ -138,104 +94,104 @@ export default function MunicipalTable({
                 </span>
               </th>
 
-              {/* БАЛАНС ПО ЖИТЕЛ */}
+              {/* Balance column — shows avg + label */}
               <th
-                className="px-4 py-3 text-center align-middle min-w-[160px] whitespace-nowrap text-[10px] font-sans font-bold uppercase tracking-widest text-slate-400 cursor-pointer select-none hover:text-slate-200 transition-colors sticky top-[32px] z-10 bg-[#0f172a] border-b border-slate-800"
+                className="px-3 py-2 text-center align-middle min-w-[140px] whitespace-nowrap cursor-pointer select-none hover:text-slate-200 transition-colors sticky top-0 z-20 bg-[#0f172a]"
                 onClick={() => handleSort('drain')}
                 onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); handleSort('drain'); } }}
                 tabIndex={0}
                 role="columnheader"
                 aria-sort={getSortDir('drain', sortKey, sortAsc)}
               >
-                <span className="inline-flex items-center gap-1.5">
-                  <span className="text-[#F59E0B]">▸</span> {t('hdr_balance')}
-                  <SortIcon columnKey="drain" sortKey={sortKey} sortAsc={sortAsc} />
-                </span>
+                <div className="flex flex-col items-center gap-0.5">
+                  <span className="text-[10px] font-mono uppercase tracking-wider text-slate-500">Avg Balance</span>
+                  <span className="text-xs font-bold text-[#F59E0B] font-mono tabular-nums">{fmt(totals.avgBalance, true)}</span>
+                </div>
               </th>
 
-              {/* ДАНОЧНО ЗАТАЈУВАЊЕ */}
+              {/* Leakage column */}
               <th
-                className="px-4 py-3 text-center align-middle min-w-[160px] whitespace-nowrap text-[10px] font-sans font-bold uppercase tracking-widest text-slate-400 cursor-pointer select-none hover:text-slate-200 transition-colors sticky top-[32px] z-10 bg-[#0f172a] border-b border-slate-800"
+                className="px-3 py-2 text-center align-middle min-w-[140px] whitespace-nowrap cursor-pointer select-none hover:text-slate-200 transition-colors sticky top-0 z-20 bg-[#0f172a]"
                 onClick={() => handleSort('leakage')}
                 onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); handleSort('leakage'); } }}
                 tabIndex={0}
                 role="columnheader"
                 aria-sort={getSortDir('leakage', sortKey, sortAsc)}
               >
-                <span className="inline-flex items-center gap-1.5">
-                  <span className="text-[#F59E0B]">▸</span> {t('hdr_leakage')}
-                  <SortIcon columnKey="leakage" sortKey={sortKey} sortAsc={sortAsc} />
-                </span>
+                <div className="flex flex-col items-center gap-0.5">
+                  <span className="text-[10px] font-mono uppercase tracking-wider text-slate-500">Avg Leakage</span>
+                  <span className="text-xs font-bold text-[#F59E0B] font-mono tabular-nums">{fmt(totals.avgLeakage, true)}</span>
+                </div>
               </th>
 
-              {/* СОЦИЈАЛНА ЗАШТИТА */}
+              {/* Welfare column */}
               <th
-                className="px-4 py-3 text-center align-middle min-w-[160px] whitespace-nowrap text-[10px] font-sans font-bold uppercase tracking-widest text-slate-400 cursor-pointer select-none hover:text-slate-200 transition-colors sticky top-[32px] z-10 bg-[#0f172a] border-b border-slate-800"
+                className="px-3 py-2 text-center align-middle min-w-[140px] whitespace-nowrap cursor-pointer select-none hover:text-slate-200 transition-colors sticky top-0 z-20 bg-[#0f172a]"
                 onClick={() => handleSort('welfare')}
                 onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); handleSort('welfare'); } }}
                 tabIndex={0}
                 role="columnheader"
                 aria-sort={getSortDir('welfare', sortKey, sortAsc)}
               >
-                <span className="inline-flex items-center gap-1.5">
-                  <span className="text-[#F43F5E]">▸</span> {t('hdr_welfare')}
-                  <SortIcon columnKey="welfare" sortKey={sortKey} sortAsc={sortAsc} />
-                </span>
+                <div className="flex flex-col items-center gap-0.5">
+                  <span className="text-[10px] font-mono uppercase tracking-wider text-slate-500">Avg Welfare</span>
+                  <span className="text-xs font-bold text-[#F87171] font-mono tabular-nums">{fmt(totals.avgWelfare, true)}</span>
+                </div>
               </th>
 
-              {/* НЕТО РЕГИОНАЛЕН ОДЛИВ */}
+              {/* Annual Drain */}
               <th
-                className="px-4 py-3 text-center align-middle min-w-[160px] whitespace-nowrap text-[10px] font-sans font-bold uppercase tracking-widest text-slate-400 cursor-pointer select-none hover:text-slate-200 transition-colors sticky top-[32px] z-10 bg-[#0f172a] border-b border-slate-800"
+                className="px-3 py-2 text-center align-middle min-w-[130px] whitespace-nowrap cursor-pointer select-none hover:text-slate-200 transition-colors sticky top-0 z-20 bg-[#0f172a]"
                 onClick={() => handleSort('yearly')}
                 onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); handleSort('yearly'); } }}
                 tabIndex={0}
                 role="columnheader"
                 aria-sort={getSortDir('yearly', sortKey, sortAsc)}
               >
-                <span className="inline-flex items-center gap-1.5">
-                  <span className="text-[#F43F5E]">▸</span> {t('hdr_drain_yr')}
-                  <SortIcon columnKey="yearly" sortKey={sortKey} sortAsc={sortAsc} />
-                </span>
+                <div className="flex flex-col items-center gap-0.5">
+                  <span className="text-[10px] font-mono uppercase tracking-wider text-slate-500">Total Drain</span>
+                  <span className="text-xs font-bold text-[#F87171] font-mono tabular-nums">{fmt(totals.totalDrainMillions, false)}</span>
+                </div>
               </th>
 
-              {/* ЗАДОЛЖУВАЊА */}
+              {/* Arrears */}
               <th
-                className="px-4 py-3 text-center align-middle min-w-[160px] whitespace-nowrap text-[10px] font-sans font-bold uppercase tracking-widest text-slate-400 cursor-pointer select-none hover:text-slate-200 transition-colors sticky top-[32px] z-10 bg-[#0f172a] border-b border-slate-800"
+                className="px-3 py-2 text-center align-middle min-w-[120px] whitespace-nowrap cursor-pointer select-none hover:text-slate-200 transition-colors sticky top-0 z-20 bg-[#0f172a]"
                 onClick={() => handleSort('arrears')}
                 onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); handleSort('arrears'); } }}
                 tabIndex={0}
                 role="columnheader"
                 aria-sort={getSortDir('arrears', sortKey, sortAsc)}
               >
-                <span className="inline-flex items-center gap-1.5">
-                  <span className="text-[#64748b]">▸</span> {t('hdr_arrears')}
-                  <SortIcon columnKey="arrears" sortKey={sortKey} sortAsc={sortAsc} />
-                </span>
+                <div className="flex flex-col items-center gap-0.5">
+                  <span className="text-[10px] font-mono uppercase tracking-wider text-slate-500">Total Arrears</span>
+                  <span className="text-xs font-bold text-slate-400 font-mono tabular-nums">{fmt(totals.totalArrearsMillions, false)}</span>
+                </div>
               </th>
 
-              {/* НЕВРАБОТЕНИ */}
+              {/* Unemployed */}
               <th
-                className="px-4 py-3 text-center align-middle min-w-[160px] whitespace-nowrap text-[10px] font-sans font-bold uppercase tracking-widest text-slate-400 cursor-pointer select-none hover:text-slate-200 transition-colors sticky top-[32px] z-10 bg-[#0f172a] border-b border-slate-800"
+                className="px-3 py-2 text-center align-middle min-w-[160px] whitespace-nowrap cursor-pointer select-none hover:text-slate-200 transition-colors sticky top-0 z-20 bg-[#0f172a]"
                 onClick={() => handleSort('unemployment')}
                 onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); handleSort('unemployment'); } }}
                 tabIndex={0}
                 role="columnheader"
                 aria-sort={getSortDir('unemployment', sortKey, sortAsc)}
               >
-                <span className="inline-flex items-center gap-1.5">
-                  <span className="text-[#38bdf8]">▸</span> {t('hdr_unemployed')}
+                <span className="inline-flex items-center gap-1 justify-center text-[10px] font-mono uppercase tracking-wider text-slate-500">
+                  Unemployed
                   <SortIcon columnKey="unemployment" sortKey={sortKey} sortAsc={sortAsc} />
                 </span>
               </th>
 
-              {/* СТРУКТУРНИ */}
-              <th className="px-4 py-3 text-center align-middle min-w-[160px] whitespace-nowrap text-[10px] font-sans font-bold uppercase tracking-widest text-slate-400 sticky top-[32px] z-10 bg-[#0f172a] border-b border-slate-800">
-                {t('hdr_structural')}
+              {/* Structural */}
+              <th className="px-3 py-2 text-center align-middle min-w-[140px] whitespace-nowrap text-[10px] font-mono uppercase tracking-wider text-slate-500 sticky top-0 z-20 bg-[#0f172a]">
+                Structural
               </th>
 
-              {/* КОРЕКЦИЈА */}
-              <th className="px-4 py-3 text-center align-middle min-w-[160px] whitespace-nowrap text-[10px] font-sans font-bold uppercase tracking-widest text-slate-400 sticky top-[32px] z-10 bg-[#0f172a] border-b border-slate-800">
-                {t('hdr_correction')}
+              {/* Correction */}
+              <th className="px-3 py-2 text-center align-middle min-w-[110px] whitespace-nowrap text-[10px] font-mono uppercase tracking-wider text-slate-500 sticky top-0 z-20 bg-[#0f172a]">
+                Correction
               </th>
             </tr>
           </thead>
@@ -271,41 +227,41 @@ export default function MunicipalTable({
                       backgroundColor: isFocused ? 'rgb(30,41,59)' : (i % 2 === 0 ? 'rgb(15,23,42)' : 'rgb(11,17,32)'),
                     }}
                   >
-                    <div className="flex items-center gap-2">
-                      <span className={`font-semibold whitespace-nowrap transition-colors duration-200 ${isFocused ? 'text-amber-300' : 'text-slate-200 group-hover:text-white'}`}>
+                    <div className="flex items-center gap-2.5">
+                      <span className={`font-semibold whitespace-nowrap transition-colors duration-200 text-sm ${isFocused ? 'text-amber-300' : 'text-slate-200 group-hover:text-white'}`}>
                         {getMuniName(muni, locale)}
                       </span>
-                      <div className="hidden sm:block h-1 w-10 rounded-full bg-slate-800 overflow-hidden">
+                      <div className="hidden sm:block h-1 w-12 rounded-full bg-slate-800 overflow-hidden flex-shrink-0">
                         <div className="h-full rounded-full transition-all duration-300" style={{ width: `${(sparkWidth / 60) * 100}%`, backgroundColor: '#F59E0B' }} />
                       </div>
-                      <svg className="w-3 h-3 text-slate-700 group-hover:text-amber-500/50 transition-colors duration-200 ml-auto opacity-0 group-hover:opacity-100" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                      <svg className="w-3.5 h-3.5 text-slate-700 group-hover:text-amber-500/50 transition-colors duration-200 ml-auto opacity-0 group-hover:opacity-100 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                       </svg>
                     </div>
                   </td>
 
                   {/* Capita Drain */}
-                  <td className="px-4 py-2.5 text-right font-semibold tabular-nums" style={{ color: '#F59E0B' }}>
+                  <td className="px-3 py-2.5 text-right font-semibold tabular-nums text-sm" style={{ color: '#F59E0B' }}>
                     {fmt(muni.totalPerCapitaDrain, true)}
                   </td>
 
-                  {/* Tax Leakage — fixed from #d4a84b to #F59E0B */}
-                  <td className="px-4 py-2.5 text-right tabular-nums" style={{ color: '#F59E0B' }}>
+                  {/* Tax Leakage */}
+                  <td className="px-3 py-2.5 text-right tabular-nums text-sm" style={{ color: '#F59E0B' }}>
                     {fmt(muni.uncollectedLeakage, true)}
                   </td>
 
                   {/* Welfare */}
-                  <td className="px-4 py-2.5 text-right tabular-nums" style={{ color: '#F43F5E' }}>
+                  <td className="px-3 py-2.5 text-right tabular-nums text-sm" style={{ color: '#F87171' }}>
                     {fmt(muni.welfareBurden, true)}
                   </td>
 
                   {/* Annual Drain */}
-                  <td className="px-4 py-2.5 text-right font-semibold tabular-nums" style={{ color: '#F43F5E' }}>
+                  <td className="px-3 py-2.5 text-right font-semibold tabular-nums text-sm" style={{ color: '#F87171' }}>
                     {fmt(muni.totalYearlyDrain / 1_000_000, false)}
                   </td>
 
                   {/* Arrears */}
-                  <td className="px-4 py-2.5 text-right tabular-nums" style={{ color: '#64748b' }}>
+                  <td className="px-3 py-2.5 text-right tabular-nums text-sm" style={{ color: '#64748b' }}>
                     {(() => {
                       const nf = NET_FISCAL[muni.id];
                       if (!nf || !nf.arrears) return '—';
@@ -314,7 +270,7 @@ export default function MunicipalTable({
                   </td>
 
                   {/* Unemployed */}
-                  <td className="px-4 py-2.5 text-right tabular-nums" style={{ color: '#38bdf8' }}>
+                  <td className="px-3 py-2.5 text-right tabular-nums text-sm" style={{ color: '#38bdf8' }}>
                     {(() => {
                       const ud = UNEMPLOYMENT_DATA[muni.id];
                       if (!ud) return '—';
@@ -323,28 +279,23 @@ export default function MunicipalTable({
                     })()}
                   </td>
 
-                  {/* Structural — Shadow + Compliance stacked */}
-                  <td className="px-4 py-2.5">
-                    <div className="flex flex-col gap-1">
-                      <div className="flex items-center gap-2">
+                  {/* Structural — Shadow + Compliance side by side */}
+                  <td className="px-3 py-2.5">
+                    <div className="flex items-center gap-3">
+                      <div className="flex items-center gap-1.5">
                         <span className="w-1 h-1 rounded-full bg-amber-500 flex-shrink-0" />
-                        <div className="h-1 w-16 rounded-full bg-slate-800 overflow-hidden">
-                          <div className="h-full rounded-full bg-amber-500" style={{ width: `${muni.adjustedShadowEcon}%` }} />
-                        </div>
-                        <span className="text-[10px] tabular-nums" style={{ color: '#94a3b8' }}>{muni.adjustedShadowEcon}%</span>
+                        <span className="text-[11px] tabular-nums" style={{ color: '#94a3b8' }}>{muni.adjustedShadowEcon}%</span>
                       </div>
-                      <div className="flex items-center gap-2">
+                      <div className="w-[1px] h-3 bg-slate-700" />
+                      <div className="flex items-center gap-1.5">
                         <span className="w-1 h-1 rounded-full bg-emerald-500 flex-shrink-0" />
-                        <div className="h-1 w-16 rounded-full bg-slate-800 overflow-hidden">
-                          <div className="h-full rounded-full bg-emerald-500" style={{ width: `${muni.adjustedCompliance}%` }} />
-                        </div>
-                        <span className="text-[10px] tabular-nums" style={{ color: '#94a3b8' }}>{muni.adjustedCompliance}%</span>
+                        <span className="text-[11px] tabular-nums" style={{ color: '#94a3b8' }}>{muni.adjustedCompliance}%</span>
                       </div>
                     </div>
                   </td>
 
                   {/* Correction */}
-                  <td className="px-4 py-2.5 text-right tabular-nums" style={{ color: applyCorrection ? '#10B981' : '#475569' }}>
+                  <td className="px-3 py-2.5 text-right tabular-nums text-sm" style={{ color: applyCorrection ? '#34d399' : '#475569' }}>
                     {applyCorrection ? `€${muni.corporateRetraction.toLocaleString()}` : '—'}
                   </td>
                 </tr>

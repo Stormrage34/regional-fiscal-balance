@@ -113,31 +113,30 @@ export default function Sidebar({
               <span className="text-[10px] font-mono uppercase tracking-wider" style={{ color: '#64748b' }}>
                 {t('sidebar_currency')}
               </span>
-              <div className="relative inline-flex h-7 rounded-lg border overflow-hidden" style={{ borderColor: '#334155', backgroundColor: '#243047' }}>
+              <div className="relative inline-flex h-7 rounded-lg border overflow-hidden" style={{ borderColor: '#334155', backgroundColor: '#0f172a' }}>
+                {/* Sliding indicator */}
+                <div
+                  className="absolute inset-y-0 w-1/2 rounded-lg bg-indigo-600 shadow-[0_0_10px_rgba(99,102,241,0.3)] transition-all duration-300 ease-in-out"
+                  style={{ left: showMkd ? '50%' : '0%' }}
+                />
                 <button
                   type="button"
                   onClick={() => setShowMkd(false)}
-                  className={`relative z-10 px-3 py-1 text-xs font-mono transition-all duration-300 ${
+                  className={`relative z-10 px-3 py-1 text-xs font-mono transition-colors duration-300 ${
                     !showMkd ? 'text-white' : 'text-slate-400 hover:text-slate-200'
                   }`}
                 >
                   EUR
                 </button>
-                {!showMkd && (
-                  <div className="absolute inset-y-0 left-0 w-1/2 rounded-lg bg-indigo-600 shadow-[0_0_10px_rgba(99,102,241,0.3)] transition-all duration-300" />
-                )}
                 <button
                   type="button"
                   onClick={() => setShowMkd(true)}
-                  className={`relative z-10 px-3 py-1 text-xs font-mono transition-all duration-300 ${
+                  className={`relative z-10 px-3 py-1 text-xs font-mono transition-colors duration-300 ${
                     showMkd ? 'text-white' : 'text-slate-400 hover:text-slate-200'
                   }`}
                 >
                   MKD
                 </button>
-                {showMkd && (
-                  <div className="absolute inset-y-0 right-0 w-1/2 rounded-lg bg-indigo-600 shadow-[0_0_10px_rgba(99,102,241,0.3)] transition-all duration-300" />
-                )}
               </div>
             </div>
           </div>

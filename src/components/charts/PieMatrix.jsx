@@ -40,7 +40,7 @@ export default function PieMatrix({ data, onMuniClick }) {
 
   return (
     <div role="img" aria-label={t('chart_aria_matrix')}>
-      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+      <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4">
         {sortedWithSegs.map((muni) => {
           return (
             <div

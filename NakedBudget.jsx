@@ -246,7 +246,7 @@ export default function NakedBudget() {
       />
 
       {/* ─── MAIN WORKSPACE ─── */}
-      <main className="flex-1 overflow-y-auto p-6 lg:p-10 max-w-6xl space-y-8">
+      <main className="flex-1 overflow-y-auto p-6 lg:p-12 max-w-6xl space-y-10">
         {/* ═══ HEADER ═══ */}
         <header className="pb-8 relative">
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
@@ -306,7 +306,7 @@ export default function NakedBudget() {
         />
 
         {/* ═══ NET FISCAL IMPACT ═══ */}
-        <section className="rounded-xl relative overflow-hidden mb-10 transition-all duration-300 hover:shadow-[0_0_20px_rgba(99,102,241,0.05)]" style={{ backgroundColor: 'rgba(11,17,32,0.4)', borderColor: '#1F3050', borderWidth: 1 }}>
+        <section className="rounded-xl relative overflow-hidden mb-12 transition-all duration-300 hover:shadow-[0_0_20px_rgba(99,102,241,0.05)]" style={{ backgroundColor: 'rgba(11,17,32,0.4)', borderColor: '#1F3050', borderWidth: 1 }}>
           <div className="flex items-center gap-2 mb-4">
             <h2 className="text-xs font-mono uppercase tracking-widest" style={{ color: '#94a3b8' }}>
               {t('net_fiscal')}
@@ -361,7 +361,7 @@ export default function NakedBudget() {
         </section>
 
         {/* ═══ CALLOUTS ═══ */}
-        <section className="grid grid-cols-1 md:grid-cols-2 gap-5 mb-10">
+        <section className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
           {/* Worst */}
           <div className="rounded-xl relative overflow-hidden transition-all duration-300" style={{ backgroundColor: 'rgba(11,17,32,0.4)', borderColor: '#1F3050', borderWidth: 1, borderLeftWidth: 3, borderLeftColor: '#ef4444' }}>
             <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-red-500/25 to-transparent" />
@@ -448,7 +448,7 @@ export default function NakedBudget() {
         </section>
 
         {/* ═══ CHARTS ═══ */}
-        <section className="rounded-xl relative overflow-hidden mb-12 transition-all duration-300 hover:shadow-[0_0_20px_rgba(99,102,241,0.05)] bg-gradient-to-b from-slate-900/[0.15] to-transparent" style={{ backgroundColor: 'rgba(11,17,32,0.5)', borderColor: '#1F3050', borderWidth: 1 }}>
+        <section className="rounded-xl relative overflow-hidden mb-14 transition-all duration-300 hover:shadow-[0_0_20px_rgba(99,102,241,0.05)] bg-gradient-to-b from-slate-900/[0.15] to-transparent" style={{ backgroundColor: 'rgba(11,17,32,0.5)', borderColor: '#1F3050', borderWidth: 1 }}>
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[60%] h-[60%] rounded-full pointer-events-none" style={{ background: 'radial-gradient(ellipse at center, rgba(99,102,241,0.03) 0%, transparent 70%)' }} />
 
           <div className="relative">
@@ -485,18 +485,25 @@ export default function NakedBudget() {
         />
 
         {/* ═══ FOOTER ═══ */}
-        <footer className="mt-14 py-8 border-t border-slate-800/60 text-center">
+        <footer className="mt-16 py-8 border-t border-slate-800/60 text-center">
           <p className="font-mono text-xs text-slate-500 tracking-wide">
             {t('footer')}
           </p>
-          <p className="mt-4">
+          <p className="mt-5">
             <a
               href="https://buymeacoffee.com/stefangel9b"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-block font-mono text-xs text-slate-600 hover:text-amber-400 transition-colors duration-200"
+              className="inline-flex items-center gap-2 font-mono text-xs text-slate-500 hover:text-amber-400 transition-colors duration-200 group"
             >
-              ☕ {t('buy_coffee') || 'Buy me a coffee'}
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="opacity-60 group-hover:opacity-100 transition-opacity">
+                <path d="M18 8h1a4 4 0 0 1 0 8h-1" />
+                <path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z" />
+                <line x1="6" y1="1" x2="6" y2="4" />
+                <line x1="10" y1="1" x2="10" y2="4" />
+                <line x1="14" y1="1" x2="14" y2="4" />
+              </svg>
+              {t('buy_coffee') || 'Buy me a coffee'}
             </a>
           </p>
         </footer>
@@ -518,7 +525,7 @@ export default function NakedBudget() {
             aria-labelledby="panel-title"
             tabIndex={-1}
             onKeyDown={(e) => { if (e.key === 'Escape') closePanel(); }}
-            className="fixed top-0 right-0 h-screen w-[380px] max-w-full bg-[#243047]/98 backdrop-blur-2xl border-l border-slate-800/60 z-50 transition-transform duration-500 ease-in-out overflow-y-auto"
+            className="fixed top-0 right-0 h-screen w-[420px] max-w-[90vw] bg-[#243047]/98 backdrop-blur-2xl border-l border-slate-800/60 z-50 transition-transform duration-500 ease-in-out overflow-y-auto"
             style={{ boxShadow: '-8px 0 32px rgba(0,0,0,0.5)' }}
           >
             <button
@@ -533,7 +540,7 @@ export default function NakedBudget() {
               </svg>
             </button>
 
-            <div className="p-6 pt-12">
+            <div className="p-6 pt-12 space-y-6">
               <div className="mb-6">
                 <h3 id="panel-title" className="text-xl font-bold font-mono text-white tracking-tight">
                   {getMuniName(focusedMuni, locale)}

@@ -479,6 +479,19 @@ export default function NakedBudget() {
           </p>
         </section>
 
+        {/* ═══ KPI RIBBON ═══ */}
+        <section id="section-overview">
+          <KpiRibbon
+            aggregates={aggregates}
+            gainerCount={gainerCount}
+            loserCount={loserCount}
+            MUNICIPALITIES={MUNICIPALITIES}
+            AnimatedNumber={AnimatedNumber}
+            fmt={fmt}
+            showMkd={showMkd}
+          />
+        </section>
+
         {/* ═══ SKOPIE CAPITAL CITY ═══ */}
         <SkopjeCapitalSection aggregates={netFiscalAggs} />
 
@@ -659,98 +672,6 @@ export default function NakedBudget() {
         {/* ═══ KEY FINDINGS ═══ */}
         <KeyFindingsCard />
 
-        {/* ═══ KPI RIBBON ═══ */}
-        <section id="section-overview">
-          <KpiRibbon
-            aggregates={aggregates}
-            gainerCount={gainerCount}
-            loserCount={loserCount}
-            MUNICIPALITIES={MUNICIPALITIES}
-            AnimatedNumber={AnimatedNumber}
-            fmt={fmt}
-            showMkd={showMkd}
-          />
-        </section>
-
-        {/* ═══ PHASE COMPARISON ═══ */}
-        <section id="section-phases" className="mb-8">
-          <div className="flex items-center gap-3 mb-4">
-            <h2 className="text-sm font-mono font-bold text-white tracking-tight">
-              {t('section_phase_comparison')}
-            </h2>
-          </div>
-          <p className="text-xs font-mono text-slate-500 mt-1 mb-1">
-            {t('section_phase_subtitle')}
-          </p>
-          <p className="text-[10px] font-mono leading-relaxed max-w-3xl mb-4" style={{ color: '#64748b' }}>{t('phase_explanation')}</p>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {/* Card 1: Avg Net Fiscal Balance per capita */}
-            <div className="rounded-xl p-5 border" style={{ backgroundColor: 'rgba(11,17,32,0.4)', borderColor: '#1F3050' }}>
-              <div className="flex items-center justify-between mb-3">
-                <span className="text-[10px] font-mono uppercase tracking-widest text-slate-500">
-                  {t('phase_balance_label')}
-                </span>
-                <span className="text-xs font-mono px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
-                  {t('phase_badge').replace('{n}', '1')}
-                </span>
-              </div>
-              <div className="flex items-baseline justify-between">
-                <span className="text-2xl font-bold font-mono text-emerald-400">{fmt(phaseComparison.avgNetFiscalPC1, true)}</span>
-                <span className="text-sm font-mono text-slate-500">{t('phase_2_prefix')}{fmt(phaseComparison.avgNetFiscalPC2, true)}</span>
-              </div>
-            </div>
-
-            {/* Card 2: Avg Arrears per capita */}
-            <div className="rounded-xl p-5 border" style={{ backgroundColor: 'rgba(11,17,32,0.4)', borderColor: '#1F3050' }}>
-              <div className="flex items-center justify-between mb-3">
-                <span className="text-[10px] font-mono uppercase tracking-widest text-slate-500">
-                  {t('phase_arrears_label')}
-                </span>
-                <span className="text-xs font-mono px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
-                  {t('phase_badge').replace('{n}', '1')}
-                </span>
-              </div>
-              <div className="flex items-baseline justify-between">
-                <span className="text-2xl font-bold font-mono text-emerald-400">{fmt(phaseComparison.avgArrearsPC1, true)}</span>
-                <span className="text-sm font-mono text-slate-500">{t('phase_2_prefix')}{fmt(phaseComparison.avgArrearsPC2, true)}</span>
-              </div>
-            </div>
-
-            {/* Card 3: Avg Compliance Rate */}
-            <div className="rounded-xl p-5 border" style={{ backgroundColor: 'rgba(11,17,32,0.4)', borderColor: '#1F3050' }}>
-              <div className="flex items-center justify-between mb-3">
-                <span className="text-[10px] font-mono uppercase tracking-widest text-slate-500">
-                  {t('phase_compliance_label')}
-                </span>
-                <span className="text-xs font-mono px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
-                  {t('phase_badge').replace('{n}', '1')}
-                </span>
-              </div>
-              <div className="flex items-baseline justify-between">
-                <span className="text-2xl font-bold font-mono text-emerald-400">{phaseComparison.avgCompliance1}%</span>
-                <span className="text-sm font-mono text-slate-500">{t('phase_2_prefix')}{phaseComparison.avgCompliance2}%</span>
-              </div>
-            </div>
-
-            {/* Card 4: Count of municipalities */}
-            <div className="rounded-xl p-5 border" style={{ backgroundColor: 'rgba(11,17,32,0.4)', borderColor: '#1F3050' }}>
-              <div className="flex items-center justify-between mb-3">
-                <span className="text-[10px] font-mono uppercase tracking-widest text-slate-500">
-                  {t('phase_count_label')}
-                </span>
-                <span className="text-xs font-mono px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
-                  {t('phase_badge').replace('{n}', '1')}
-                </span>
-              </div>
-              <div className="flex items-baseline justify-between">
-                <span className="text-2xl font-bold font-mono text-emerald-400">{phaseComparison.p1Count}</span>
-                <span className="text-sm font-mono text-slate-500">{t('phase_2_prefix')}{phaseComparison.p2Count}</span>
-              </div>
-            </div>
-          </div>
-        </section>
-
         {/* ═══ CHARTS ═══ */}
         <section id="section-charts" className="rounded-xl relative overflow-hidden mb-14 transition-all duration-300 hover:shadow-[0_0_20px_rgba(99,102,241,0.05)] bg-gradient-to-b from-slate-900/[0.15] to-transparent" style={{ backgroundColor: 'rgba(11,17,32,0.5)', borderColor: '#1F3050', borderWidth: 1 }}>
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[60%] h-[60%] rounded-full pointer-events-none" style={{ background: 'radial-gradient(ellipse at center, rgba(99,102,241,0.03) 0%, transparent 70%)' }} />
@@ -822,6 +743,62 @@ export default function NakedBudget() {
             handleSort={handleSort}
             showAdvancedColumns={showAdvancedColumns}
           />
+        </section>
+
+        {/* ═══ PHASE COMPARISON ═══ */}
+        <section id="section-phases" className="mb-8">
+          <div className="flex items-center gap-3 mb-4">
+            <h2 className="text-sm font-mono font-bold text-white tracking-tight">
+              {t('section_phase_comparison')}
+            </h2>
+          </div>
+          <p className="text-xs font-mono text-slate-500 mt-1 mb-1">
+            {t('section_phase_subtitle')}
+          </p>
+          <p className="text-[10px] font-mono leading-relaxed max-w-3xl mb-4" style={{ color: '#64748b' }}>{t('phase_explanation')}</p>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="rounded-xl p-5 border" style={{ backgroundColor: 'rgba(11,17,32,0.4)', borderColor: '#1F3050' }}>
+              <div className="flex items-center justify-between mb-3">
+                <span className="text-[10px] font-mono uppercase tracking-widest text-slate-500">{t('phase_balance_label')}</span>
+                <span className="text-xs font-mono px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">{t('phase_badge').replace('{n}', '1')}</span>
+              </div>
+              <div className="flex items-baseline justify-between">
+                <span className="text-2xl font-bold font-mono text-emerald-400">{fmt(phaseComparison.avgNetFiscalPC1, true)}</span>
+                <span className="text-sm font-mono text-slate-500">{t('phase_2_prefix')}{fmt(phaseComparison.avgNetFiscalPC2, true)}</span>
+              </div>
+            </div>
+            <div className="rounded-xl p-5 border" style={{ backgroundColor: 'rgba(11,17,32,0.4)', borderColor: '#1F3050' }}>
+              <div className="flex items-center justify-between mb-3">
+                <span className="text-[10px] font-mono uppercase tracking-widest text-slate-500">{t('phase_arrears_label')}</span>
+                <span className="text-xs font-mono px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">{t('phase_badge').replace('{n}', '1')}</span>
+              </div>
+              <div className="flex items-baseline justify-between">
+                <span className="text-2xl font-bold font-mono text-emerald-400">{fmt(phaseComparison.avgArrearsPC1, true)}</span>
+                <span className="text-sm font-mono text-slate-500">{t('phase_2_prefix')}{fmt(phaseComparison.avgArrearsPC2, true)}</span>
+              </div>
+            </div>
+            <div className="rounded-xl p-5 border" style={{ backgroundColor: 'rgba(11,17,32,0.4)', borderColor: '#1F3050' }}>
+              <div className="flex items-center justify-between mb-3">
+                <span className="text-[10px] font-mono uppercase tracking-widest text-slate-500">{t('phase_compliance_label')}</span>
+                <span className="text-xs font-mono px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">{t('phase_badge').replace('{n}', '1')}</span>
+              </div>
+              <div className="flex items-baseline justify-between">
+                <span className="text-2xl font-bold font-mono text-emerald-400">{phaseComparison.avgCompliance1}%</span>
+                <span className="text-sm font-mono text-slate-500">{t('phase_2_prefix')}{phaseComparison.avgCompliance2}%</span>
+              </div>
+            </div>
+            <div className="rounded-xl p-5 border" style={{ backgroundColor: 'rgba(11,17,32,0.4)', borderColor: '#1F3050' }}>
+              <div className="flex items-center justify-between mb-3">
+                <span className="text-[10px] font-mono uppercase tracking-widest text-slate-500">{t('phase_count_label')}</span>
+                <span className="text-xs font-mono px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">{t('phase_badge').replace('{n}', '1')}</span>
+              </div>
+              <div className="flex items-baseline justify-between">
+                <span className="text-2xl font-bold font-mono text-emerald-400">{phaseComparison.p1Count}</span>
+                <span className="text-sm font-mono text-slate-500">{t('phase_2_prefix')}{phaseComparison.p2Count}</span>
+              </div>
+            </div>
+          </div>
         </section>
 
         {/* ═══ FOOTER ═══ */}

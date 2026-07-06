@@ -1,36 +1,140 @@
 @import "tailwindcss";
 
+/* ═══════════════════════════════════════════
+   THEME SYSTEM — CSS custom properties + utility classes
+   ═══════════════════════════════════════════ */
+
 :root,
 [data-theme="dark"] {
-  --color-surface-card: #1e293b;
-  --color-surface-section: rgba(15, 23, 42, 0.95);
+  /* Semantic brand colors — FIXED across themes */
   --color-drain-amber: #f59e0b;
   --color-gainer-green: #10b981;
   --color-loser-rose: #ef4444;
   --color-welfare-rose: #f43f5e;
   --color-cyan-accent: #06b6d4;
   --color-indigo-accent: #6366f1;
-  --color-text-primary: #f8fafc;
-  --color-text-secondary: #94a3b8;
-  --color-text-tertiary: #64748b;
-  --color-text-quaternary: #94a3b8;
-  --color-border-card: #334155;
-  --color-bg-root: #0f172a;
+  --color-blue-accent: #3b82f6;
+  --color-purple-accent: #8b5cf6;
+  --color-violet-accent: #a78bfa;
+  --color-cornflower-accent: #818cf8;
+  --color-sky-accent: #38bdf8;
+  --color-emerald-light: #34d399;
+  --color-amber-light: #fbbf24;
+  --color-rose-light: #f87171;
+  --color-gold: #ffd700;
+  --color-dark-gold: #b8860b;
+
+  /* Theme-dependent colors */
+  --bg-root: #0f172a;
+  --bg-card: #1e293b;
+  --bg-elevated: #243047;
+  --bg-section: rgba(15, 23, 42, 0.95);
+  --bg-section-transparent: rgba(11, 17, 32, 0.6);
+  --bg-hover: rgba(255, 255, 255, 0.04);
+  --bg-hover-strong: rgba(255, 255, 255, 0.08);
+
+  --text-primary: #f8fafc;
+  --text-secondary: #94a3b8;
+  --text-tertiary: #64748b;
+  --text-muted: #475569;
+
+  --border-card: #334155;
+  --border-light: rgba(51, 65, 85, 0.3);
+  --border-section: rgba(184, 134, 11, 0.3);
+
+  /* Chart structural */
+  --chart-axis: #334155;
+  --chart-grid: rgba(51, 65, 85, 0.3);
+  --chart-bg: #1e293b;
+  --chart-label: #94a3b8;
+  --chart-label-muted: #64748b;
 }
 
 [data-theme="light"] {
-  --color-surface-card: #ffffff;
-  --color-surface-section: rgba(248, 250, 252, 0.95);
+  /* Semantic brand colors — FIXED across themes */
   --color-drain-amber: #d97706;
   --color-gainer-green: #059669;
   --color-loser-rose: #dc2626;
   --color-welfare-rose: #e11d48;
   --color-cyan-accent: #0891b2;
   --color-indigo-accent: #4f46e5;
-  --color-text-primary: #0f172a;
-  --color-text-secondary: #475569;
-  --color-text-tertiary: #64748b;
-  --color-text-quaternary: #94a3b8;
-  --color-border-card: #e2e8f0;
-  --color-bg-root: #f8fafc;
+  --color-blue-accent: #2563eb;
+  --color-purple-accent: #7c3aed;
+  --color-violet-accent: #8b5cf6;
+  --color-cornflower-accent: #6366f1;
+  --color-sky-accent: #0284c7;
+  --color-emerald-light: #059669;
+  --color-amber-light: #d97706;
+  --color-rose-light: #dc2626;
+  --color-gold: #b8860b;
+  --color-dark-gold: #92400e;
+
+  /* Theme-dependent colors */
+  --bg-root: #f8fafc;
+  --bg-card: #ffffff;
+  --bg-elevated: #f1f5f9;
+  --bg-section: rgba(248, 250, 252, 0.95);
+  --bg-section-transparent: rgba(255, 255, 255, 0.85);
+  --bg-hover: rgba(0, 0, 0, 0.03);
+  --bg-hover-strong: rgba(0, 0, 0, 0.06);
+
+  --text-primary: #0f172a;
+  --text-secondary: #475569;
+  --text-tertiary: #64748b;
+  --text-muted: #94a3b8;
+
+  --border-card: #e2e8f0;
+  --border-light: rgba(226, 232, 240, 0.8);
+  --border-section: rgba(184, 134, 11, 0.3);
+
+  /* Chart structural */
+  --chart-axis: #e2e8f0;
+  --chart-grid: rgba(226, 232, 240, 0.8);
+  --chart-bg: #ffffff;
+  --chart-label: #475569;
+  --chart-label-muted: #94a3b8;
 }
+
+/* ═══════════════════════════════════════════
+   UTILITY CLASSES — theme-aware replacements
+   ═══════════════════════════════════════════ */
+
+/* Backgrounds */
+.bg-root { background-color: var(--bg-root); }
+.bg-card { background-color: var(--bg-card); }
+.bg-elevated { background-color: var(--bg-elevated); }
+.bg-section { background-color: var(--bg-section); }
+.bg-hover { background-color: var(--bg-hover); }
+.bg-hover-strong { background-color: var(--bg-hover-strong); }
+
+/* Text colors */
+.text-primary { color: var(--text-primary); }
+.text-secondary { color: var(--text-secondary); }
+.text-tertiary { color: var(--text-tertiary); }
+.text-muted { color: var(--text-muted); }
+
+/* Brand accent text (fixed across themes) */
+.text-drain-amber { color: var(--color-drain-amber); }
+.text-gainer-green { color: var(--color-gainer-green); }
+.text-loser-rose { color: var(--color-loser-rose); }
+.text-welfare-rose { color: var(--color-welfare-rose); }
+.text-cyan-accent { color: var(--color-cyan-accent); }
+.text-indigo-accent { color: var(--color-indigo-accent); }
+.text-blue-accent { color: var(--color-blue-accent); }
+.text-purple-accent { color: var(--color-purple-accent); }
+.text-violet-accent { color: var(--color-violet-accent); }
+.text-cornflower-accent { color: var(--color-cornflower-accent); }
+.text-sky-accent { color: var(--color-sky-accent); }
+
+/* Border colors */
+.border-card { border-color: var(--border-card); }
+.border-light { border-color: var(--border-light); }
+.border-section { border-color: var(--border-section); }
+
+/* Chart structural (fixed across themes for data integrity) */
+.chart-axis { stroke: var(--chart-axis); }
+.chart-grid { stroke: var(--chart-grid); }
+
+/* Hover states */
+.hover-bg:hover { background-color: var(--bg-hover); }
+.hover-text-primary:hover { color: var(--text-primary); }

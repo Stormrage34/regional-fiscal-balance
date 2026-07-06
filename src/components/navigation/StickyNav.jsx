@@ -54,8 +54,7 @@ export default function StickyNav() {
   return (
     <>
       <nav
-        className="sticky top-0 z-40 border-b border-slate-700/40 backdrop-blur-xl"
-        style={{ backgroundColor: 'rgba(15,23,42,0.92)' }}
+        className="sticky top-0 z-40 border-b border-card bg-section backdrop-blur-xl"
         role="navigation"
         aria-label="Навигација по секции"
       >
@@ -69,8 +68,8 @@ export default function StickyNav() {
                 onClick={() => scrollTo(item.id)}
                 className={`px-3 py-2 rounded-full text-[11px] font-mono whitespace-nowrap transition-all duration-200 ${
                   isActive
-                    ? 'bg-amber-500/15 text-amber-300 border border-amber-500/30 shadow-[0_0_8px_rgba(245,158,11,0.08)]'
-                    : 'text-slate-400 hover:text-slate-200 hover:bg-white/5 border border-transparent'
+                    ? 'bg-drain-amber/15 text-drain-amber border border-drain-amber/30 shadow-[0_0_8px_rgba(245,158,11,0.08)]'
+                    : 'text-secondary hover-text-primary hover-bg border border-transparent'
                 }`}
                 aria-current={isActive ? 'true' : undefined}
               >
@@ -81,13 +80,13 @@ export default function StickyNav() {
         </div>
 
         <div className="md:hidden flex items-center justify-between px-4 py-2.5">
-          <span className="text-[11px] font-mono text-amber-300 font-semibold truncate">
+          <span className="text-[11px] font-mono text-drain-amber font-semibold truncate">
             {NAV_ITEMS.find(i => i.id === activeSection)?.label || 'Почеток'}
           </span>
           <button
             type="button"
             onClick={() => setMobileOpen(prev => !prev)}
-            className="p-1.5 rounded-md text-slate-400 hover:text-white hover:bg-white/10 transition-colors"
+            className="p-2 rounded-md text-secondary hover-text-primary hover-bg transition-colors"
             aria-expanded={mobileOpen}
             aria-label={mobileOpen ? 'Затвори мени' : 'Отвори мени'}
           >
@@ -101,7 +100,7 @@ export default function StickyNav() {
         </div>
 
         {mobileOpen && (
-          <div className="md:hidden border-t border-slate-700/40 px-3 py-2 space-y-0.5" style={{ backgroundColor: 'rgba(15,23,42,0.98)' }}>
+          <div className="md:hidden border-t border-card px-3 py-2 space-y-0.5 bg-section">
             {NAV_ITEMS.map(item => {
               const isActive = activeSection === item.id;
               return (
@@ -111,8 +110,8 @@ export default function StickyNav() {
                   onClick={() => scrollTo(item.id)}
                   className={`block w-full text-left px-3 py-2.5 rounded text-[11px] font-mono transition-colors duration-150 ${
                     isActive
-                      ? 'text-amber-300 bg-amber-500/10 font-semibold'
-                      : 'text-slate-400 hover:text-slate-200 hover:bg-white/5'
+                      ? 'text-drain-amber bg-drain-amber/10 font-semibold'
+                      : 'text-secondary hover-text-primary hover-bg'
                   }`}
                 >
                   {item.label}

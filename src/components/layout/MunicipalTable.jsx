@@ -5,13 +5,13 @@ import { useMemo } from 'react';
 function SortIcon({ columnKey, sortKey, sortAsc }) {
   if (sortKey !== columnKey) {
     return (
-      <svg className="ml-1 w-3 h-3 text-slate-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+      <svg className="ml-1 w-3 h-3 text-muted" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4" />
       </svg>
     );
   }
   return (
-    <svg className={`ml-1 w-4 h-4 text-amber-400`} fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+    <svg className="ml-1 w-4 h-4 text-drain-amber" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
       {sortAsc ? (
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 15l7-7 7 7" />
       ) : (
@@ -61,35 +61,34 @@ export default function MunicipalTable({
 
   return (
     <section
-      className="rounded-xl relative mb-10 transition-all duration-300"
-      style={{ backgroundColor: 'rgba(11,17,32,0.4)', borderColor: '#1F3050', borderWidth: 1, overflow: 'clip' }}
+      className="rounded-xl relative mb-10 transition-all duration-300 border border-card bg-section-transparent overflow-clip"
     >
-      <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-slate-600/25 to-transparent" />
+      <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-border-light to-transparent" />
 
-      <div className="px-5 py-3.5 border-b flex items-center justify-between relative" style={{ borderColor: '#1F3050' }}>
-        <h3 className="text-xs font-mono uppercase tracking-widest" style={{ color: '#94a3b8' }}>
+      <div className="px-5 py-3.5 border-b flex items-center justify-between relative border-card">
+        <h3 className="text-xs font-mono uppercase tracking-widest text-secondary">
           {t('muni_profiles')}
         </h3>
-        <span className="text-[10px] font-mono" style={{ color: '#94a3b8' }}>
+        <span className="text-[10px] font-mono text-secondary">
           {t('muni_sort')}
         </span>
       </div>
 
       {/* Source legend */}
-      <div className="px-5 pb-2 flex items-center gap-4 text-[9px] font-mono" style={{ color: '#64748b' }}>
-        <span className="flex items-center gap-1"><span className="w-1.5 h-1.5 rounded-full bg-emerald-500 flex-shrink-0" />Treasury data</span>
-        <span className="flex items-center gap-1"><span className="w-1.5 h-1.5 rounded-full bg-amber-500 flex-shrink-0" />Model-derived</span>
-        <span className="flex items-center gap-1"><span className="w-1.5 h-1.5 rounded-full bg-red-500 flex-shrink-0" />Estimated</span>
+      <div className="px-5 pb-2 flex items-center gap-4 text-[9px] font-mono text-muted">
+        <span className="flex items-center gap-1"><span className="w-1.5 h-1.5 rounded-full bg-gainer-green flex-shrink-0" />Treasury data</span>
+        <span className="flex items-center gap-1"><span className="w-1.5 h-1.5 rounded-full bg-drain-amber flex-shrink-0" />Model-derived</span>
+        <span className="flex items-center gap-1"><span className="w-1.5 h-1.5 rounded-full bg-loser-rose flex-shrink-0" />Estimated</span>
       </div>
 
       <div className="w-full overflow-x-auto overflow-y-auto max-h-[520px]">
         <table className="w-full text-sm font-mono border-collapse table-auto">
           <thead>
             {/* ═══ Single Row Header with Macro Averages inline ═══ */}
-            <tr className="border-b border-slate-700/50 bg-[#0f172a]">
+            <tr className="border-b border-card bg-card">
               {/* Municipality header — sticky left */}
               <th
-                className="px-4 py-2.5 text-left align-middle min-w-[150px] whitespace-nowrap text-[10px] font-sans font-bold uppercase tracking-widest text-slate-400 cursor-pointer select-none hover:text-slate-200 transition-colors sticky top-0 left-0 z-30 bg-[#0f172a]"
+                className="px-4 py-2.5 text-left align-middle min-w-[150px] whitespace-nowrap text-[10px] font-sans font-bold uppercase tracking-widest text-secondary cursor-pointer select-none hover-text-primary transition-colors sticky top-0 left-0 z-30 bg-card"
                 onClick={() => handleSort('name')}
                 onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); handleSort('name'); } }}
                 tabIndex={0}
@@ -104,7 +103,7 @@ export default function MunicipalTable({
 
               {/* Balance column — shows avg + label */}
               <th
-                className="px-3 py-3 text-center align-middle min-w-[140px] whitespace-nowrap cursor-pointer select-none hover:text-slate-200 transition-colors sticky top-0 z-20 bg-[#0f172a]"
+                className="px-3 py-3 text-center align-middle min-w-[140px] whitespace-nowrap cursor-pointer select-none hover-text-primary transition-colors sticky top-0 z-20 bg-card"
                 onClick={() => handleSort('drain')}
                 onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); handleSort('drain'); } }}
                 tabIndex={0}
@@ -112,14 +111,14 @@ export default function MunicipalTable({
                 aria-sort={getSortDir('drain', sortKey, sortAsc)}
               >
                 <div className="flex flex-col items-center gap-0.5">
-                  <span className="text-[10px] font-mono uppercase tracking-wider text-slate-500 flex items-center gap-1"><span className="inline-block w-1.5 h-1.5 rounded-full" style={{ backgroundColor: '#10B981' }} title="Real Treasury data" />{t('tbl_avg_balance')}</span>
-                  <span className="text-xs font-bold text-[#F59E0B] font-mono tabular-nums">{fmt(totals.avgBalance, true)}</span>
+                  <span className="text-[10px] font-mono uppercase tracking-wider text-muted flex items-center gap-1"><span className="inline-block w-1.5 h-1.5 rounded-full bg-gainer-green" title="Real Treasury data" />{t('tbl_avg_balance')}</span>
+                  <span className="text-xs font-bold text-drain-amber font-mono tabular-nums">{fmt(totals.avgBalance, true)}</span>
                 </div>
               </th>
 
               {/* Leakage column */}
               <th
-                className="px-3 py-3 text-center align-middle min-w-[140px] whitespace-nowrap cursor-pointer select-none hover:text-slate-200 transition-colors sticky top-0 z-20 bg-[#0f172a]"
+                className="px-3 py-3 text-center align-middle min-w-[140px] whitespace-nowrap cursor-pointer select-none hover-text-primary transition-colors sticky top-0 z-20 bg-card"
                 onClick={() => handleSort('leakage')}
                 onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); handleSort('leakage'); } }}
                 tabIndex={0}
@@ -127,14 +126,14 @@ export default function MunicipalTable({
                 aria-sort={getSortDir('leakage', sortKey, sortAsc)}
               >
                 <div className="flex flex-col items-center gap-0.5">
-                  <span className="text-[10px] font-mono uppercase tracking-wider text-slate-500 flex items-center gap-1"><span className="inline-block w-1.5 h-1.5 rounded-full" style={{ backgroundColor: '#F59E0B' }} title="Model-derived estimate" />{t('tbl_avg_leakage')}</span>
-                  <span className="text-xs font-bold text-[#F59E0B] font-mono tabular-nums">{fmt(totals.avgLeakage, true)}</span>
+                  <span className="text-[10px] font-mono uppercase tracking-wider text-muted flex items-center gap-1"><span className="inline-block w-1.5 h-1.5 rounded-full bg-drain-amber" title="Model-derived estimate" />{t('tbl_avg_leakage')}</span>
+                  <span className="text-xs font-bold text-drain-amber font-mono tabular-nums">{fmt(totals.avgLeakage, true)}</span>
                 </div>
               </th>
 
               {/* Welfare column */}
               <th
-                className="px-3 py-3 text-center align-middle min-w-[140px] whitespace-nowrap cursor-pointer select-none hover:text-slate-200 transition-colors sticky top-0 z-20 bg-[#0f172a]"
+                className="px-3 py-3 text-center align-middle min-w-[140px] whitespace-nowrap cursor-pointer select-none hover-text-primary transition-colors sticky top-0 z-20 bg-card"
                 onClick={() => handleSort('welfare')}
                 onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); handleSort('welfare'); } }}
                 tabIndex={0}
@@ -142,14 +141,14 @@ export default function MunicipalTable({
                 aria-sort={getSortDir('welfare', sortKey, sortAsc)}
               >
                 <div className="flex flex-col items-center gap-0.5">
-                  <span className="text-[10px] font-mono uppercase tracking-wider text-slate-500 flex items-center gap-1"><span className="inline-block w-1.5 h-1.5 rounded-full" style={{ backgroundColor: '#F59E0B' }} title="Model-derived estimate" />{t('tbl_avg_welfare')}</span>
-                  <span className="text-xs font-bold text-[#F87171] font-mono tabular-nums">{fmt(totals.avgWelfare, true)}</span>
+                  <span className="text-[10px] font-mono uppercase tracking-wider text-muted flex items-center gap-1"><span className="inline-block w-1.5 h-1.5 rounded-full bg-drain-amber" title="Model-derived estimate" />{t('tbl_avg_welfare')}</span>
+                  <span className="text-xs font-bold text-loser-rose font-mono tabular-nums">{fmt(totals.avgWelfare, true)}</span>
                 </div>
               </th>
 
               {/* Annual Drain */}
               <th
-                className="px-3 py-3 text-center align-middle min-w-[130px] whitespace-nowrap cursor-pointer select-none hover:text-slate-200 transition-colors sticky top-0 z-20 bg-[#0f172a]"
+                className="px-3 py-3 text-center align-middle min-w-[130px] whitespace-nowrap cursor-pointer select-none hover-text-primary transition-colors sticky top-0 z-20 bg-card"
                 onClick={() => handleSort('yearly')}
                 onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); handleSort('yearly'); } }}
                 tabIndex={0}
@@ -157,14 +156,14 @@ export default function MunicipalTable({
                 aria-sort={getSortDir('yearly', sortKey, sortAsc)}
               >
                 <div className="flex flex-col items-center gap-0.5">
-                  <span className="text-[10px] font-mono uppercase tracking-wider text-slate-500 flex items-center gap-1"><span className="inline-block w-1.5 h-1.5 rounded-full" style={{ backgroundColor: '#3B82F6' }} title="Published source data" />{t('tbl_total_drain')}</span>
-                  <span className="text-xs font-bold text-[#F87171] font-mono tabular-nums">{fmt(totals.totalDrainMillions, false)}</span>
+                  <span className="text-[10px] font-mono uppercase tracking-wider text-muted flex items-center gap-1"><span className="inline-block w-1.5 h-1.5 rounded-full bg-blue-accent" title="Published source data" />{t('tbl_total_drain')}</span>
+                  <span className="text-xs font-bold text-loser-rose font-mono tabular-nums">{fmt(totals.totalDrainMillions, false)}</span>
                 </div>
               </th>
 
               {/* Arrears */}
               <th
-                className="px-3 py-3 text-center align-middle min-w-[120px] whitespace-nowrap cursor-pointer select-none hover:text-slate-200 transition-colors sticky top-0 z-20 bg-[#0f172a]"
+                className="px-3 py-3 text-center align-middle min-w-[120px] whitespace-nowrap cursor-pointer select-none hover-text-primary transition-colors sticky top-0 z-20 bg-card"
                 onClick={() => handleSort('arrears')}
                 onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); handleSort('arrears'); } }}
                 tabIndex={0}
@@ -172,21 +171,21 @@ export default function MunicipalTable({
                 aria-sort={getSortDir('arrears', sortKey, sortAsc)}
               >
                 <div className="flex flex-col items-center gap-0.5">
-                  <span className="text-[10px] font-mono uppercase tracking-wider text-slate-500 flex items-center gap-1"><span className="inline-block w-1.5 h-1.5 rounded-full" style={{ backgroundColor: '#10B981' }} title="Real Treasury data" />{t('tbl_total_arrears')}</span>
-                  <span className="text-xs font-bold text-slate-400 font-mono tabular-nums">{fmt(totals.totalArrearsMillions, false)}</span>
+                  <span className="text-[10px] font-mono uppercase tracking-wider text-muted flex items-center gap-1"><span className="inline-block w-1.5 h-1.5 rounded-full bg-gainer-green" title="Real Treasury data" />{t('tbl_total_arrears')}</span>
+                  <span className="text-xs font-bold text-secondary font-mono tabular-nums">{fmt(totals.totalArrearsMillions, false)}</span>
                 </div>
               </th>
 
               {/* Unemployed */}
               <th
-                className="px-3 py-3 text-center align-middle min-w-[140px] whitespace-nowrap cursor-pointer select-none hover:text-slate-200 transition-colors sticky top-0 z-20 bg-[#0f172a]"
+                className="px-3 py-3 text-center align-middle min-w-[140px] whitespace-nowrap cursor-pointer select-none hover-text-primary transition-colors sticky top-0 z-20 bg-card"
                 onClick={() => handleSort('unemployment')}
                 onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); handleSort('unemployment'); } }}
                 tabIndex={0}
                 role="columnheader"
                 aria-sort={getSortDir('unemployment', sortKey, sortAsc)}
               >
-                <span className="inline-flex items-center gap-1 justify-center text-[10px] font-mono uppercase tracking-wider text-slate-500">
+                <span className="inline-flex items-center gap-1 justify-center text-[10px] font-mono uppercase tracking-wider text-muted">
                   {t('tbl_unemployed')}
                   <SortIcon columnKey="unemployment" sortKey={sortKey} sortAsc={sortAsc} />
                 </span>
@@ -196,37 +195,37 @@ export default function MunicipalTable({
                 <>
                   {/* Structural */}
                   <th className="relative group cursor-help whitespace-nowrap px-3 py-3 text-center align-middle min-w-[140px]">
-                    <span className="text-[10px] font-mono uppercase tracking-wider text-slate-500">{t('tbl_structural')}</span>
-                    <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2 py-1 bg-slate-800 border border-slate-600 rounded text-[10px] text-slate-300 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap z-50">
+                    <span className="text-[10px] font-mono uppercase tracking-wider text-muted">{t('tbl_structural')}</span>
+                    <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2 py-1 bg-elevated border border-card rounded text-[10px] text-secondary opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap z-50">
                       Структурна компонента на одливот
                     </div>
                   </th>
 
                   {/* Correction */}
                   <th className="relative group cursor-help whitespace-nowrap px-3 py-3 text-center align-middle min-w-[110px]">
-                    <span className="text-[10px] font-mono uppercase tracking-wider text-slate-500">{t('tbl_correction')}</span>
-                    <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2 py-1 bg-slate-800 border border-slate-600 rounded text-[10px] text-slate-300 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap z-50">
+                    <span className="text-[10px] font-mono uppercase tracking-wider text-muted">{t('tbl_correction')}</span>
+                    <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2 py-1 bg-elevated border border-card rounded text-[10px] text-secondary opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap z-50">
                       Корективен фактор
                     </div>
                   </th>
 
                   {/* Phase */}
-                  <th className="px-3 py-3 text-center align-middle min-w-[60px] whitespace-nowrap text-[10px] font-mono uppercase tracking-wider text-slate-500">
+                  <th className="px-3 py-3 text-center align-middle min-w-[60px] whitespace-nowrap text-[10px] font-mono uppercase tracking-wider text-muted">
                     {t('hdr_phase')}
                   </th>
 
                   {/* Risk / Discipline */}
                   <th className="relative group cursor-help whitespace-nowrap px-3 py-3 text-center align-middle min-w-[80px]">
-                    <span className="text-[10px] font-mono uppercase tracking-wider text-slate-500">{t('hdr_discipline')}</span>
-                    <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2 py-1 bg-slate-800 border border-slate-600 rounded text-[10px] text-slate-300 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap z-50">
+                    <span className="text-[10px] font-mono uppercase tracking-wider text-muted">{t('hdr_discipline')}</span>
+                    <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2 py-1 bg-elevated border border-card rounded text-[10px] text-secondary opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap z-50">
                       Ризик базиран на однос заостанати долгови/приходи
                     </div>
                   </th>
 
                   {/* Credit Rating */}
                   <th className="relative group cursor-help whitespace-nowrap px-3 py-3 text-center align-middle min-w-[60px]">
-                    <span className="text-[10px] font-mono uppercase tracking-wider text-slate-500">RATING*</span>
-                    <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2 py-1 bg-slate-800 border border-slate-600 rounded text-[10px] text-slate-300 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap z-50">
+                    <span className="text-[10px] font-mono uppercase tracking-wider text-muted">RATING*</span>
+                    <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2 py-1 bg-elevated border border-card rounded text-[10px] text-secondary opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap z-50">
                       Кредитен рејтинг: B1 (Moody's, Штип 2017) или NR
                     </div>
                   </th>
@@ -241,8 +240,8 @@ export default function MunicipalTable({
                     aria-sort={getSortDir('prediction', sortKey, sortAsc)}
                   >
                     <div className="inline-flex flex-col items-center gap-1">
-                      <span className="text-[10px] font-mono uppercase tracking-wider text-slate-500">MODEL</span>
-                      <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2 py-1 bg-slate-800 border border-slate-600 rounded text-[10px] text-slate-300 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap z-50">
+                      <span className="text-[10px] font-mono uppercase tracking-wider text-muted">MODEL</span>
+                      <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2 py-1 bg-elevated border border-card rounded text-[10px] text-secondary opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap z-50">
                         Gainer/Loser предвидување од логистички модел
                       </div>
                     </div>
@@ -250,8 +249,8 @@ export default function MunicipalTable({
 
                   {/* Match */}
                   <th className="relative group cursor-help whitespace-nowrap px-2 py-3 text-center align-middle min-w-[70px]">
-                    <span className="text-[10px] font-mono uppercase tracking-wider text-slate-500">{t('hdr_match')}</span>
-                    <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2 py-1 bg-slate-800 border border-slate-600 rounded text-[10px] text-slate-300 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap z-50">
+                    <span className="text-[10px] font-mono uppercase tracking-wider text-muted">{t('hdr_match')}</span>
+                    <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2 py-1 bg-elevated border border-card rounded text-[10px] text-secondary opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap z-50">
                       Моделот точно/неточно ја предвидел класификацијата
                     </div>
                   </th>
@@ -266,8 +265,8 @@ export default function MunicipalTable({
                     aria-sort={getSortDir('probability', sortKey, sortAsc)}
                   >
                     <div className="inline-flex flex-col items-center gap-1">
-                      <span className="text-[10px] font-mono uppercase tracking-wider text-slate-500">PROB</span>
-                      <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2 py-1 bg-slate-800 border border-slate-600 rounded text-[10px] text-slate-300 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap z-50">
+                      <span className="text-[10px] font-mono uppercase tracking-wider text-muted">PROB</span>
+                      <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2 py-1 bg-elevated border border-card rounded text-[10px] text-secondary opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap z-50">
                         Веројатност од логистички модел
                       </div>
                     </div>
@@ -290,10 +289,10 @@ export default function MunicipalTable({
                   aria-pressed={isFocused}
                   onClick={() => setFocusedMuniId(prev => prev === muni.id ? null : muni.id)}
                   onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setFocusedMuniId(prev => prev === muni.id ? null : muni.id); } }}
-                  className="transition-all duration-200 hover:bg-white/[0.06] cursor-pointer group"
+                  className="transition-all duration-200 hover-bg cursor-pointer group"
                   style={{
-                    borderBottom: i < sortedResults.length - 1 ? '1px solid rgba(27,42,74,0.4)' : 'none',
-                    backgroundColor: isFocused ? 'rgba(245,158,11,0.03)' : (i % 2 === 0 ? 'rgba(255,255,255,0.008)' : 'rgba(0,0,0,0.015)'),
+                    borderBottom: i < sortedResults.length - 1 ? '1px solid var(--border-light)' : 'none',
+                    backgroundColor: isFocused ? 'rgba(245,158,11,0.03)' : (i % 2 === 0 ? 'var(--bg-hover)' : 'var(--bg-section-transparent)'),
                     borderLeft: isFocused ? '2px solid #f59e0b' : undefined,
                     boxShadow: isFocused ? 'inset 0 0 12px rgba(245,158,11,0.02)' : undefined,
                   }}
@@ -305,44 +304,44 @@ export default function MunicipalTable({
                       zIndex: 3,
                       isolation: 'isolate',
                       willChange: 'transform',
-                      backgroundColor: isFocused ? 'rgb(30,41,59)' : (i % 2 === 0 ? 'rgb(15,23,42)' : 'rgb(11,17,32)'),
+                      backgroundColor: isFocused ? 'var(--bg-card)' : (i % 2 === 0 ? 'var(--bg-root)' : 'var(--bg-section-transparent)'),
                     }}
                   >
                     <div className="flex items-center gap-2.5">
-                      <span className={`font-semibold whitespace-nowrap transition-colors duration-200 text-sm ${isFocused ? 'text-amber-300' : 'text-slate-200 group-hover:text-white'}`}>
+                      <span className={`font-semibold whitespace-nowrap transition-colors duration-200 text-sm ${isFocused ? 'text-amber-light' : 'text-secondary group-hover-text-primary'}`}>
                         {getMuniName(muni, locale)}
                       </span>
-                      <div className="hidden sm:block h-1 w-12 rounded-full bg-slate-800 overflow-hidden flex-shrink-0">
+                      <div className="hidden sm:block h-1 w-12 rounded-full bg-chart-bg overflow-hidden flex-shrink-0">
                         <div className="h-full rounded-full transition-all duration-300" style={{ width: `${(sparkWidth / 60) * 100}%`, backgroundColor: '#F59E0B' }} />
                       </div>
-                      <svg className="w-3.5 h-3.5 text-slate-700 group-hover:text-amber-500/50 transition-colors duration-200 ml-auto opacity-0 group-hover:opacity-100 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                      <svg className="w-3.5 h-3.5 text-muted group-hover-text-drain-amber/50 transition-colors duration-200 ml-auto opacity-0 group-hover:opacity-100 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                       </svg>
                     </div>
                   </td>
 
                   {/* Capita Drain */}
-                  <td className="px-3 py-2.5 text-right font-semibold tabular-nums text-sm" style={{ color: '#F59E0B' }}>
+                  <td className="px-3 py-2.5 text-right font-semibold tabular-nums text-sm text-drain-amber">
                     {fmt(muni.totalPerCapitaDrain, true)}
                   </td>
 
                   {/* Tax Leakage */}
-                  <td className="px-3 py-2.5 text-right tabular-nums text-sm" style={{ color: '#F59E0B' }}>
+                  <td className="px-3 py-2.5 text-right tabular-nums text-sm text-drain-amber">
                     {fmt(muni.uncollectedLeakage, true)}
                   </td>
 
                   {/* Welfare */}
-                  <td className="px-3 py-2.5 text-right tabular-nums text-sm" style={{ color: '#F87171' }}>
+                  <td className="px-3 py-2.5 text-right tabular-nums text-sm text-loser-rose">
                     {fmt(muni.welfareBurden, true)}
                   </td>
 
                   {/* Annual Drain */}
-                  <td className="px-3 py-2.5 text-right font-semibold tabular-nums text-sm" style={{ color: '#F87171' }}>
+                  <td className="px-3 py-2.5 text-right font-semibold tabular-nums text-sm text-loser-rose">
                     {fmt(muni.totalYearlyDrain / 1_000_000, false)}
                   </td>
 
                   {/* Arrears */}
-                  <td className="px-3 py-2.5 text-right tabular-nums text-sm" style={{ color: '#64748b' }}>
+                  <td className="px-3 py-2.5 text-right tabular-nums text-sm text-tertiary">
                     {(() => {
                       const nf = NET_FISCAL[muni.id];
                       if (!nf || !nf.arrears) return '—';
@@ -351,12 +350,12 @@ export default function MunicipalTable({
                   </td>
 
                   {/* Unemployed */}
-                  <td className="px-3 py-2.5 text-right tabular-nums text-sm" style={{ color: '#38bdf8' }}>
+                  <td className="px-3 py-2.5 text-right tabular-nums text-sm text-sky-accent">
                     {(() => {
                       const ud = UNEMPLOYMENT_DATA[muni.id];
                       if (!ud) return '—';
                       const fiscalLoss = ud.registered * FISCAL_LOSS_PER_UNEMPLOYED.totalAnnual;
-                      return <>{ud.registered.toLocaleString()} <span className="text-[10px] text-slate-600">/ €{Math.round(fiscalLoss / muni.workingAgePop).toLocaleString()}{t('pc_abbr')}</span></>;
+                      return <>{ud.registered.toLocaleString()} <span className="text-[10px] text-muted">/ €{Math.round(fiscalLoss / muni.workingAgePop).toLocaleString()}{t('pc_abbr')}</span></>;
                     })()}
                   </td>
 
@@ -364,13 +363,13 @@ export default function MunicipalTable({
                   <td className="px-3 py-2.5">
                     <div className="flex items-center gap-3">
                       <div className="flex items-center gap-1.5">
-                        <span className="w-1 h-1 rounded-full bg-amber-500 flex-shrink-0" />
-                        <span className="text-[11px] tabular-nums" style={{ color: '#94a3b8' }}>{muni.adjustedShadowEcon}%</span>
+                        <span className="w-1 h-1 rounded-full bg-drain-amber flex-shrink-0" />
+                        <span className="text-[11px] tabular-nums text-secondary">{muni.adjustedShadowEcon}%</span>
                       </div>
-                      <div className="w-[1px] h-3 bg-slate-700" />
+                      <div className="w-[1px] h-3 bg-border-light" />
                       <div className="flex items-center gap-1.5">
-                        <span className="w-1 h-1 rounded-full bg-emerald-500 flex-shrink-0" />
-                        <span className="text-[11px] tabular-nums" style={{ color: '#94a3b8' }}>{muni.adjustedCompliance}%</span>
+                        <span className="w-1 h-1 rounded-full bg-gainer-green flex-shrink-0" />
+                        <span className="text-[11px] tabular-nums text-secondary">{muni.adjustedCompliance}%</span>
                       </div>
                     </div>
                   </td>
@@ -388,8 +387,8 @@ export default function MunicipalTable({
                       return (
                         <span title={isP2 ? t('phase_tooltip_2') : t('phase_tooltip_1')} className={`inline-flex items-center justify-center px-1.5 py-0.5 rounded text-[10px] font-mono font-bold cursor-help ${
                           isP2
-                            ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20'
-                            : 'bg-amber-500/10 text-amber-400 border border-amber-500/20'
+                            ? 'bg-gainer-green/10 text-gainer-green border-gainer-green/20'
+                            : 'bg-drain-amber/10 text-drain-amber border-drain-amber/20'
                         }`}>
                           {isP2 ? 'P2' : 'P1'}
                         </span>
@@ -403,13 +402,13 @@ export default function MunicipalTable({
                       const tier = muni.p2_risk_tier || '—';
                       let colorClass;
                       if (tier === t('risk_low')) {
-                        colorClass = 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20';
+                        colorClass = 'bg-gainer-green/10 text-gainer-green border-gainer-green/20';
                       } else if (tier === t('risk_watch')) {
-                        colorClass = 'bg-amber-500/10 text-amber-400 border-amber-500/20';
+                        colorClass = 'bg-drain-amber/10 text-drain-amber border-drain-amber/20';
                       } else if (tier === t('risk_high')) {
-                        colorClass = 'bg-red-500/10 text-red-400 border-red-500/20';
+                        colorClass = 'bg-loser-rose/10 text-loser-rose border-loser-rose/20';
                       } else {
-                        colorClass = 'bg-slate-500/10 text-slate-400 border-slate-500/20';
+                        colorClass = 'bg-muted/10 text-muted border-muted/20';
                       }
                       return (
                         <span className={`inline-flex items-center justify-center px-1.5 py-0.5 rounded text-[10px] font-mono font-bold border ${colorClass}`}>
@@ -425,13 +424,13 @@ export default function MunicipalTable({
                       const rating = muni.creditRating || 'NR';
                       if (rating === 'B1') {
                         return (
-                          <span className="inline-flex items-center justify-center px-1.5 py-0.5 rounded text-[10px] font-mono font-bold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+                          <span className="inline-flex items-center justify-center px-1.5 py-0.5 rounded text-[10px] font-mono font-bold bg-gainer-green/10 text-gainer-green border-gainer-green/20">
                             {rating}
                           </span>
                         );
                       }
                       return (
-                        <span className="inline-flex items-center justify-center px-1.5 py-0.5 rounded text-[10px] font-mono font-bold bg-slate-500/10 text-slate-400 border border-slate-500/20">
+                        <span className="inline-flex items-center justify-center px-1.5 py-0.5 rounded text-[10px] font-mono font-bold bg-muted/10 text-muted border-muted/20">
                           NR
                         </span>
                       );
@@ -443,7 +442,7 @@ export default function MunicipalTable({
                     {(() => {
                       if (!muni.inTrainingSet) {
                         return (
-                          <span className="inline-flex items-center justify-center px-1.5 py-0.5 rounded text-[10px] font-mono font-bold bg-slate-500/10 text-slate-400 border border-slate-500/20">
+                          <span className="inline-flex items-center justify-center px-1.5 py-0.5 rounded text-[10px] font-mono font-bold bg-muted/10 text-muted border-muted/20">
                             {t('pred_na')}
                           </span>
                         );
@@ -452,8 +451,8 @@ export default function MunicipalTable({
                       return (
                         <span className={`inline-flex items-center justify-center px-1.5 py-0.5 rounded text-[10px] font-mono font-bold ${
                           isGainer
-                            ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20'
-                            : 'bg-red-500/10 text-red-400 border border-red-500/20'
+                            ? 'bg-gainer-green/10 text-gainer-green border-gainer-green/20'
+                            : 'bg-loser-rose/10 text-loser-rose border-loser-rose/20'
                         }`}>
                           {isGainer ? t('pred_gainer') : t('pred_loser')}
                         </span>
@@ -465,7 +464,7 @@ export default function MunicipalTable({
                   <td className="px-2 py-2.5 text-center">
                     {(() => {
                       if (!muni.inTrainingSet) {
-                        return <span className="text-[10px] font-mono" style={{ color: '#64748b' }}>—</span>;
+                        return <span className="text-[10px] font-mono text-muted">—</span>;
                       }
                       const nf = NET_FISCAL[muni.id];
                       if (!nf) return '—';
@@ -484,11 +483,11 @@ export default function MunicipalTable({
                   <td className="px-2 py-2.5 text-center">
                     {(() => {
                       if (!muni.inTrainingSet) {
-                        return <span className="text-[10px] font-mono" style={{ color: '#64748b' }}>—</span>;
+                        return <span className="text-[10px] font-mono text-muted">—</span>;
                       }
                       const probStr = Math.round(muni.probReduced * 100) + '%';
                       return (
-                        <span className="text-[11px] font-mono font-semibold tabular-nums" style={{ color: '#F59E0B' }}>
+                        <span className="text-[11px] font-mono font-semibold tabular-nums text-drain-amber">
                           {probStr}
                         </span>
                       );
@@ -502,10 +501,10 @@ export default function MunicipalTable({
       </div>
 
       {/* Legend */}
-      <div className="mt-2 flex flex-wrap gap-4 text-[10px] font-mono text-slate-500 px-5 pb-4">
-        <span>Фаза: <span className="text-emerald-400">🟢 P2</span> = блок дотации (со плати)</span>
-        <span><span className="text-amber-400">🟡 P1</span> = наменски дотации (без плати)</span>
-        <span>Ризик: <span className="text-red-400">🔴 High</span> · <span className="text-amber-400">🟡 Watch</span> · <span className="text-emerald-400">🟢 Low</span></span>
+      <div className="mt-2 flex flex-wrap gap-4 text-[10px] font-mono text-muted px-5 pb-4">
+        <span>Фаза: <span className="text-gainer-green">🟢 P2</span> = блок дотации (со плати)</span>
+        <span><span className="text-drain-amber">🟡 P1</span> = наменски дотации (без плати)</span>
+        <span>Ризик: <span className="text-loser-rose">🔴 High</span> · <span className="text-drain-amber">🟡 Watch</span> · <span className="text-gainer-green">🟢 Low</span></span>
       </div>
     </section>
   );

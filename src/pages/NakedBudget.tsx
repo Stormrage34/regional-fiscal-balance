@@ -414,6 +414,7 @@ export default function NakedBudget() {
           linear-gradient(90deg, rgba(148,163,184,0.04) 1px, transparent 1px)
         `,
         backgroundSize: '60px 60px',
+        pointerEvents: 'none',
       }} />
 
       {/* Gradient orbs */}
@@ -481,7 +482,7 @@ export default function NakedBudget() {
                   e.currentTarget.style.boxShadow = '0 0 12px rgba(245,158,11,0.15)';
                 }}
               >
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" strokeWidth="1.5" className="flex-shrink-0">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" strokeWidth="1.5" className="flex-shrink-0" aria-hidden="true">
                   <path d="M18 8h1a4 4 0 0 1 0 8h-1" />
                   <path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z" />
                   <line x1="6" y1="1" x2="6" y2="4" />
@@ -494,7 +495,7 @@ export default function NakedBudget() {
             <button
               type="button"
               onClick={() => setSidebarOpen(true)}
-              className="md:hidden flex items-center gap-1.5 px-3 py-1.5 rounded-full font-mono text-xs text-secondary border border-card hover:text-primary hover:border-card transition-colors"
+              className="md:hidden relative z-20 flex items-center gap-1.5 px-3 py-1.5 rounded-full font-mono text-xs text-secondary border border-card hover:text-primary hover:border-card transition-colors touch-manipulation"
               aria-label={t('sidebar_open')}
             >
               <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -504,7 +505,7 @@ export default function NakedBudget() {
             <button
               type="button"
               onClick={() => setSidebarOpen(!sidebarOpen)}
-              className="md:hidden flex items-center justify-center w-11 h-11 rounded-lg border border-card hover:bg-card transition-colors ml-auto"
+              className="md:hidden relative z-20 flex items-center justify-center w-11 h-11 rounded-lg border border-card hover:bg-card transition-colors touch-manipulation"
               aria-label={sidebarOpen ? t('sidebar_close') : t('sidebar_open')}
             >
               <svg width="16" height="16" viewBox="0 0 16 16" fill="none" style={{ color: '#94a3b8' }} aria-hidden="true">
@@ -584,7 +585,7 @@ export default function NakedBudget() {
         <section id="section-balance" className="rounded-xl relative overflow-hidden mb-12 transition-all duration-300 hover:shadow-[0_0_20px_rgba(99,102,241,0.05)]" style={{ backgroundColor: 'rgba(11,17,32,0.4)', borderColor: '#1F3050', borderWidth: 1 }}>
           <div className="flex items-center gap-2 mb-4">
             <span title={TRUST.real.label} className="inline-block w-1.5 h-1.5 rounded-full flex-shrink-0" style={{ backgroundColor: TRUST.real.color }} />
-            <h2 className="text-xs font-sans font-semibold uppercase tracking-widest" style={{ color: '#94a3b8' }}>
+            <h2 className="text-xs font-sans font-semibold uppercase tracking-widest text-secondary">
               {t('net_fiscal')}
             </h2>
             <span className="text-[10px] font-mono px-2 py-0.5 rounded" style={{ backgroundColor: '#334155', color: '#94a3b8' }}>
@@ -628,7 +629,7 @@ export default function NakedBudget() {
         <section id="section-regional-balance" className="rounded-xl relative overflow-hidden mb-12 transition-all duration-300 hover:shadow-[0_0_20px_rgba(99,102,241,0.05)]" style={{ backgroundColor: 'rgba(11,17,32,0.4)', borderColor: '#1F3050', borderWidth: 1 }}>
           <div className="flex items-center gap-2 mb-4 px-5 pt-5">
             <span title={TRUST.real.label} className="inline-block w-1.5 h-1.5 rounded-full flex-shrink-0" style={{ backgroundColor: TRUST.real.color }} />
-            <h2 className="text-xs font-sans font-semibold uppercase tracking-widest" style={{ color: '#94a3b8' }}>
+            <h2 className="text-xs font-sans font-semibold uppercase tracking-widest text-secondary">
               {t('section_regional_balance')}
             </h2>
           </div>
@@ -660,7 +661,7 @@ export default function NakedBudget() {
         <section id="section-labor-market" className="rounded-xl relative overflow-hidden mb-12 transition-all duration-300 hover:shadow-[0_0_20px_rgba(99,102,241,0.05)]" style={{ backgroundColor: 'rgba(11,17,32,0.4)', borderColor: '#1F3050', borderWidth: 1 }}>
           <div className="flex items-center gap-2 mb-4 px-5 pt-5">
             <span title={TRUST.derived.label} className="inline-block w-1.5 h-1.5 rounded-full flex-shrink-0" style={{ backgroundColor: TRUST.derived.color }} />
-            <h2 className="text-xs font-sans font-semibold uppercase tracking-widest" style={{ color: '#94a3b8' }}>
+            <h2 className="text-xs font-sans font-semibold uppercase tracking-widest text-secondary">
               {t('section_labor_market')}
             </h2>
           </div>
@@ -676,7 +677,7 @@ export default function NakedBudget() {
         <section id="section-callouts" className="mb-12">
           <div className="flex items-center gap-2 mb-4">
             <span title={TRUST.derived.label} className="inline-block w-1.5 h-1.5 rounded-full flex-shrink-0" style={{ backgroundColor: TRUST.derived.color }} />
-            <h2 className="text-xs font-sans font-semibold uppercase tracking-widest mb-0" style={{ color: '#94a3b8' }}>
+            <h2 className="text-xs font-sans font-semibold uppercase tracking-widest mb-0 text-secondary">
               {t('callout_title')}
             </h2>
           </div>
@@ -785,7 +786,7 @@ export default function NakedBudget() {
           <div className="relative">
             <div className="flex items-center gap-2 px-5 pt-5 pb-2">
               <span title={TRUST.derived.label} className="inline-block w-1.5 h-1.5 rounded-full flex-shrink-0" style={{ backgroundColor: TRUST.derived.color }} />
-              <h2 className="text-xs font-sans font-semibold uppercase tracking-widest mb-0" style={{ color: '#94a3b8' }}>
+              <h2 className="text-xs font-sans font-semibold uppercase tracking-widest mb-0 text-secondary">
                 {t('method_title')}
               </h2>
             </div>
@@ -833,7 +834,7 @@ export default function NakedBudget() {
             <div>
               <div className="flex items-center gap-2">
                 <span title={TRUST.derived.label} className="inline-block w-1.5 h-1.5 rounded-full flex-shrink-0" style={{ backgroundColor: TRUST.derived.color }} />
-                <h2 className="text-xs font-sans font-semibold uppercase tracking-widest mb-0" style={{ color: '#94a3b8' }}>
+                <h2 className="text-xs font-sans font-semibold uppercase tracking-widest mb-0 text-secondary">
                   {t('muni_profiles')}
                 </h2>
               </div>
@@ -949,7 +950,7 @@ export default function NakedBudget() {
                 e.currentTarget.style.boxShadow = '0 0 12px rgba(245,158,11,0.15)';
               }}
             >
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" strokeWidth="1.5" className="flex-shrink-0">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" strokeWidth="1.5" className="flex-shrink-0" aria-hidden="true">
                 <path d="M18 8h1a4 4 0 0 1 0 8h-1" />
                 <path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z" />
                 <line x1="6" y1="1" x2="6" y2="4" />

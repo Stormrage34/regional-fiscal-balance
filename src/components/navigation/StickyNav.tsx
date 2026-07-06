@@ -93,7 +93,7 @@ export default function StickyNav() {
             aria-expanded={mobileOpen}
             aria-label={mobileOpen ? t('nav_menu_close') : t('nav_menu_open')}
           >
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
               {mobileOpen
                 ? <path d="M18 6L6 18M6 6l12 12" strokeLinecap="round" />
                 : <><path d="M4 6h16M4 12h16M4 18h16" strokeLinecap="round" /></>

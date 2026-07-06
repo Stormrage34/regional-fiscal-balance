@@ -66,9 +66,9 @@ export default function MunicipalTable({
       <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-border-light to-transparent" />
 
       <div className="px-5 py-3.5 border-b flex items-center justify-between relative border-card">
-        <h3 className="text-xs font-mono uppercase tracking-widest text-secondary">
+        <div className="text-xs font-mono uppercase tracking-widest text-secondary">
           {t('muni_profiles')}
-        </h3>
+        </div>
         <span className="text-[10px] font-mono text-secondary">
           {t('muni_sort')}
         </span>
@@ -81,7 +81,7 @@ export default function MunicipalTable({
         <span className="flex items-center gap-1"><span className="w-1.5 h-1.5 rounded-full bg-loser-rose flex-shrink-0" />Estimated</span>
       </div>
 
-      <div className="w-full overflow-x-auto overflow-y-auto max-h-[520px]">
+      <div className="w-full overflow-x-auto overflow-y-auto max-h-[520px]" style={{ maskImage: 'linear-gradient(to right, black 95%, transparent 100%)', WebkitMaskImage: 'linear-gradient(to right, black 95%, transparent 100%)' }}>
         <table className="w-full text-sm font-mono border-collapse table-auto">
           <thead>
             {/* ═══ Single Row Header with Macro Averages inline ═══ */}

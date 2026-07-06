@@ -65,8 +65,8 @@ export default function ComplianceScatter({ data, onMuniClick, focusedId }) {
   const maxComp = 100;
 
   // Jitter magnitude: small enough to preserve trends, large enough to separate clusters
-  const magX = maxComp * 0.04; // ±4 compliance points
-  const magY = maxLeak * 0.04; // ±4% of leakage range
+  const magX = maxComp * 0.06; // ±6 compliance points
+  const magY = maxLeak * 0.06; // ±6% of leakage range
 
   const points = data.map(m => {
     const { dx, dy } = jitter(m.id, magX, magY);
@@ -90,7 +90,7 @@ export default function ComplianceScatter({ data, onMuniClick, focusedId }) {
   const xTicks = [0, 20, 40, 60, 80, 100];
 
   const isMobile = width < 480;
-  const dotRadius = (pop) => Math.max(5, Math.min(9, Math.sqrt(pop / 800)));
+  const dotRadius = (pop) => Math.max(4, Math.min(8, Math.sqrt(pop / 1000)));
   const hitRadius = (r) => r * 2.5;
 
   const handleMouseLeave = () => setHoveredId(null);
@@ -186,10 +186,10 @@ export default function ComplianceScatter({ data, onMuniClick, focusedId }) {
                 cx={cx} cy={cy}
                 r={r + (isFocused || isHovered ? 3 : 0)}
                 fill={dotColor}
-                fillOpacity={isFocused || isHovered ? 1 : 0.82}
-                stroke={isFocused ? 'var(--text-primary)' : dotColor}
-                strokeWidth={isFocused ? 2.5 : isHovered ? 1.5 : 0.5}
-                strokeOpacity={0.6}
+                fillOpacity={isFocused || isHovered ? 1 : 0.6}
+                stroke="var(--text-primary)"
+                strokeWidth={isFocused ? 2 : isHovered ? 1.2 : 0.8}
+                strokeOpacity={isFocused ? 0.8 : 0.2}
               />
               {/* Focus label with background */}
               {(isFocused || isHovered) && (

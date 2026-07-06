@@ -379,7 +379,7 @@ export default function MunicipalTable({
                       const phase = muni.phase || 1;
                       const isP2 = phase === 2;
                       return (
-                        <span className={`inline-flex items-center justify-center px-1.5 py-0.5 rounded text-[10px] font-mono font-bold ${
+                        <span title={isP2 ? t('phase_tooltip_2') : t('phase_tooltip_1')} className={`inline-flex items-center justify-center px-1.5 py-0.5 rounded text-[10px] font-mono font-bold cursor-help ${
                           isP2
                             ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20'
                             : 'bg-amber-500/10 text-amber-400 border border-amber-500/20'
@@ -496,8 +496,8 @@ export default function MunicipalTable({
 
       {/* Legend */}
       <div className="mt-2 flex flex-wrap gap-4 text-[10px] font-mono text-slate-500 px-5 pb-4">
-        <span>Фаза: <span className="text-emerald-400">🟢 P2</span> = целосни компетенции</span>
-        <span><span className="text-amber-400">🟡 P1</span> = делумни компетенции</span>
+        <span>Фаза: <span className="text-emerald-400">🟢 P2</span> = блок дотации (со плати)</span>
+        <span><span className="text-amber-400">🟡 P1</span> = наменски дотации (без плати)</span>
         <span>Ризик: <span className="text-red-400">🔴 High</span> · <span className="text-amber-400">🟡 Watch</span> · <span className="text-emerald-400">🟢 Low</span></span>
       </div>
     </section>

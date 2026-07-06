@@ -1,4 +1,4 @@
-import { SKOPIE_PROPERTY_TAX, getMuniName, MKD_PER_EUR } from '../../data/fiscalData.js';
+import { SKOPIE_PROPERTY_TAX, MUNICIPALITIES, getMuniName, MKD_PER_EUR } from '../../data/fiscalData.js';
 import { useLocale } from '../../context/LocaleContext.jsx';
 
 /**
@@ -19,13 +19,16 @@ export default function SkopjeCapitalSection({ aggregates = {} }) {
   
   // Sort boroughs by collection rate descending
   const boroughs = Object.entries(SKOPIE_PROPERTY_TAX)
-    .map(([id, data]) => ({ id, ...data }))
+    .map(([id, data]) => ({ 
+      id, ...data, 
+      muni: MUNICIPALITIES.find(m => m.id === id) || { id, name: id, name_mk: id, name_sq: id }
+    }))
     .sort((a, b) => b.collectionRate - a.collectionRate);
 
   const maxRevenue = Math.max(...boroughs.map(b => b.annualRevenueK));
 
   return (
-    <section className="rounded-xl relative overflow-hidden mb-8 transition-all duration-300" style={{ 
+    <section id="section-skopje" className="rounded-xl relative overflow-hidden mb-8 transition-all duration-300" style={{ 
       backgroundColor: 'rgba(11,17,32,0.6)', 
       borderColor: '#B8860B', // Dark goldenrod — capital accent
       borderWidth: 1,
@@ -108,7 +111,7 @@ export default function SkopjeCapitalSection({ aggregates = {} }) {
               {/* Borough name */}
               <div className="w-28 text-right flex-shrink-0">
                 <span className="text-[11px] font-mono text-slate-300 group-hover:text-white transition-colors">
-                  {getMuniName({ id: b.id }, locale)}
+                  {getMuniName(b.muni, locale)}
                 </span>
               </div>
 

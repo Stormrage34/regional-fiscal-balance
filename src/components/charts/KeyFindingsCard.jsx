@@ -3,7 +3,7 @@
  */
 export default function KeyFindingsCard() {
   return (
-    <section className="max-w-3xl mx-auto mb-8">
+    <section id="section-findings" className="max-w-3xl mx-auto mb-8">
       <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
         <Finding 
           icon="🔴" 

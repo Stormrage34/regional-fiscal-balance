@@ -3,7 +3,7 @@
  */
 import { useLocale } from '../../context/LocaleContext.jsx';
 
-export default function KeyFindingsCard({ skopjeSurplusEURm }) {
+export default function KeyFindingsCard({ skopjeSurplusEURm, loserCount = 63, totalMunis = 77 }) {
   const { t, locale } = useLocale();
 
   // Compute dynamic surplus if not provided as prop
@@ -21,7 +21,7 @@ export default function KeyFindingsCard({ skopjeSurplusEURm }) {
       <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
         <Finding 
           icon="🔴" 
-          text={t('key_finding_1')}
+          text={t('key_finding_1').replace('{n}', String(loserCount)).replace('{total}', String(totalMunis))}
         />
         <Finding 
           icon="🟢" 
@@ -38,10 +38,7 @@ export default function KeyFindingsCard({ skopjeSurplusEURm }) {
 
 function Finding({ icon, text }) {
   return (
-    <div className="rounded-lg px-4 py-3 border" style={{ 
-      backgroundColor: 'rgba(15,23,42,0.6)', 
-      borderColor: 'rgba(51,65,85,0.5)' 
-    }}>
+    <div className="rounded-lg px-4 py-3 border bg-section border-card">
       <div className="flex items-start gap-2">
         <span className="text-lg flex-shrink-0">{icon}</span>
         <p className="text-[11px] font-mono leading-relaxed text-primary">

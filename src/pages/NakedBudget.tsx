@@ -554,7 +554,7 @@ export default function NakedBudget() {
             {results.length} {t('hero_municipalities').split('·')[0]?.trim() || ''} · {aggregates.totalPop.toLocaleString()} {t('hero_municipalities').split('·')[1]?.trim() || ''} · {t('hero_avg_prefix')} €{aggregates.weightedAvgDrain}{t('hero_per_person_suffix')}
           </p>
           <p className="text-[11px] leading-relaxed text-secondary max-w-2xl mx-auto mt-6 px-4">
-            {t('hero_description')}
+            {t('hero_description').replace('{n}', String(loserCount)).replace('{total}', String(MUNICIPALITIES.length))}
           </p>
         </section>
 
@@ -774,7 +774,7 @@ export default function NakedBudget() {
 
         {/* ═══ KEY FINDINGS ═══ */}
         <ErrorBoundary>
-          <KeyFindingsCard skopjeSurplusEURm={Math.round(netFiscalAggs.skopjeNet / MKD_PER_EUR / 1_000_000)} />
+          <KeyFindingsCard skopjeSurplusEURm={Math.round(netFiscalAggs.skopjeNet / MKD_PER_EUR / 1_000_000)} loserCount={loserCount} totalMunis={MUNICIPALITIES.length} />
         </ErrorBoundary>
 
         {/* ═══ CHARTS ═══ */}

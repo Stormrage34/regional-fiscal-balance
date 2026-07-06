@@ -1,9 +1,28 @@
-import { useMemo } from 'react';
+import { useMemo, useRef, useEffect, useState } from 'react';
 import { CONSTANTS, getMuniName } from '../../data/fiscalData.js';
 import { useLocale } from '../../context/LocaleContext.jsx';
 
 export default function PieMatrix({ data, onMuniClick }) {
   const { t, locale } = useLocale();
+  const gridRef = useRef(null);
+  const [renderCount, setRenderCount] = useState(20); // initial batch
+
+  // Expand to full render when grid enters viewport
+  useEffect(() => {
+    if (!gridRef.current || renderCount >= data.length) return;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting) {
+          setRenderCount(data.length);
+          observer.disconnect();
+        }
+      },
+      { rootMargin: '500px' }
+    );
+    observer.observe(gridRef.current);
+    return () => observer.disconnect();
+  }, [data.length, renderCount]);
+
   const sortedWithSegs = useMemo(() => {
     const items = [...data].sort((a, b) => (b.totalPerCapitaDrain || 0) - (a.totalPerCapitaDrain || 0));
     return items.map(muni => {
@@ -40,8 +59,8 @@ export default function PieMatrix({ data, onMuniClick }) {
 
   return (
     <div role="img" aria-label={t('chart_aria_matrix')}>
-      <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4">
-        {sortedWithSegs.map((muni) => {
+      <div ref={gridRef} className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4">
+        {sortedWithSegs.slice(0, renderCount).map((muni) => {
           return (
             <div
               key={muni.id}

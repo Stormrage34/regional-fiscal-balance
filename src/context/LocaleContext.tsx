@@ -41,7 +41,8 @@ export function LocaleProvider({ children }) {
   }, [locale]);
 
   const t = useCallback((key) => {
-    return translations?.[locale]?.[key] ?? translations?.['en']?.[key] ?? key;
+    if (!translations) return '';
+    return translations[locale]?.[key] ?? translations['en']?.[key] ?? key;
   }, [locale, translations]);
 
   const switchLocale = useCallback((l) => {

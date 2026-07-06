@@ -550,7 +550,7 @@ export default function NakedBudget() {
             €{Math.round(aggregates.totalYearlyDrain / 1_000_000)}M
           </p>
           <p className="text-xs font-mono text-tertiary mt-4">
-            {results.length} {t('hero_municipalities').split('·')[0].trim()} · {aggregates.totalPop.toLocaleString()} {t('hero_municipalities').split('·')[1].trim()} · {t('hero_avg_prefix')} €{aggregates.weightedAvgDrain}{t('hero_per_person_suffix')}
+            {results.length} {t('hero_municipalities').split('·')[0]?.trim() || ''} · {aggregates.totalPop.toLocaleString()} {t('hero_municipalities').split('·')[1]?.trim() || ''} · {t('hero_avg_prefix')} €{aggregates.weightedAvgDrain}{t('hero_per_person_suffix')}
           </p>
           <p className="text-[11px] leading-relaxed text-secondary max-w-2xl mx-auto mt-6 px-4">
             {t('hero_description')}

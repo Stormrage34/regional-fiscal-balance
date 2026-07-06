@@ -1,6 +1,6 @@
 import { LocaleProvider } from './context/LocaleContext.jsx';
 import { ThemeProvider } from './context/ThemeContext.jsx';
-import NakedBudget from './pages/NakedBudget.jsx';
+import NakedBudget from './pages/NakedBudget';
 
 export default function App() {
   return (

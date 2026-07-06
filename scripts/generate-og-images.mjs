@@ -5,7 +5,7 @@ import { fileURLToPath } from 'url';
 
 // ── Dynamic import of fiscal data ──
 // fiscalData.js only uses plain ESM exports, safe to import in Node.
-const fiscalDataPath = '../src/data/fiscalData.js';
+const fiscalDataPath = '../src/data/fiscalData.ts';
 const { MUNICIPALITIES, NET_FISCAL, MKD_PER_EUR, formatCurrency } = await import(fiscalDataPath);
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));

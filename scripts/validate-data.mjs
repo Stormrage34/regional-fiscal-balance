@@ -1,4 +1,4 @@
-import { MUNICIPALITIES, NET_FISCAL, UNEMPLOYMENT_DATA, MKD_PER_EUR } from '../src/data/fiscalData.js';
+import { MUNICIPALITIES, NET_FISCAL, UNEMPLOYMENT_DATA, MKD_PER_EUR } from '../src/data/fiscalData.ts';
 
 let errors = 0;
 

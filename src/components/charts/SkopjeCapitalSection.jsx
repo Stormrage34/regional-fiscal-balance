@@ -51,6 +51,7 @@ export default function SkopjeCapitalSection({ aggregates = {} }) {
             <path d="M2 20h20L18 8l-4 6-2-8-2 8-4-6z" stroke="#FFD700" strokeWidth="1.5" strokeLinejoin="round" />
             <circle cx="12" cy="18" r="1" fill="#FFD700" />
           </svg>
+          <span title="Real data from Ministry of Finance Treasury" className="inline-block w-1.5 h-1.5 rounded-full mr-1.5 align-middle flex-shrink-0" style={{ backgroundColor: '#10B981' }} />
           <h2 className="text-sm font-mono font-bold text-white tracking-widest uppercase">
             {t('capital_section_title')}
           </h2>
@@ -73,7 +74,10 @@ export default function SkopjeCapitalSection({ aggregates = {} }) {
           <div className="text-[10px] font-mono uppercase tracking-wider mb-1" style={{ color: '#64748b' }}>
             {t('capital_budget_surplus')}
           </div>
-          <div className="text-xl font-bold font-mono text-emerald-400">€{skopjeSurplusM}M</div>
+          <div className="text-xl font-bold font-mono text-emerald-400">
+            €{skopjeSurplusM}M
+            <span title="Per-borough Treasury data sums to ~4× the consolidated City of Skopje budget. Boroughs allocate shared city revenues individually. True aggregate surplus lies between €5.9M (city budget) and €123M (borough sum)." className="inline-block w-3.5 h-3.5 rounded-full bg-slate-600/40 text-[8px] text-slate-400 text-center leading-3 ml-1 cursor-help align-middle" aria-label="Data note">ⓘ</span>
+          </div>
           <div className="text-[10px] font-mono mt-0.5" style={{ color: '#475569' }}>+€{skopjeNetPC}/жител · Трезор 2025</div>
         </div>
         <div className="text-center">

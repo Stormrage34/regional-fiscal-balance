@@ -182,7 +182,10 @@ export default function NakedBudget() {
     }, 0);
     const skopjeNet = skopjeRev - skopjeOut;
     const skopjeNetPC = skopjePop > 0 ? Math.round(skopjeNet / MKD_PER_EUR / skopjePop) : 0;
-    return { gainers, losers, totalRev, totalOut, totalNet, totalArrears, skopjeRev, skopjeOut, skopjePop, skopjeNet, skopjeNetPC };
+    // Dynamic national avg own revenue per capita (EUR) — total revenue / total pop
+    const totalPopAll = results.reduce((s, r) => s + r.workingAgePop / 0.67, 0);
+    const nationalAvgRevPC = totalPopAll > 0 ? Math.round((totalRev / MKD_PER_EUR) / totalPopAll) : 500;
+    return { gainers, losers, totalRev, totalOut, totalNet, totalArrears, skopjeRev, skopjeOut, skopjePop, skopjeNet, skopjeNetPC, nationalAvgRevPC };
   }, [results]);
 
   const gainerCount = results.filter(r => NET_FISCAL[r.id] && (NET_FISCAL[r.id].revenueInflow - NET_FISCAL[r.id].budgetOutflow) > 0).length;
@@ -281,6 +284,14 @@ export default function NakedBudget() {
     if (showMkd) return baseFormatCurrency(value * MKD_PER_EUR, isPerCapita).replace('€', 'MKD ');
     return baseFormatCurrency(value, isPerCapita);
   }, [showMkd]);
+
+  // ── Trust Dot — indicates data source reliability ──
+  const TRUST = {
+    real:     { color: '#10B981', label: 'Real Treasury data' },
+    published:{ color: '#3B82F6', label: 'Published source' },
+    derived:  { color: '#F59E0B', label: 'Derived from data + model' },
+    model:    { color: '#EF4444', label: 'Model assumption' },
+  };
 
   // ── Focus Handler ──
   const handleMuniFocus = useCallback((id) => {
@@ -497,6 +508,7 @@ export default function NakedBudget() {
         {/* ═══ NET FISCAL IMPACT — 5 CARD GRID ═══ */}
         <section id="section-balance" className="rounded-xl relative overflow-hidden mb-12 transition-all duration-300 hover:shadow-[0_0_20px_rgba(99,102,241,0.05)]" style={{ backgroundColor: 'rgba(11,17,32,0.4)', borderColor: '#1F3050', borderWidth: 1 }}>
           <div className="flex items-center gap-2 mb-4">
+            <span title={TRUST.real.label} className="inline-block w-1.5 h-1.5 rounded-full flex-shrink-0" style={{ backgroundColor: TRUST.real.color }} />
             <h2 className="text-xs font-mono uppercase tracking-widest" style={{ color: '#94a3b8' }}>
               {t('net_fiscal')}
             </h2>
@@ -537,6 +549,7 @@ export default function NakedBudget() {
         {/* ═══ REGIONAL FISCAL BALANCE — DIVERGING BAR ═══ */}
         <section id="section-regional-balance" className="rounded-xl relative overflow-hidden mb-12 transition-all duration-300 hover:shadow-[0_0_20px_rgba(99,102,241,0.05)]" style={{ backgroundColor: 'rgba(11,17,32,0.4)', borderColor: '#1F3050', borderWidth: 1 }}>
           <div className="flex items-center gap-2 mb-4 px-5 pt-5">
+            <span title={TRUST.real.label} className="inline-block w-1.5 h-1.5 rounded-full flex-shrink-0" style={{ backgroundColor: TRUST.real.color }} />
             <h2 className="text-xs font-mono uppercase tracking-widest" style={{ color: '#94a3b8' }}>
               Регионален Фискален Биланс
             </h2>
@@ -564,6 +577,7 @@ export default function NakedBudget() {
         {/* ═══ LABOR MARKET MAPPING — COMPLIANCE SCATTER ═══ */}
         <section id="section-labor-market" className="rounded-xl relative overflow-hidden mb-12 transition-all duration-300 hover:shadow-[0_0_20px_rgba(99,102,241,0.05)]" style={{ backgroundColor: 'rgba(11,17,32,0.4)', borderColor: '#1F3050', borderWidth: 1 }}>
           <div className="flex items-center gap-2 mb-4 px-5 pt-5">
+            <span title={TRUST.derived.label} className="inline-block w-1.5 h-1.5 rounded-full flex-shrink-0" style={{ backgroundColor: TRUST.derived.color }} />
             <h2 className="text-xs font-mono uppercase tracking-widest" style={{ color: '#94a3b8' }}>
               Мапирање на Пазарот на Труд
             </h2>
@@ -575,9 +589,12 @@ export default function NakedBudget() {
 
         {/* ═══ CALLOUTS ═══ */}
         <section id="section-callouts" className="mb-12">
-          <h2 className="text-xs font-mono uppercase tracking-widest mb-4" style={{ color: '#94a3b8' }}>
-            {t('callout_title')}
-          </h2>
+          <div className="flex items-center gap-2 mb-4">
+            <span title={TRUST.derived.label} className="inline-block w-1.5 h-1.5 rounded-full flex-shrink-0" style={{ backgroundColor: TRUST.derived.color }} />
+            <h2 className="text-xs font-mono uppercase tracking-widest mb-0" style={{ color: '#94a3b8' }}>
+              {t('callout_title')}
+            </h2>
+          </div>
           <p className="text-xs font-mono text-slate-500 mt-1 mb-4">
             {t('callout_subtitle')}
           </p>
@@ -676,9 +693,12 @@ export default function NakedBudget() {
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[60%] h-[60%] rounded-full pointer-events-none" style={{ background: 'radial-gradient(ellipse at center, rgba(99,102,241,0.03) 0%, transparent 70%)' }} />
 
           <div className="relative">
-            <h2 className="text-xs font-mono uppercase tracking-widest px-5 pt-5 pb-2" style={{ color: '#94a3b8' }}>
-              {t('method_title')}
-            </h2>
+            <div className="flex items-center gap-2 px-5 pt-5 pb-2">
+              <span title={TRUST.derived.label} className="inline-block w-1.5 h-1.5 rounded-full flex-shrink-0" style={{ backgroundColor: TRUST.derived.color }} />
+              <h2 className="text-xs font-mono uppercase tracking-widest mb-0" style={{ color: '#94a3b8' }}>
+                {t('method_title')}
+              </h2>
+            </div>
             <p className="text-xs font-mono text-slate-500 px-5 pb-4">
               {t('method_how')}
             </p>
@@ -699,7 +719,7 @@ export default function NakedBudget() {
             )}
             {chartView === 'fiscal-capacity' && (
               <div className="max-h-[600px] overflow-y-auto">
-                <FiscalCapacityChart results={results} fmt={fmt} />
+                <FiscalCapacityChart results={results} fmt={fmt} nationalAvgRevPC={netFiscalAggs.nationalAvgRevPC} />
               </div>
             )}
             {chartView === 'model-accuracy' && modelAccuracy && (
@@ -717,9 +737,12 @@ export default function NakedBudget() {
         <section id="section-table" className="mb-10">
           <div className="flex items-center justify-between mb-3">
             <div>
-              <h2 className="text-xs font-mono uppercase tracking-widest" style={{ color: '#94a3b8' }}>
-                {t('muni_profiles')}
-              </h2>
+              <div className="flex items-center gap-2">
+                <span title={TRUST.derived.label} className="inline-block w-1.5 h-1.5 rounded-full flex-shrink-0" style={{ backgroundColor: TRUST.derived.color }} />
+                <h2 className="text-xs font-mono uppercase tracking-widest mb-0" style={{ color: '#94a3b8' }}>
+                  {t('muni_profiles')}
+                </h2>
+              </div>
               <p className="text-xs font-mono text-slate-500 mt-1">
                 All data for 28 municipalities
               </p>
@@ -747,6 +770,7 @@ export default function NakedBudget() {
         {/* ═══ PHASE COMPARISON ═══ */}
         <section id="section-phases" className="mb-8">
           <div className="flex items-center gap-3 mb-4">
+            <span title={TRUST.derived.label} className="inline-block w-1.5 h-1.5 rounded-full flex-shrink-0" style={{ backgroundColor: TRUST.derived.color }} />
             <h2 className="text-sm font-mono font-bold text-white tracking-tight">
               {t('section_phase_comparison')}
             </h2>

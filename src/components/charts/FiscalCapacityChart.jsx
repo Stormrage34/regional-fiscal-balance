@@ -11,14 +11,14 @@ import { UNEMPLOYMENT_DATA, NET_FISCAL, MKD_PER_EUR } from '../../data/fiscalDat
  * @param {Function} props.fmt   — currency formatter
  * @returns {JSX.Element}
  */
-export default function FiscalCapacityChart({ results, fmt }) {
+export default function FiscalCapacityChart({ results, fmt, nationalAvgRevPC = 500 }) {
   const chartData = useMemo(() => {
     return results
       .map((m) => {
         const nf = NET_FISCAL[m.id];
         if (!nf) return null;
         const empData = UNEMPLOYMENT_DATA[m.id] || { employmentRate: 0.5 };
-        const cap = computeFiscalCapacity(m, nf, empData.employmentRate);
+        const cap = computeFiscalCapacity(m, nf, empData.employmentRate, nationalAvgRevPC);
         return {
           id: m.id,
           name: m.name,

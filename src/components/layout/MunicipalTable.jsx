@@ -75,6 +75,13 @@ export default function MunicipalTable({
         </span>
       </div>
 
+      {/* Source legend */}
+      <div className="px-5 pb-2 flex items-center gap-4 text-[9px] font-mono" style={{ color: '#64748b' }}>
+        <span className="flex items-center gap-1"><span className="w-1.5 h-1.5 rounded-full bg-emerald-500 flex-shrink-0" />Treasury data</span>
+        <span className="flex items-center gap-1"><span className="w-1.5 h-1.5 rounded-full bg-amber-500 flex-shrink-0" />Model-derived</span>
+        <span className="flex items-center gap-1"><span className="w-1.5 h-1.5 rounded-full bg-red-500 flex-shrink-0" />Estimated</span>
+      </div>
+
       <div className="w-full overflow-x-auto overflow-y-auto max-h-[520px]">
         <table className="w-full text-sm font-mono border-collapse table-auto">
           <thead>

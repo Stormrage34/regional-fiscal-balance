@@ -15,10 +15,12 @@
  * @param {number} employmentRate — AVRM registered employment rate (0-1)
  * @returns {{ estimatedCapacityPC: number, actualRevenuePC: number, capacityGapPC: number }}
  */
-export function computeFiscalCapacity(muni, netFiscal, employmentRate) {
+/**
+ * @param {number} nationalAvgOwnRevenuePC — computed national average own revenue per capita (EUR)
+ */
+export function computeFiscalCapacity(muni, netFiscal, employmentRate, nationalAvgOwnRevenuePC) {
   // Derived values
   const pop = muni.workingAgePop / 0.67;
-  const nationalAvgOwnRevenuePC = 500; // Placeholder — actual national avg (EUR)
 
   // Proxy: tax base health = compliance × employment × (1 - shadowEcon)
   const formalEconomyMultiplier = muni.baseCompliance * employmentRate * (1 - muni.baseShadowEcon);

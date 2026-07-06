@@ -544,7 +544,7 @@ export default function NakedBudget() {
             </span>
           </div>
 
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3">
             <div className="rounded-lg px-4 py-3 border hover:shadow-[0_0_12px_rgba(99,102,241,0.04)] transition-shadow duration-300" style={{ backgroundColor: '#243047', borderColor: '#1F3050' }}>
               <span className="text-xs font-mono" style={{ color: '#64748b' }}>{t('net_gainers')}</span>
               <span className="block text-2xl font-bold font-mono mt-0.5" style={{ color: '#10B981' }}>{netFiscalAggs.gainers.length}</span>

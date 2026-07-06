@@ -113,7 +113,7 @@ export default function SkopjeCapitalSection({ aggregates = {} }) {
               borderColor: 'rgba(51,65,85,0.3)',
             }}>
               {/* Borough name */}
-              <div className="w-28 text-right flex-shrink-0">
+              <div className="w-20 md:w-28 text-right flex-shrink-0">
                 <span className="text-[11px] font-mono text-slate-300 group-hover:text-white transition-colors">
                   {getMuniName(b.muni, locale)}
                 </span>
@@ -136,14 +136,14 @@ export default function SkopjeCapitalSection({ aggregates = {} }) {
               </div>
 
               {/* Annual revenue */}
-              <div className="w-16 text-right flex-shrink-0">
+              <div className="w-12 md:w-16 text-right flex-shrink-0">
                 <span className="text-[11px] font-mono tabular-nums" style={{ color: '#94a3b8' }}>
                   €{(b.annualRevenueK / 1000).toFixed(1)}M
                 </span>
               </div>
 
               {/* Revenue bar (normalized) */}
-              <div className="w-16 h-4 rounded-sm bg-slate-800 overflow-hidden flex-shrink-0">
+              <div className="w-12 md:w-16 h-4 rounded-sm bg-slate-800 overflow-hidden flex-shrink-0">
                 <div 
                   className="h-full rounded-sm bg-amber-500/60"
                   style={{ width: `${(b.annualRevenueK / maxRevenue) * 100}%` }}

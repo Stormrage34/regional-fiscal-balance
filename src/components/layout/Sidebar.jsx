@@ -113,7 +113,7 @@ export default function Sidebar({
               <span className="text-[10px] font-mono uppercase tracking-wider" style={{ color: '#64748b' }}>
                 {t('sidebar_currency')}
               </span>
-              <div className="relative inline-flex h-7 rounded-lg border overflow-hidden" style={{ borderColor: '#334155', backgroundColor: '#0f172a' }}>
+              <div className="relative inline-flex h-11 rounded-lg border overflow-hidden" style={{ borderColor: '#334155', backgroundColor: '#0f172a' }}>
                 {/* Sliding indicator */}
                 <div
                   className="absolute inset-y-0 w-1/2 rounded-lg bg-indigo-600 shadow-[0_0_10px_rgba(99,102,241,0.3)] transition-all duration-300 ease-in-out"

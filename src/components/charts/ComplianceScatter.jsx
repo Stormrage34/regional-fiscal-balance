@@ -1,12 +1,30 @@
+import { useState, useEffect, useRef } from 'react';
 import { useLocale } from '../../context/LocaleContext.jsx';
 import { NET_FISCAL, getMuniName } from '../../data/fiscalData.js';
 
 export default function ComplianceScatter({ data, onMuniClick, focusedId }) {
   const { t, locale } = useLocale();
+  const containerRef = useRef(null);
+  const [containerWidth, setContainerWidth] = useState(700);
+
+  useEffect(() => {
+    if (!containerRef.current) return;
+
+    const observer = new ResizeObserver((entries) => {
+      for (const entry of entries) {
+        setContainerWidth(entry.contentRect.width);
+      }
+    });
+
+    observer.observe(containerRef.current);
+    return () => observer.disconnect();
+  }, []);
+
   if (!data || data.length === 0) return null;
 
   const margin = { top: 20, right: 20, bottom: 50, left: 60 };
-  const width = 700, height = 400;
+  const width = Math.max(containerWidth, 320);
+  const height = 400;
   const plotW = width - margin.left - margin.right;
   const plotH = height - margin.top - margin.bottom;
 
@@ -23,8 +41,13 @@ export default function ComplianceScatter({ data, onMuniClick, focusedId }) {
   points.sort((a, b) => (a.isGainer ? 1 : 0) - (b.isGainer ? 1 : 0));
 
   return (
-    <div className="relative">
-      <svg viewBox={`0 0 ${width} ${height}`} className="w-full h-auto" role="img" aria-label={t('chart_aria_scatter')}>
+    <div ref={containerRef} className="relative w-full">
+      <svg
+        viewBox={`0 0 ${width} ${height}`}
+        className="w-full h-auto"
+        role="img"
+        aria-label={t('chart_aria_scatter')}
+      >
         {/* Axes */}
         <line x1={margin.left} y1={margin.top + plotH} x2={margin.left + plotW} y2={margin.top + plotH} stroke="#334155" strokeWidth="1" />
         <line x1={margin.left} y1={margin.top} x2={margin.left} y2={margin.top + plotH} stroke="#334155" strokeWidth="1" />
@@ -49,7 +72,7 @@ export default function ComplianceScatter({ data, onMuniClick, focusedId }) {
           return (
             <g key={pct}>
               <line x1={x} y1={margin.top} x2={x} y2={margin.top + plotH} stroke="#334155" strokeWidth="0.8" strokeDasharray="3 3" />
-              <text x={x} y={margin.top + plotH + 18} textAnchor="middle" fill="#64748b" fontSize="10" fontFamily="monospace">
+              <text x={x} y={margin.top + plotH + 18} textAnchor="middle" fill="#94a3b8" fontSize="10" fontFamily="monospace">
                 {pct}%
               </text>
             </g>

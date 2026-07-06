@@ -38,11 +38,11 @@ export default function KpiRibbon({
           <span className="text-[10px] font-mono" style={{ color: '#64748b' }}>
             {t('pop_weighted')}
           </span>
-          <span className="text-[10px] font-mono" style={{ color: '#475569' }}>·</span>
+          <span className="text-[10px] font-mono" style={{ color: '#64748b' }}>·</span>
           <span className="text-[10px] font-mono" style={{ color: '#94a3b8' }}>
             {MUNICIPALITIES.length} {t('municipalities')}
           </span>
-          <span className="text-[10px] font-mono" style={{ color: '#475569' }}>·</span>
+          <span className="text-[10px] font-mono" style={{ color: '#64748b' }}>·</span>
           <span className="text-[10px] font-mono" style={{ color: '#94a3b8' }}>
             {aggregates.totalPop.toLocaleString()} {t('pop')}
           </span>

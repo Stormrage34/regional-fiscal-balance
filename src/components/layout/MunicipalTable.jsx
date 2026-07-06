@@ -104,7 +104,7 @@ export default function MunicipalTable({
 
               {/* Balance column — shows avg + label */}
               <th
-                className="px-3 py-2 text-center align-middle min-w-[140px] whitespace-nowrap cursor-pointer select-none hover:text-slate-200 transition-colors sticky top-0 z-20 bg-[#0f172a]"
+                className="px-3 py-3 text-center align-middle min-w-[140px] whitespace-nowrap cursor-pointer select-none hover:text-slate-200 transition-colors sticky top-0 z-20 bg-[#0f172a]"
                 onClick={() => handleSort('drain')}
                 onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); handleSort('drain'); } }}
                 tabIndex={0}
@@ -119,7 +119,7 @@ export default function MunicipalTable({
 
               {/* Leakage column */}
               <th
-                className="px-3 py-2 text-center align-middle min-w-[140px] whitespace-nowrap cursor-pointer select-none hover:text-slate-200 transition-colors sticky top-0 z-20 bg-[#0f172a]"
+                className="px-3 py-3 text-center align-middle min-w-[140px] whitespace-nowrap cursor-pointer select-none hover:text-slate-200 transition-colors sticky top-0 z-20 bg-[#0f172a]"
                 onClick={() => handleSort('leakage')}
                 onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); handleSort('leakage'); } }}
                 tabIndex={0}
@@ -134,7 +134,7 @@ export default function MunicipalTable({
 
               {/* Welfare column */}
               <th
-                className="px-3 py-2 text-center align-middle min-w-[140px] whitespace-nowrap cursor-pointer select-none hover:text-slate-200 transition-colors sticky top-0 z-20 bg-[#0f172a]"
+                className="px-3 py-3 text-center align-middle min-w-[140px] whitespace-nowrap cursor-pointer select-none hover:text-slate-200 transition-colors sticky top-0 z-20 bg-[#0f172a]"
                 onClick={() => handleSort('welfare')}
                 onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); handleSort('welfare'); } }}
                 tabIndex={0}
@@ -149,7 +149,7 @@ export default function MunicipalTable({
 
               {/* Annual Drain */}
               <th
-                className="px-3 py-2 text-center align-middle min-w-[130px] whitespace-nowrap cursor-pointer select-none hover:text-slate-200 transition-colors sticky top-0 z-20 bg-[#0f172a]"
+                className="px-3 py-3 text-center align-middle min-w-[130px] whitespace-nowrap cursor-pointer select-none hover:text-slate-200 transition-colors sticky top-0 z-20 bg-[#0f172a]"
                 onClick={() => handleSort('yearly')}
                 onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); handleSort('yearly'); } }}
                 tabIndex={0}
@@ -164,7 +164,7 @@ export default function MunicipalTable({
 
               {/* Arrears */}
               <th
-                className="px-3 py-2 text-center align-middle min-w-[120px] whitespace-nowrap cursor-pointer select-none hover:text-slate-200 transition-colors sticky top-0 z-20 bg-[#0f172a]"
+                className="px-3 py-3 text-center align-middle min-w-[120px] whitespace-nowrap cursor-pointer select-none hover:text-slate-200 transition-colors sticky top-0 z-20 bg-[#0f172a]"
                 onClick={() => handleSort('arrears')}
                 onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); handleSort('arrears'); } }}
                 tabIndex={0}
@@ -179,7 +179,7 @@ export default function MunicipalTable({
 
               {/* Unemployed */}
               <th
-                className="px-3 py-2 text-center align-middle min-w-[160px] whitespace-nowrap cursor-pointer select-none hover:text-slate-200 transition-colors sticky top-0 z-20 bg-[#0f172a]"
+                className="px-3 py-3 text-center align-middle min-w-[140px] whitespace-nowrap cursor-pointer select-none hover:text-slate-200 transition-colors sticky top-0 z-20 bg-[#0f172a]"
                 onClick={() => handleSort('unemployment')}
                 onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); handleSort('unemployment'); } }}
                 tabIndex={0}
@@ -195,7 +195,7 @@ export default function MunicipalTable({
               {showAdvancedColumns && (
                 <>
                   {/* Structural */}
-                  <th className="relative group cursor-help whitespace-nowrap px-3 py-2 text-center align-middle min-w-[140px]">
+                  <th className="relative group cursor-help whitespace-nowrap px-3 py-3 text-center align-middle min-w-[140px]">
                     <span className="text-[10px] font-mono uppercase tracking-wider text-slate-500">{t('tbl_structural')}</span>
                     <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2 py-1 bg-slate-800 border border-slate-600 rounded text-[10px] text-slate-300 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap z-50">
                       Структурна компонента на одливот
@@ -203,7 +203,7 @@ export default function MunicipalTable({
                   </th>
 
                   {/* Correction */}
-                  <th className="relative group cursor-help whitespace-nowrap px-3 py-2 text-center align-middle min-w-[110px]">
+                  <th className="relative group cursor-help whitespace-nowrap px-3 py-3 text-center align-middle min-w-[110px]">
                     <span className="text-[10px] font-mono uppercase tracking-wider text-slate-500">{t('tbl_correction')}</span>
                     <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2 py-1 bg-slate-800 border border-slate-600 rounded text-[10px] text-slate-300 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap z-50">
                       Корективен фактор
@@ -211,12 +211,12 @@ export default function MunicipalTable({
                   </th>
 
                   {/* Phase */}
-                  <th className="px-3 py-2 text-center align-middle min-w-[60px] whitespace-nowrap text-[10px] font-mono uppercase tracking-wider text-slate-500">
+                  <th className="px-3 py-3 text-center align-middle min-w-[60px] whitespace-nowrap text-[10px] font-mono uppercase tracking-wider text-slate-500">
                     {t('hdr_phase')}
                   </th>
 
                   {/* Risk / Discipline */}
-                  <th className="relative group cursor-help whitespace-nowrap px-3 py-2 text-center align-middle min-w-[80px]">
+                  <th className="relative group cursor-help whitespace-nowrap px-3 py-3 text-center align-middle min-w-[80px]">
                     <span className="text-[10px] font-mono uppercase tracking-wider text-slate-500">{t('hdr_discipline')}</span>
                     <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2 py-1 bg-slate-800 border border-slate-600 rounded text-[10px] text-slate-300 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap z-50">
                       Ризик базиран на однос заостанати долгови/приходи
@@ -224,7 +224,7 @@ export default function MunicipalTable({
                   </th>
 
                   {/* Credit Rating */}
-                  <th className="relative group cursor-help whitespace-nowrap px-3 py-2 text-center align-middle min-w-[60px]">
+                  <th className="relative group cursor-help whitespace-nowrap px-3 py-3 text-center align-middle min-w-[60px]">
                     <span className="text-[10px] font-mono uppercase tracking-wider text-slate-500">RATING*</span>
                     <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2 py-1 bg-slate-800 border border-slate-600 rounded text-[10px] text-slate-300 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap z-50">
                       Кредитен рејтинг: B1 (Moody's, Штип 2017) или NR
@@ -249,7 +249,7 @@ export default function MunicipalTable({
                   </th>
 
                   {/* Match */}
-                  <th className="relative group cursor-help whitespace-nowrap px-2 py-2 text-center align-middle min-w-[70px]">
+                  <th className="relative group cursor-help whitespace-nowrap px-2 py-3 text-center align-middle min-w-[70px]">
                     <span className="text-[10px] font-mono uppercase tracking-wider text-slate-500">{t('hdr_match')}</span>
                     <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2 py-1 bg-slate-800 border border-slate-600 rounded text-[10px] text-slate-300 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap z-50">
                       Моделот точно/неточно ја предвидел класификацијата
@@ -376,7 +376,7 @@ export default function MunicipalTable({
                   </td>
 
                   {/* Correction */}
-                  <td className="px-3 py-2.5 text-right tabular-nums text-sm" style={{ color: applyCorrection ? '#34d399' : '#475569' }}>
+                  <td className="px-3 py-2.5 text-right tabular-nums text-sm" style={{ color: applyCorrection ? '#34d399' : '#64748b' }}>
                     {applyCorrection ? `€${muni.corporateRetraction.toLocaleString()}` : '—'}
                   </td>
 
@@ -465,7 +465,7 @@ export default function MunicipalTable({
                   <td className="px-2 py-2.5 text-center">
                     {(() => {
                       if (!muni.inTrainingSet) {
-                        return <span className="text-[10px] font-mono" style={{ color: '#475569' }}>—</span>;
+                        return <span className="text-[10px] font-mono" style={{ color: '#64748b' }}>—</span>;
                       }
                       const nf = NET_FISCAL[muni.id];
                       if (!nf) return '—';
@@ -484,7 +484,7 @@ export default function MunicipalTable({
                   <td className="px-2 py-2.5 text-center">
                     {(() => {
                       if (!muni.inTrainingSet) {
-                        return <span className="text-[10px] font-mono" style={{ color: '#475569' }}>—</span>;
+                        return <span className="text-[10px] font-mono" style={{ color: '#64748b' }}>—</span>;
                       }
                       const probStr = Math.round(muni.probReduced * 100) + '%';
                       return (

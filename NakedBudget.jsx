@@ -465,7 +465,7 @@ export default function NakedBudget() {
             <button
               type="button"
               onClick={() => setSidebarOpen(!sidebarOpen)}
-              className="md:hidden flex items-center justify-center w-8 h-8 rounded-lg border border-slate-700/50 hover:bg-slate-800 transition-colors ml-auto"
+              className="md:hidden flex items-center justify-center w-11 h-11 rounded-lg border border-slate-700/50 hover:bg-slate-800 transition-colors ml-auto"
               aria-label={sidebarOpen ? t('sidebar_close') : t('sidebar_open')}
             >
               <svg width="16" height="16" viewBox="0 0 16 16" fill="none" style={{ color: '#94a3b8' }} aria-hidden="true">
@@ -930,7 +930,7 @@ export default function NakedBudget() {
               type="button"
               data-close-panel
               onClick={closePanel}
-              className="absolute top-4 right-4 z-10 flex items-center justify-center w-8 h-8 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 transition-all duration-200 focus:shadow-[0_0_0_3px_rgba(99,102,241,0.3)] focus:outline-none"
+              className="absolute top-4 right-4 z-10 flex items-center justify-center w-11 h-11 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 transition-all duration-200 focus:shadow-[0_0_0_3px_rgba(99,102,241,0.3)] focus:outline-none"
               aria-label={t('panel_close_label').replace('{name}', getMuniName(focusedMuni, locale))}
             >
               <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">

@@ -85,21 +85,21 @@ export default function SkopjeCapitalSection({ aggregates = {} }) {
             €{skopjeSurplusM}M
             <span title="Per-borough Treasury data sums to ~4× the consolidated City of Skopje budget. Boroughs allocate shared city revenues individually. True aggregate surplus lies between €5.9M (city budget) and €123M (borough sum)." className="inline-block w-3.5 h-3.5 rounded-full bg-slate-600/40 text-[8px] text-slate-400 text-center leading-3 ml-1 cursor-help align-middle" aria-label="Data note">ⓘ</span>
           </div>
-          <div className="text-[10px] font-mono mt-0.5" style={{ color: '#475569' }}>+€{skopjeNetPC}/жител · Трезор 2025</div>
+          <div className="text-[10px] font-mono mt-0.5" style={{ color: '#64748b' }}>+€{skopjeNetPC}/жител · Трезор 2025</div>
         </div>
         <div className="text-center">
           <div className="text-[10px] font-mono uppercase tracking-wider mb-1" style={{ color: '#64748b' }}>
             {t('capital_population')}
           </div>
           <div className="text-xl font-bold font-mono text-white">526K</div>
-          <div className="text-[10px] font-mono mt-0.5" style={{ color: '#475569' }}>SSO Census 2021</div>
+          <div className="text-[10px] font-mono mt-0.5" style={{ color: '#64748b' }}>SSO Census 2021</div>
         </div>
         <div className="text-center">
           <div className="text-[10px] font-mono uppercase tracking-wider mb-1" style={{ color: '#64748b' }}>
             {t('capital_boroughs')}
           </div>
           <div className="text-xl font-bold font-mono text-amber-400">10</div>
-          <div className="text-[10px] font-mono mt-0.5" style={{ color: '#475569' }}>City boroughs</div>
+          <div className="text-[10px] font-mono mt-0.5" style={{ color: '#64748b' }}>City boroughs</div>
         </div>
       </div>
 
@@ -109,7 +109,7 @@ export default function SkopjeCapitalSection({ aggregates = {} }) {
           <span className="text-[10px] font-mono uppercase tracking-wider" style={{ color: '#64748b' }}>
             {t('capital_ring_count')}
           </span>
-          <span className="text-[10px] font-mono" style={{ color: '#475569' }}>
+          <span className="text-[10px] font-mono" style={{ color: '#64748b' }}>
             {ringMunis.map(id => getMuniName(MUNICIPALITIES.find(m => m.id === id) || { id }, locale)).join(', ')}
           </span>
         </div>
@@ -121,7 +121,7 @@ export default function SkopjeCapitalSection({ aggregates = {} }) {
           <h3 className="text-[10px] font-mono uppercase tracking-widest" style={{ color: '#94a3b8' }}>
             {t('capital_property_tax')}
           </h3>
-          <span className="text-[10px] font-mono" style={{ color: '#475569' }}>
+          <span className="text-[10px] font-mono" style={{ color: '#64748b' }}>
             CCC Open Data 2017-2019
           </span>
         </div>
@@ -188,7 +188,7 @@ export default function SkopjeCapitalSection({ aggregates = {} }) {
         {/* Divider */}
         <div className="flex items-center gap-3 my-4">
           <div className="flex-1 h-[1px]" style={{ backgroundColor: 'rgba(100,116,139,0.3)' }} />
-          <span className="text-[9px] font-mono uppercase tracking-wider whitespace-nowrap" style={{ color: '#475569' }}>
+          <span className="text-[9px] font-mono uppercase tracking-wider whitespace-nowrap" style={{ color: '#64748b' }}>
             — {t('capital_ring_count')} —
           </span>
           <div className="flex-1 h-[1px]" style={{ backgroundColor: 'rgba(100,116,139,0.3)' }} />
@@ -212,7 +212,7 @@ export default function SkopjeCapitalSection({ aggregates = {} }) {
               const muni = MUNICIPALITIES.find(m => m.id === id) || { id, name: id, name_mk: id, name_sq: id };
               return (
                 <div key={id} className="flex items-center gap-1.5 py-1">
-                  <span className="text-[10px] font-mono line-through" style={{ color: '#475569' }}>
+                  <span className="text-[10px] font-mono line-through" style={{ color: '#64748b' }}>
                     {getMuniName(muni, locale)}
                   </span>
                   <span className="text-[8px] font-mono px-1 rounded" style={{ 
@@ -252,7 +252,7 @@ export default function SkopjeCapitalSection({ aggregates = {} }) {
           backgroundColor: 'rgba(100,116,139,0.03)', 
           borderColor: 'rgba(100,116,139,0.15)' 
         }}>
-          <p className="text-[9px] font-mono" style={{ color: '#475569' }}>
+          <p className="text-[9px] font-mono" style={{ color: '#64748b' }}>
             ⚠ {t('capital_model_exclusion')}
           </p>
         </div>

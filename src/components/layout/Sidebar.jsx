@@ -2,6 +2,7 @@ import RangeSlider from '../ui/RangeSlider.jsx';
 import LanguageSwitcher from '../ui/LanguageSwitcher.jsx';
 import { CONSTANTS } from '../../data/fiscalData.js';
 import { useLocale } from '../../context/LocaleContext.jsx';
+import { useTheme } from '../../context/ThemeContext.jsx';
 
 export default function Sidebar({
   enforcementStrength, setEnforcementStrength,
@@ -11,6 +12,7 @@ export default function Sidebar({
   showMkd, setShowMkd,
 }) {
   const { t } = useLocale();
+  const { theme, toggleTheme } = useTheme();
   return (
     <>
       {sidebarOpen && (
@@ -138,6 +140,33 @@ export default function Sidebar({
                   MKD
                 </button>
               </div>
+            </div>
+          </div>
+
+          {/* Theme Toggle */}
+          <div className="pt-2">
+            <div className="h-[1px] bg-gradient-to-r from-transparent via-slate-700/50 to-transparent mb-3" />
+            <div className="flex items-center justify-between">
+              <span className="text-[10px] font-mono uppercase tracking-wider" style={{ color: '#64748b' }}>
+                Theme
+              </span>
+              <button
+                type="button"
+                onClick={toggleTheme}
+                className="flex items-center gap-2 rounded-lg px-3 py-2 text-xs font-mono transition-all duration-200 hover:bg-white/[0.05]"
+                style={{ border: '1px solid #334155', backgroundColor: theme === 'dark' ? '#0f172a' : '#f8fafc' }}
+              >
+                <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  {theme === 'dark' ? (
+                    <><circle cx="12" cy="12" r="5" /><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42" /></>
+                  ) : (
+                    <><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" /></>
+                  )}
+                </svg>
+                <span style={{ color: theme === 'dark' ? '#94a3b8' : '#475569' }}>
+                  {theme === 'dark' ? 'Dark' : 'Light'}
+                </span>
+              </button>
             </div>
           </div>
 

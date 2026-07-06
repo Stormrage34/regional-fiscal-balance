@@ -87,7 +87,7 @@ export default function PieMatrix({ data, onMuniClick }) {
                 })()}
               </svg>
               <div className="flex flex-col items-center mt-2 w-full px-1">
-                <span className="text-[10px] font-mono truncate text-slate-300 group-hover:text-slate-100 transition-colors duration-200 w-full text-center">{getMuniName(muni, locale)}</span>
+                <span className="text-[10px] font-mono truncate text-secondary group-hover:text-primary transition-colors duration-200 w-full text-center">{getMuniName(muni, locale)}</span>
                 <div className="flex items-center justify-center gap-1.5 mt-1">
                   {muni.paths.map((seg, i) => (
                     <span key={i} className="flex items-center gap-0.5 text-[10px] font-mono" style={{ color: '#94a3b8' }}>

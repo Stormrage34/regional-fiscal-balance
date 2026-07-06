@@ -63,7 +63,7 @@ export default function FiscalCapacityChart({ results, fmt, nationalAvgRevPC = 5
               </span>
 
               {/* Estimated bar (faded) */}
-              <div className="flex-1 h-5 bg-slate-800/50 rounded-sm overflow-hidden relative">
+              <div className="flex-1 h-5 bg-elevated opacity-50 rounded-sm overflow-hidden relative">
                 <div
                   className="h-full rounded-sm transition-all duration-500"
                   style={{ width: `${estWidth}%`, backgroundColor: 'rgba(245,158,11,0.25)' }}
@@ -71,7 +71,7 @@ export default function FiscalCapacityChart({ results, fmt, nationalAvgRevPC = 5
               </div>
 
               {/* Actual bar (solid) */}
-              <div className="flex-1 h-5 bg-slate-800/50 rounded-sm overflow-hidden relative">
+              <div className="flex-1 h-5 bg-elevated opacity-50 rounded-sm overflow-hidden relative">
                 <div
                   className="h-full rounded-sm transition-all duration-500"
                   style={{ width: `${actWidth}%`, backgroundColor: '#F59E0B' }}

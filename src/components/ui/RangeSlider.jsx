@@ -4,7 +4,7 @@ export default function RangeSlider({ label, value, onChange, min, max, unit, ac
   return (
     <div className="flex flex-col gap-2">
       <div className="flex items-center justify-between">
-        <span className="text-slate-400 text-xs font-mono tracking-tight truncate">{label}</span>
+        <span className="text-secondary text-xs font-mono tracking-tight truncate">{label}</span>
         <span className="font-mono text-sm font-semibold ml-3 shrink-0" style={{ color: accentColor }}>
           {value.toFixed(1)}{unit}
         </span>

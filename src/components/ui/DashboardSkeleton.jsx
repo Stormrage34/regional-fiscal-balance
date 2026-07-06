@@ -17,20 +17,20 @@ export default function DashboardSkeleton({ rows = 3, columns = 4 }) {
           }}
         >
           {/* Top accent line */}
-          <div className="absolute top-0 left-0 right-0 h-[2px] bg-slate-700/50" />
+          <div className="absolute top-0 left-0 right-0 h-[2px] bg-elevated opacity-50" />
           
           {/* Skeleton content */}
           <div className="p-5 space-y-3">
             {/* Label placeholder */}
-            <div className="h-3 w-24 rounded bg-slate-700/50 animate-pulse" />
+            <div className="h-3 w-24 rounded bg-elevated opacity-50 animate-pulse" />
             
             {/* Value placeholder */}
-            <div className="h-10 w-32 rounded bg-slate-700/50 animate-pulse" />
+            <div className="h-10 w-32 rounded bg-elevated opacity-50 animate-pulse" />
             
             {/* Description placeholders */}
             <div className="space-y-2">
-              <div className="h-2 w-full rounded bg-slate-700/30 animate-pulse" />
-              <div className="h-2 w-3/4 rounded bg-slate-700/30 animate-pulse" />
+              <div className="h-2 w-full rounded bg-elevated opacity-30 animate-pulse" />
+              <div className="h-2 w-3/4 rounded bg-elevated opacity-30 animate-pulse" />
             </div>
           </div>
         </div>

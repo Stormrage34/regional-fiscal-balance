@@ -44,7 +44,7 @@ function Finding({ icon, text }) {
     }}>
       <div className="flex items-start gap-2">
         <span className="text-lg flex-shrink-0">{icon}</span>
-        <p className="text-[11px] font-mono leading-relaxed text-slate-300">
+        <p className="text-[11px] font-mono leading-relaxed text-primary">
           {text}
         </p>
       </div>

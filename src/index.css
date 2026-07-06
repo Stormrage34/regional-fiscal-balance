@@ -137,4 +137,7 @@
 
 /* Hover states */
 .hover-bg:hover { background-color: var(--bg-hover); }
+.hover-bg-card:hover { background-color: var(--bg-card); }
 .hover-text-primary:hover { color: var(--text-primary); }
+.hover-border-card:hover { border-color: var(--border-card); }
+.hover-border-section:hover { border-color: var(--border-section); }

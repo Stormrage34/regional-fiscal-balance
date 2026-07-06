@@ -31,7 +31,7 @@ export default function LanguageSwitcher() {
               flex-1 px-2 py-2.5 text-[11px] font-mono rounded-md transition-all duration-200 min-h-[44px]
               ${locale === code
                 ? 'bg-indigo-600 text-white shadow-sm'
-                : 'text-slate-400 hover:text-slate-200 hover:bg-white/[0.06]'}
+                : 'text-secondary hover:text-primary hover:bg-white/[0.06]'}
             `}
           >
             {FLAGS[code]} {LABELS[code]}

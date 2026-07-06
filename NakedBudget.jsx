@@ -79,7 +79,7 @@ function BackToTop() {
     <button
       type="button"
       onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-      className="fixed bottom-6 right-6 z-50 w-10 h-10 rounded-full border border-slate-600/50 bg-slate-800/90 backdrop-blur-sm text-slate-400 hover:text-amber-300 hover:border-amber-500/30 transition-all duration-200 flex items-center justify-center shadow-lg"
+      className="fixed bottom-6 right-6 z-50 w-10 h-10 rounded-full border border-card bg-card backdrop-blur-sm text-secondary hover:text-amber-300 hover:border-amber-500/30 transition-all duration-200 flex items-center justify-center shadow-lg"
       aria-label="Врати се на почеток"
       title="Врти се на почеток"
     >
@@ -455,7 +455,7 @@ export default function NakedBudget() {
             <button
               type="button"
               onClick={() => setSidebarOpen(true)}
-              className="flex items-center gap-1.5 px-3 py-1.5 rounded-full font-mono text-xs text-slate-400 border border-slate-700/50 hover:text-slate-200 hover:border-slate-600 transition-colors"
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-full font-mono text-xs text-secondary border border-card hover:text-primary hover:border-card transition-colors"
               aria-label={t('sidebar_open')}
             >
               <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -465,7 +465,7 @@ export default function NakedBudget() {
             <button
               type="button"
               onClick={() => setSidebarOpen(!sidebarOpen)}
-              className="md:hidden flex items-center justify-center w-11 h-11 rounded-lg border border-slate-700/50 hover:bg-slate-800 transition-colors ml-auto"
+              className="md:hidden flex items-center justify-center w-11 h-11 rounded-lg border border-card hover:bg-card transition-colors ml-auto"
               aria-label={sidebarOpen ? t('sidebar_close') : t('sidebar_open')}
             >
               <svg width="16" height="16" viewBox="0 0 16 16" fill="none" style={{ color: '#94a3b8' }} aria-hidden="true">
@@ -504,16 +504,16 @@ export default function NakedBudget() {
 
         {/* ═══ HERO — TOTAL FISCAL DRAIN ═══ */}
         <section id="section-hero" className="text-center py-12 md:py-16">
-          <p className="text-[11px] font-mono uppercase tracking-widest text-slate-400 mb-4">
+          <p className="text-[11px] font-mono uppercase tracking-widest text-secondary mb-4">
             {t('hero_label')}
           </p>
           <p className="text-4xl md:text-6xl lg:text-8xl font-bold font-mono tabular-nums" style={{ color: '#F59E0B' }}>
             €{Math.round(aggregates.totalYearlyDrain / 1_000_000)}M
           </p>
-          <p className="text-xs font-mono text-slate-500 mt-4">
+          <p className="text-xs font-mono text-tertiary mt-4">
             {results.length} {t('hero_municipalities').split('·')[0].trim()} · {aggregates.totalPop.toLocaleString()} {t('hero_municipalities').split('·')[1].trim()} · просек €{aggregates.weightedAvgDrain}/жител
           </p>
-          <p className="text-[11px] leading-relaxed text-slate-400 max-w-2xl mx-auto mt-6 px-4">
+          <p className="text-[11px] leading-relaxed text-secondary max-w-2xl mx-auto mt-6 px-4">
             {t('hero_description')}
           </p>
         </section>
@@ -624,7 +624,7 @@ export default function NakedBudget() {
               {t('callout_title')}
             </h2>
           </div>
-          <p className="text-xs font-sans text-slate-500 mt-1 mb-4">
+          <p className="text-xs font-sans text-tertiary mt-1 mb-4">
             {t('callout_subtitle')}
           </p>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -654,7 +654,7 @@ export default function NakedBudget() {
                         <span className="text-sm font-bold font-mono ml-2 flex-shrink-0" style={{ color: '#ef4444' }}>{fmt(m.netFiscalPC, true)}</span>
                       </div>
                       <div className="flex items-center gap-2 mt-1">
-                        <div className="flex-1 h-1 rounded-full bg-slate-800 overflow-hidden">
+                        <div className="flex-1 h-1 rounded-full bg-card overflow-hidden">
                           <div className="h-full rounded-full transition-all duration-300" style={{ width: `${(Math.abs(m.netFiscalPC) / maxAbs) * 100}%`, backgroundColor: '#ef4444' }} />
                         </div>
                         {UNEMPLOYMENT_DATA[m.id] && (
@@ -696,7 +696,7 @@ export default function NakedBudget() {
                         <span className="text-sm font-bold font-mono ml-2 flex-shrink-0" style={{ color: '#10b981' }}>{fmt(m.netFiscalPC, true)}</span>
                       </div>
                       <div className="flex items-center gap-2 mt-1">
-                        <div className="flex-1 h-1 rounded-full bg-slate-800 overflow-hidden">
+                        <div className="flex-1 h-1 rounded-full bg-card overflow-hidden">
                           <div className="h-full rounded-full transition-all duration-300" style={{ width: `${(m.netFiscalPC / maxAbs) * 100}%`, backgroundColor: '#10b981' }} />
                         </div>
                         {UNEMPLOYMENT_DATA[m.id] && (
@@ -728,7 +728,7 @@ export default function NakedBudget() {
                 {t('method_title')}
               </h2>
             </div>
-            <p className="text-xs font-sans text-slate-500 px-5 pb-4">
+            <p className="text-xs font-sans text-tertiary px-5 pb-4">
               {t('method_how')}
             </p>
 
@@ -772,13 +772,13 @@ export default function NakedBudget() {
                   {t('muni_profiles')}
                 </h2>
               </div>
-              <p className="text-xs font-sans text-slate-500 mt-1">
+              <p className="text-xs font-sans text-tertiary mt-1">
                 All data for 28 municipalities
               </p>
             </div>
             <button
               onClick={() => setShowAdvancedColumns(!showAdvancedColumns)}
-              className="flex items-center gap-1 text-[10px] font-mono text-slate-400 hover:text-slate-200 transition-colors"
+              className="flex items-center gap-1 text-[10px] font-mono text-secondary hover:text-primary transition-colors"
             >
               {showAdvancedColumns ? '⏶ Основни колони' : '⏷ Напредни колони'}
             </button>
@@ -804,7 +804,7 @@ export default function NakedBudget() {
               {t('section_phase_comparison')}
             </h2>
           </div>
-          <p className="text-xs font-sans text-slate-500 mt-1 mb-1">
+          <p className="text-xs font-sans text-tertiary mt-1 mb-1">
             {t('section_phase_subtitle')}
           </p>
           <p className="text-[10px] font-sans leading-relaxed max-w-3xl mb-4" style={{ color: '#64748b' }}>{t('phase_explanation')}</p>
@@ -812,50 +812,50 @@ export default function NakedBudget() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="rounded-xl p-5 border" style={{ backgroundColor: 'rgba(11,17,32,0.4)', borderColor: '#1F3050' }}>
               <div className="flex items-center justify-between mb-3">
-                <span className="text-[10px] font-mono uppercase tracking-widest text-slate-500">{t('phase_balance_label')}</span>
+                <span className="text-[10px] font-mono uppercase tracking-widest text-tertiary">{t('phase_balance_label')}</span>
                 <span className="text-xs font-mono px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">{t('phase_badge').replace('{n}', '1')}</span>
               </div>
               <div className="flex items-baseline justify-between">
                 <span className="text-2xl font-bold font-mono text-emerald-400">{fmt(phaseComparison.avgNetFiscalPC1, true)}</span>
-                <span className="text-sm font-mono text-slate-500">{t('phase_2_prefix')}{fmt(phaseComparison.avgNetFiscalPC2, true)}</span>
+                <span className="text-sm font-mono text-tertiary">{t('phase_2_prefix')}{fmt(phaseComparison.avgNetFiscalPC2, true)}</span>
               </div>
             </div>
             <div className="rounded-xl p-5 border" style={{ backgroundColor: 'rgba(11,17,32,0.4)', borderColor: '#1F3050' }}>
               <div className="flex items-center justify-between mb-3">
-                <span className="text-[10px] font-mono uppercase tracking-widest text-slate-500">{t('phase_arrears_label')}</span>
+                <span className="text-[10px] font-mono uppercase tracking-widest text-tertiary">{t('phase_arrears_label')}</span>
                 <span className="text-xs font-mono px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">{t('phase_badge').replace('{n}', '1')}</span>
               </div>
               <div className="flex items-baseline justify-between">
                 <span className="text-2xl font-bold font-mono text-emerald-400">{fmt(phaseComparison.avgArrearsPC1, true)}</span>
-                <span className="text-sm font-mono text-slate-500">{t('phase_2_prefix')}{fmt(phaseComparison.avgArrearsPC2, true)}</span>
+                <span className="text-sm font-mono text-tertiary">{t('phase_2_prefix')}{fmt(phaseComparison.avgArrearsPC2, true)}</span>
               </div>
             </div>
             <div className="rounded-xl p-5 border" style={{ backgroundColor: 'rgba(11,17,32,0.4)', borderColor: '#1F3050' }}>
               <div className="flex items-center justify-between mb-3">
-                <span className="text-[10px] font-mono uppercase tracking-widest text-slate-500">{t('phase_compliance_label')}</span>
+                <span className="text-[10px] font-mono uppercase tracking-widest text-tertiary">{t('phase_compliance_label')}</span>
                 <span className="text-xs font-mono px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">{t('phase_badge').replace('{n}', '1')}</span>
               </div>
               <div className="flex items-baseline justify-between">
                 <span className="text-2xl font-bold font-mono text-emerald-400">{phaseComparison.avgCompliance1}%</span>
-                <span className="text-sm font-mono text-slate-500">{t('phase_2_prefix')}{phaseComparison.avgCompliance2}%</span>
+                <span className="text-sm font-mono text-tertiary">{t('phase_2_prefix')}{phaseComparison.avgCompliance2}%</span>
               </div>
             </div>
             <div className="rounded-xl p-5 border" style={{ backgroundColor: 'rgba(11,17,32,0.4)', borderColor: '#1F3050' }}>
               <div className="flex items-center justify-between mb-3">
-                <span className="text-[10px] font-mono uppercase tracking-widest text-slate-500">{t('phase_count_label')}</span>
+                <span className="text-[10px] font-mono uppercase tracking-widest text-tertiary">{t('phase_count_label')}</span>
                 <span className="text-xs font-mono px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">{t('phase_badge').replace('{n}', '1')}</span>
               </div>
               <div className="flex items-baseline justify-between">
                 <span className="text-2xl font-bold font-mono text-emerald-400">{phaseComparison.p1Count}</span>
-                <span className="text-sm font-mono text-slate-500">{t('phase_2_prefix')}{phaseComparison.p2Count}</span>
+                <span className="text-sm font-mono text-tertiary">{t('phase_2_prefix')}{phaseComparison.p2Count}</span>
               </div>
             </div>
           </div>
         </section>
 
         {/* ═══ FOOTER ═══ */}
-        <footer className="mt-16 py-8 border-t border-slate-800/60 text-center">
-          <p className="font-mono text-xs text-slate-500 tracking-wide">
+        <footer className="mt-16 py-8 border-t border-card text-center">
+          <p className="font-mono text-xs text-tertiary tracking-wide">
             {t('footer')}
           </p>
           <p className="mt-5">
@@ -890,13 +890,13 @@ export default function NakedBudget() {
               <span className="text-amber-300 group-hover:text-amber-200 transition-colors">Buy me a coffee</span>
             </a>
           </p>
-          <p className="mt-4 font-mono text-[11px] text-slate-600 tracking-wide">
+          <p className="mt-4 font-mono text-[11px] text-muted tracking-wide">
             Built with{' '}
             <a
               href="https://opencode.ai/go?ref=PZBFA3PEMJ"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-slate-500 hover:text-amber-400 transition-colors duration-200"
+              className="text-tertiary hover:text-amber-400 transition-colors duration-200"
             >
               OpenCode Go
             </a>
@@ -923,14 +923,14 @@ export default function NakedBudget() {
             aria-labelledby="panel-title"
             tabIndex={-1}
             onKeyDown={(e) => { if (e.key === 'Escape') closePanel(); }}
-            className="fixed top-0 right-0 h-dvh w-[420px] max-w-[90vw] bg-[#243047]/98 backdrop-blur-2xl border-l border-slate-800/60 z-50 transition-transform duration-500 ease-in-out overflow-y-auto"
+            className="fixed top-0 right-0 h-dvh w-[420px] max-w-[90vw] bg-elevated backdrop-blur-2xl border-l border-card z-50 transition-transform duration-500 ease-in-out overflow-y-auto"
             style={{ boxShadow: '-8px 0 32px rgba(0,0,0,0.5)', height: '100dvh' }}
           >
             <button
               type="button"
               data-close-panel
               onClick={closePanel}
-              className="absolute top-4 right-4 z-10 flex items-center justify-center w-11 h-11 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 transition-all duration-200 focus:shadow-[0_0_0_3px_rgba(99,102,241,0.3)] focus:outline-none"
+              className="absolute top-4 right-4 z-10 flex items-center justify-center w-11 h-11 rounded-lg text-secondary hover:text-primary hover:bg-card transition-all duration-200 focus:shadow-[0_0_0_3px_rgba(99,102,241,0.3)] focus:outline-none"
               aria-label={t('panel_close_label').replace('{name}', getMuniName(focusedMuni, locale))}
             >
               <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
@@ -1026,10 +1026,10 @@ export default function NakedBudget() {
                       ? [{ label: t('chart_legend_correction'), value: -focusedMuni.corporateRetraction, color: '#10B981' }]
                       : []),
                   ].map((item) => (
-                    <div key={item.label} className="flex items-center justify-between py-1 border-b border-slate-800/40 last:border-b-0">
+                    <div key={item.label} className="flex items-center justify-between py-1 border-b border-card last:border-b-0">
                       <div className="flex items-center gap-2">
                         <span className="w-1.5 h-1.5 rounded-full" style={{ backgroundColor: item.color }} />
-                        <span className="text-xs font-mono text-slate-400">{item.label}</span>
+                        <span className="text-xs font-mono text-secondary">{item.label}</span>
                       </div>
                       <span className="text-xs font-semibold font-mono" style={{ color: item.color }}>
                         {showMkd ? 'MKD ' + Math.round(Math.abs(item.value) * MKD_PER_EUR).toLocaleString() : (item.value >= 0 ? '€' : '-€') + Math.abs(item.value).toLocaleString()}
@@ -1042,7 +1042,7 @@ export default function NakedBudget() {
               <div className="h-[1px] bg-gradient-to-r from-transparent via-slate-700/50 to-transparent mb-4" />
 
               <div className="flex items-center justify-between">
-                <span className="text-sm font-mono text-slate-400">{t('panel_total_drain')}</span>
+                <span className="text-sm font-mono text-secondary">{t('panel_total_drain')}</span>
                 <span className="text-lg font-bold font-mono" style={{ color: '#F59E0B' }}>
                   {fmt(focusedMuni.totalPerCapitaDrain, true)}
                 </span>

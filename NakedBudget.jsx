@@ -201,7 +201,7 @@ export default function NakedBudget() {
     const totalNet = totalRev - totalOut;
     const totalArrears = Object.values(NET_FISCAL).reduce((s, n) => s + n.arrears, 0);
     // ── Skopje aggregate (10 municipalities) ──
-    const skopjeIds = SKOPIE_BORROUGHS.slice(0, 10);
+    const skopjeIds = SKOPIE_BORROUGHS;
     const skopjeRev = skopjeIds.reduce((s, id) => s + (NET_FISCAL[id]?.revenueInflow || 0), 0);
     const skopjeOut = skopjeIds.reduce((s, id) => s + (NET_FISCAL[id]?.budgetOutflow || 0), 0);
     const skopjePop = skopjeIds.reduce((s, id) => {

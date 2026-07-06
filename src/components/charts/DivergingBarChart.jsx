@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import { NET_FISCAL, MKD_PER_EUR, getMuniName } from '../../data/fiscalData.js';
+import { NET_FISCAL, MKD_PER_EUR, getMuniName, SKOPIE_BORROUGHS } from '../../data/fiscalData.js';
 import { useLocale } from '../../context/LocaleContext.jsx';
 
 export default function DivergingBarChart({ results, maxAbsNetPCEUR, fmt, netFiscalAggs }) {
@@ -34,7 +34,7 @@ export default function DivergingBarChart({ results, maxAbsNetPCEUR, fmt, netFis
           const skopjeBarW = Math.max(skopjeBarPct, 2);
           return (
             <div key="__skopje_agg__" className="grid grid-cols-[80px_1fr_90px] gap-2 text-[11px] font-mono items-center pb-1.5 mb-1.5 border-b border-slate-700/30 hover:bg-white/[0.02] transition-colors duration-150">
-              <span className="text-left text-[10px] md:text-[11px] font-semibold" style={{ color: '#FFD700' }}>Скопје (10)</span>
+               <span className="text-left text-[10px] md:text-[11px] font-semibold" style={{ color: '#FFD700' }}>Скопје ({SKOPIE_BORROUGHS.length})</span>
               <div className="relative h-5 flex items-center">
                 <div className="absolute top-0 bottom-0 w-[2px] bg-slate-600/50 z-10" aria-hidden="true" />
                 <div className="absolute h-full rounded-sm transition-all duration-300"

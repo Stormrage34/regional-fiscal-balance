@@ -379,6 +379,9 @@ export default function NakedBudget() {
               <h1 className="text-lg font-bold tracking-tight text-white font-mono leading-none">
                 {t('brand_title')}
               </h1>
+              <p className="text-xs font-mono flex-1" style={{ color: '#94a3b8' }}>
+                {t('brand_sub')}
+              </p>
               <a
                 href="https://buymeacoffee.com/stefangel9b"
                 target="_blank"
@@ -410,9 +413,6 @@ export default function NakedBudget() {
                 <span className="text-amber-300 group-hover:text-amber-200 transition-colors">Buy me a coffee</span>
               </a>
             </div>
-            <p className="text-xs font-mono" style={{ color: '#94a3b8' }}>
-              {t('brand_sub')}
-            </p>
             <button
               type="button"
               onClick={() => setSidebarOpen(true)}
@@ -422,7 +422,6 @@ export default function NakedBudget() {
               <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                 <circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/>
               </svg>
-              <span className="hidden sm:inline">{t('sidebar_policy')}</span>
             </button>
             <button
               type="button"

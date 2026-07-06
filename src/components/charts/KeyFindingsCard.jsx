@@ -8,7 +8,7 @@ export default function KeyFindingsCard({ skopjeSurplusEURm }) {
 
   // Compute dynamic surplus if not provided as prop
   const surplusM = skopjeSurplusEURm ?? null;
-  const formattedSurplus = surplusM !== null ? `€${surplusM.toLocaleString(locale)}` : '€—';
+  const formattedSurplus = surplusM !== null ? `€${surplusM.toLocaleString(locale)}M` : '€—';
 
   const makeFinding2 = () => {
     const prefix = t('key_finding_2_prefix');

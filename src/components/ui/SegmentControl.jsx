@@ -1,6 +1,6 @@
 export default function SegmentControl({ value, onChange, segments }) {
   return (
-    <div className="inline-flex rounded-lg bg-slate-900/60 border border-slate-700/40 p-0.5 gap-0.5">
+    <div className="inline-flex flex-wrap rounded-lg bg-slate-900/60 border border-slate-700/40 p-0.5 gap-0.5">
       {segments.map((seg) => (
         <button
           key={seg.value}

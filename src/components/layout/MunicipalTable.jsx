@@ -67,9 +67,9 @@ export default function MunicipalTable({
       <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-slate-600/25 to-transparent" />
 
       <div className="px-5 py-3.5 border-b flex items-center justify-between relative" style={{ borderColor: '#1F3050' }}>
-        <h2 className="text-xs font-mono uppercase tracking-widest" style={{ color: '#94a3b8' }}>
+        <h3 className="text-xs font-mono uppercase tracking-widest" style={{ color: '#94a3b8' }}>
           {t('muni_profiles')}
-        </h2>
+        </h3>
         <span className="text-[10px] font-mono" style={{ color: '#94a3b8' }}>
           {t('muni_sort')}
         </span>

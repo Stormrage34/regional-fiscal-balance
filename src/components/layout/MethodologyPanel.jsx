@@ -5,9 +5,9 @@ export default function MethodologyPanel({ showMethodology, setShowMethodology }
   return (
     <div>
       <div className="flex items-center justify-between mb-4">
-        <h2 className="text-xs font-mono uppercase tracking-widest" style={{ color: '#94a3b8' }}>
+        <span className="text-xs font-mono uppercase tracking-widest" style={{ color: '#94a3b8' }}>
           {t('method_title')}
-        </h2>
+        </span>
         <button
           type="button"
           onClick={() => setShowMethodology(!showMethodology)}

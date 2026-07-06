@@ -201,7 +201,7 @@ export default function NakedBudget() {
     const totalNet = totalRev - totalOut;
     const totalArrears = Object.values(NET_FISCAL).reduce((s, n) => s + n.arrears, 0);
     // ── Skopje aggregate (10 municipalities) ──
-    const skopjeIds = ['aerodrom','butel','cair','centar','gazi-baba','gjorce-petrov','karpos','kisela-voda','saraj','suto-orizari'];
+    const skopjeIds = SKOPIE_BORROUGHS.slice(0, 10);
     const skopjeRev = skopjeIds.reduce((s, id) => s + (NET_FISCAL[id]?.revenueInflow || 0), 0);
     const skopjeOut = skopjeIds.reduce((s, id) => s + (NET_FISCAL[id]?.budgetOutflow || 0), 0);
     const skopjePop = skopjeIds.reduce((s, id) => {
@@ -213,7 +213,7 @@ export default function NakedBudget() {
     // Dynamic national avg own revenue per capita (EUR) — total revenue / total pop
     const totalPopAll = results.reduce((s, r) => s + r.workingAgePop / 0.67, 0);
     const nationalAvgRevPC = totalPopAll > 0 ? Math.round((totalRev / MKD_PER_EUR) / totalPopAll) : 500;
-    return { gainers, losers, totalRev, totalOut, totalNet, totalArrears, skopjeRev, skopjeOut, skopjePop, skopjeNet, skopjeNetPC, nationalAvgRevPC };
+    return { gainers, losers, totalRev, totalOut, totalNet, totalArrears, skopjeRev, skopjeOut, skopjePop, skopjeNet, skopjeNetPC, nationalAvgRevPC, skopjeBoroughsCount: skopjeIds.length };
   }, [results]);
 
   const gainerCount = results.filter(r => NET_FISCAL[r.id] && (NET_FISCAL[r.id].revenueInflow - NET_FISCAL[r.id].budgetOutflow) > 0).length;
@@ -570,7 +570,7 @@ export default function NakedBudget() {
             <div className="rounded-lg px-4 py-3 border hover:bg-white/[0.03] transition-colors duration-200" style={{ backgroundColor: '#243047', borderColor: '#1F3050' }}>
               <span className="text-xs font-mono" style={{ color: '#64748b' }}>Скопје</span>
               <span className="block text-2xl font-bold font-mono mt-0.5" style={{ color: '#10B981' }}>+{fmt(netFiscalAggs.skopjeNetPC, true)}</span>
-              <span className="text-xs font-mono" style={{ color: '#94a3b8' }}>{t('net_gainers').toLowerCase()} · 10 општини</span>
+              <span className="text-xs font-mono" style={{ color: '#94a3b8' }}>{t('net_gainers').toLowerCase()} · {netFiscalAggs.skopjeBoroughsCount} општини</span>
             </div>
           </div>
         </section>

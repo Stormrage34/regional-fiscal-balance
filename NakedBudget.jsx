@@ -11,6 +11,7 @@ import { computePillarScores } from './src/models/pillarScoring.js';
 import { predictFiscalDisparity, LOGIT_COEFFICIENTS } from './src/models/logisticRegression.js';
 
 // ── UI Primitives ──
+import { Analytics } from '@vercel/analytics/react';
 import AnimatedNumber from './src/components/ui/AnimatedNumber.jsx';
 import SegmentControl from './src/components/ui/SegmentControl.jsx';
 
@@ -499,6 +500,7 @@ export default function NakedBudget() {
           html { scroll-behavior: smooth; scroll-padding-top: 60px; }
         `}</style>
         <StickyNav />
+        <Analytics />
 
         {/* ═══ HERO — TOTAL FISCAL DRAIN ═══ */}
         <section id="section-hero" className="text-center py-12 md:py-16">

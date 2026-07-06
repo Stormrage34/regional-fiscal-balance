@@ -34,7 +34,7 @@ export default function DivergingBarChart({ results, maxAbsNetPCEUR, fmt, netFis
           const skopjeBarW = Math.max(skopjeBarPct, 2);
           return (
             <div key="__skopje_agg__" className="grid grid-cols-[80px_1fr_90px] gap-2 text-[11px] font-mono items-center pb-1.5 mb-1.5 border-b border-light hover-bg transition-colors duration-150">
-               <span className="text-left text-[10px] md:text-[11px] font-semibold text-gold">Скопје ({SKOPIE_BORROUGHS.length})</span>
+               <span className="text-left text-[10px] md:text-[11px] font-semibold text-gold">{t('skopje_boroughs_label').replace('{n}', SKOPIE_BORROUGHS.length)}</span>
               <div className="relative h-5 flex items-center">
                 <div className="absolute top-0 bottom-0 w-[2px] bg-chart-axis z-10" aria-hidden="true" />
                 <div className="absolute h-full rounded-sm transition-all duration-300"

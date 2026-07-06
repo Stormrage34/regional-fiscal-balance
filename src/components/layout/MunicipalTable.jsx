@@ -197,7 +197,7 @@ export default function MunicipalTable({
                   <th className="relative group cursor-help whitespace-nowrap px-3 py-3 text-center align-middle min-w-[140px]">
                     <span className="text-[10px] font-mono uppercase tracking-wider text-muted">{t('tbl_structural')}</span>
                     <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2 py-1 bg-elevated border border-card rounded text-[10px] text-secondary opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap z-50">
-                      Структурна компонента на одливот
+                      {t('tooltip_structural')}
                     </div>
                   </th>
 
@@ -205,7 +205,7 @@ export default function MunicipalTable({
                   <th className="relative group cursor-help whitespace-nowrap px-3 py-3 text-center align-middle min-w-[110px]">
                     <span className="text-[10px] font-mono uppercase tracking-wider text-muted">{t('tbl_correction')}</span>
                     <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2 py-1 bg-elevated border border-card rounded text-[10px] text-secondary opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap z-50">
-                      Корективен фактор
+                      {t('tooltip_correction')}
                     </div>
                   </th>
 
@@ -218,7 +218,7 @@ export default function MunicipalTable({
                   <th className="relative group cursor-help whitespace-nowrap px-3 py-3 text-center align-middle min-w-[80px]">
                     <span className="text-[10px] font-mono uppercase tracking-wider text-muted">{t('hdr_discipline')}</span>
                     <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2 py-1 bg-elevated border border-card rounded text-[10px] text-secondary opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap z-50">
-                      Ризик базиран на однос заостанати долгови/приходи
+                      {t('tooltip_risk')}
                     </div>
                   </th>
 
@@ -226,7 +226,7 @@ export default function MunicipalTable({
                   <th className="relative group cursor-help whitespace-nowrap px-3 py-3 text-center align-middle min-w-[60px]">
                     <span className="text-[10px] font-mono uppercase tracking-wider text-muted">RATING*</span>
                     <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2 py-1 bg-elevated border border-card rounded text-[10px] text-secondary opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap z-50">
-                      Кредитен рејтинг: B1 (Moody's, Штип 2017) или NR
+                      {t('tooltip_credit_rating')}
                     </div>
                   </th>
 
@@ -242,7 +242,7 @@ export default function MunicipalTable({
                     <div className="inline-flex flex-col items-center gap-1">
                       <span className="text-[10px] font-mono uppercase tracking-wider text-muted">MODEL</span>
                       <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2 py-1 bg-elevated border border-card rounded text-[10px] text-secondary opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap z-50">
-                        Gainer/Loser предвидување од логистички модел
+                        {t('tooltip_prediction')}
                       </div>
                     </div>
                   </th>
@@ -251,7 +251,7 @@ export default function MunicipalTable({
                   <th className="relative group cursor-help whitespace-nowrap px-2 py-3 text-center align-middle min-w-[70px]">
                     <span className="text-[10px] font-mono uppercase tracking-wider text-muted">{t('hdr_match')}</span>
                     <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2 py-1 bg-elevated border border-card rounded text-[10px] text-secondary opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap z-50">
-                      Моделот точно/неточно ја предвидел класификацијата
+                      {t('tooltip_match')}
                     </div>
                   </th>
 
@@ -267,7 +267,7 @@ export default function MunicipalTable({
                     <div className="inline-flex flex-col items-center gap-1">
                       <span className="text-[10px] font-mono uppercase tracking-wider text-muted">PROB</span>
                       <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2 py-1 bg-elevated border border-card rounded text-[10px] text-secondary opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap z-50">
-                        Веројатност од логистички модел
+                        {t('tooltip_probability')}
                       </div>
                     </div>
                   </th>
@@ -502,9 +502,9 @@ export default function MunicipalTable({
 
       {/* Legend */}
       <div className="mt-2 flex flex-wrap gap-4 text-[10px] font-mono text-muted px-5 pb-4">
-        <span>Фаза: <span className="text-gainer-green">🟢 P2</span> = блок дотации (со плати)</span>
-        <span><span className="text-drain-amber">🟡 P1</span> = наменски дотации (без плати)</span>
-        <span>Ризик: <span className="text-loser-rose">🔴 High</span> · <span className="text-drain-amber">🟡 Watch</span> · <span className="text-gainer-green">🟢 Low</span></span>
+        <span>{t('legend_phase')}: <span className="text-gainer-green">🟢 P2</span> = {t('phase_tooltip_2')}</span>
+        <span><span className="text-drain-amber">🟡 P1</span> = {t('phase_tooltip_1')}</span>
+        <span>{t('legend_risk')}: <span className="text-loser-rose">🔴 High</span> · <span className="text-drain-amber">🟡 Watch</span> · <span className="text-gainer-green">🟢 Low</span></span>
       </div>
     </section>
   );

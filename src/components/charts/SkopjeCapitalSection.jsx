@@ -78,7 +78,7 @@ export default function SkopjeCapitalSection({ aggregates = {} }) {
             €{skopjeSurplusM}M
             <span title="Per-borough Treasury data sums to ~4× the consolidated City of Skopje budget. Boroughs allocate shared city revenues individually. True aggregate surplus lies between €5.9M (city budget) and €123M (borough sum)." className="inline-block w-3.5 h-3.5 rounded-full bg-tertiary/40 text-[8px] text-secondary text-center leading-3 ml-1 cursor-help align-middle" aria-label="Data note">ⓘ</span>
           </div>
-          <div className="text-[10px] font-mono mt-0.5 text-muted">+€{skopjeNetPC}/жител · Трезор 2025</div>
+          <div className="text-[10px] font-mono mt-0.5 text-muted">{t('capital_net_per_capita').replace('{n}', skopjeNetPC)}</div>
         </div>
         <div className="text-center">
           <div className="text-[10px] font-mono uppercase tracking-wider mb-1 text-tertiary">

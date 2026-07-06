@@ -172,6 +172,47 @@ export const translations = {
     tbl_total_drain: 'Total Drain',
     tbl_total_arrears: 'Total Arrears',
     tbl_unemployed: 'Unemployed',
+    // Navigation
+    nav_skopje: 'Skopje',
+    nav_balance: 'Net Impact',
+    nav_regional: 'Regional Balance',
+    nav_labor: 'Labor Market',
+    nav_phases: 'Phases',
+    nav_charts: 'Charts',
+    nav_table: 'Table',
+    nav_default: 'Overview',
+    nav_aria_label: 'Section navigation',
+    nav_menu_open: 'Open menu',
+    nav_menu_close: 'Close menu',
+    // Back to top
+    back_to_top_label: 'Back to top',
+    back_to_top_title: 'Back to top',
+    // Section headings
+    section_regional_balance: 'Regional Fiscal Balance',
+    section_labor_market: 'Labor Market Mapping',
+    // Skopje
+    skopje_label: 'Skopje',
+    skopje_boroughs_label: 'Skopje ({n})',
+    skopje_boroughs_unit: 'boroughs',
+    // Table
+    toggle_advanced: '⏷ Advanced columns',
+    toggle_basic: '⏶ Basic columns',
+    table_subtitle: 'All data for {n} municipalities',
+    // Hero
+    hero_avg_prefix: 'avg',
+    hero_per_person_suffix: '/pc',
+    // MunicipalTable tooltips
+    tooltip_structural: 'Structural drain component',
+    tooltip_correction: 'Correction factor',
+    tooltip_risk: 'Risk based on arrears/revenue ratio',
+    tooltip_credit_rating: "Credit rating: B1 (Moody's, Stip 2017) or NR",
+    tooltip_prediction: 'Gainer/Loser prediction from logistic model',
+    tooltip_match: 'Model correctly/incorrectly predicted classification',
+    tooltip_probability: 'Probability from logistic model',
+    legend_phase: 'Phase',
+    legend_risk: 'Risk',
+    // Capital section
+    capital_net_per_capita: '+€{n}/pc · Treasury 2025',
   },
   mk: {
     brand_title: 'Отворен Фискален Биланс',
@@ -345,6 +386,47 @@ export const translations = {
     tbl_total_drain: 'Вкупен Одлив',
     tbl_total_arrears: 'Вкупни Задолж.',
     tbl_unemployed: 'Невработени',
+    // Navigation
+    nav_skopje: 'Скопје',
+    nav_balance: 'Нето Влијание',
+    nav_regional: 'Регионален Биланс',
+    nav_labor: 'Пазар на Труд',
+    nav_phases: 'Фази',
+    nav_charts: 'Графикони',
+    nav_table: 'Табела',
+    nav_default: 'Почеток',
+    nav_aria_label: 'Навигација по секции',
+    nav_menu_open: 'Отвори мени',
+    nav_menu_close: 'Затвори мени',
+    // Back to top
+    back_to_top_label: 'Врати се на почеток',
+    back_to_top_title: 'Врти се на почеток',
+    // Section headings
+    section_regional_balance: 'Регионален Фискален Биланс',
+    section_labor_market: 'Мапирање на Пазарот на Труд',
+    // Skopje
+    skopje_label: 'Скопје',
+    skopje_boroughs_label: 'Скопје ({n})',
+    skopje_boroughs_unit: 'општини',
+    // Table
+    toggle_advanced: '⏷ Напредни колони',
+    toggle_basic: '⏶ Основни колони',
+    table_subtitle: 'Сите податоци за {n} општини',
+    // Hero
+    hero_avg_prefix: 'просек',
+    hero_per_person_suffix: '/жит.',
+    // MunicipalTable tooltips
+    tooltip_structural: 'Структурна компонента на одливот',
+    tooltip_correction: 'Корективен фактор',
+    tooltip_risk: 'Ризик базиран на однос заостанати долгови/приходи',
+    tooltip_credit_rating: "Кредитен рејтинг: B1 (Moody's, Штип 2017) или NR",
+    tooltip_prediction: 'Gainer/Loser предвидување од логистички модел',
+    tooltip_match: 'Моделот точно/неточно ја предвидел класификацијата',
+    tooltip_probability: 'Веројатност од логистички модел',
+    legend_phase: 'Фаза',
+    legend_risk: 'Ризик',
+    // Capital section
+    capital_net_per_capita: '+€{n}/жит. · Трезор 2025',
   },
   sq: {
     brand_title: 'Regjistri Fiskal i Hapur',
@@ -516,5 +598,46 @@ export const translations = {
     tbl_total_drain: 'Humbja Totale',
     tbl_total_arrears: 'Borxhet Tot.',
     tbl_unemployed: 'Të papunët',
+    // Navigation
+    nav_skopje: 'Shkupi',
+    nav_balance: 'Ndikimi Neto',
+    nav_regional: 'Bilanci Rajonal',
+    nav_labor: 'Tregu i Punës',
+    nav_phases: 'Fazat',
+    nav_charts: 'Grafikët',
+    nav_table: 'Tabela',
+    nav_default: 'Përmbledhje',
+    nav_aria_label: 'Navigim sipas seksioneve',
+    nav_menu_open: 'Hap menunë',
+    nav_menu_close: 'Mbyll menunë',
+    // Back to top
+    back_to_top_label: 'Kthehu në fillim',
+    back_to_top_title: 'Kthehu në fillim',
+    // Section headings
+    section_regional_balance: 'Bilanci Rajonal Fiskal',
+    section_labor_market: 'Harta e Tregut të Punës',
+    // Skopje
+    skopje_label: 'Shkupi',
+    skopje_boroughs_label: 'Shkupi ({n})',
+    skopje_boroughs_unit: 'komuna',
+    // Table
+    toggle_advanced: '⏷ Kolona të avancuara',
+    toggle_basic: '⏶ Kolona bazë',
+    table_subtitle: 'Të dhënat për {n} komuna',
+    // Hero
+    hero_avg_prefix: 'mesatarisht',
+    hero_per_person_suffix: '/frymë',
+    // MunicipalTable tooltips
+    tooltip_structural: 'Komponentja strukturore e humbjes',
+    tooltip_correction: 'Faktori korrigjues',
+    tooltip_risk: 'Rrezik i bazuar në raportin borxhe/të ardhura',
+    tooltip_credit_rating: "Vlerësimi kreditor: B1 (Moody's, Shtip 2017) ose NR",
+    tooltip_prediction: 'Parashikimi Fitues/Humbës nga modeli logjistik',
+    tooltip_match: 'Modeli parashikoi saktë/pasaktë klasifikimin',
+    tooltip_probability: 'Probabiliteti nga modeli logjistik',
+    legend_phase: 'Faza',
+    legend_risk: 'Rreziku',
+    // Capital section
+    capital_net_per_capita: '+€{n}/frymë · Thesari 2025',
   },
 };

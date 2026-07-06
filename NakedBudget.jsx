@@ -80,8 +80,8 @@ function BackToTop() {
       type="button"
       onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
       className="fixed bottom-6 right-6 z-50 w-10 h-10 rounded-full border border-card bg-card backdrop-blur-sm text-secondary hover:text-amber-300 hover:border-amber-500/30 transition-all duration-200 flex items-center justify-center shadow-lg"
-      aria-label="Врати се на почеток"
-      title="Врти се на почеток"
+      aria-label={t('back_to_top_label')}
+      title={t('back_to_top_title')}
     >
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5}>
         <path d="M18 15l-6-6-6 6" strokeLinecap="round" strokeLinejoin="round" />
@@ -511,7 +511,7 @@ export default function NakedBudget() {
             €{Math.round(aggregates.totalYearlyDrain / 1_000_000)}M
           </p>
           <p className="text-xs font-mono text-tertiary mt-4">
-            {results.length} {t('hero_municipalities').split('·')[0].trim()} · {aggregates.totalPop.toLocaleString()} {t('hero_municipalities').split('·')[1].trim()} · просек €{aggregates.weightedAvgDrain}/жител
+            {results.length} {t('hero_municipalities').split('·')[0].trim()} · {aggregates.totalPop.toLocaleString()} {t('hero_municipalities').split('·')[1].trim()} · {t('hero_avg_prefix')} €{aggregates.weightedAvgDrain}{t('hero_per_person_suffix')}
           </p>
           <p className="text-[11px] leading-relaxed text-secondary max-w-2xl mx-auto mt-6 px-4">
             {t('hero_description')}
@@ -568,9 +568,9 @@ export default function NakedBudget() {
               <span className="text-xs font-mono" style={{ color: '#94a3b8' }}>{t('net_arrears').toLowerCase()}</span>
             </div>
             <div className="rounded-lg px-4 py-3 border hover:bg-white/[0.03] transition-colors duration-200" style={{ backgroundColor: '#243047', borderColor: '#1F3050' }}>
-              <span className="text-xs font-mono" style={{ color: '#64748b' }}>Скопје</span>
+              <span className="text-xs font-mono" style={{ color: '#64748b' }}>{t('skopje_label')}</span>
               <span className="block text-2xl font-bold font-mono mt-0.5" style={{ color: '#10B981' }}>+{fmt(netFiscalAggs.skopjeNetPC, true)}</span>
-              <span className="text-xs font-mono" style={{ color: '#94a3b8' }}>{t('net_gainers').toLowerCase()} · {netFiscalAggs.skopjeBoroughsCount} општини</span>
+              <span className="text-xs font-mono" style={{ color: '#94a3b8' }}>{t('net_gainers').toLowerCase()} · {netFiscalAggs.skopjeBoroughsCount} {t('skopje_boroughs_unit')}</span>
             </div>
           </div>
         </section>
@@ -580,7 +580,7 @@ export default function NakedBudget() {
           <div className="flex items-center gap-2 mb-4 px-5 pt-5">
             <span title={TRUST.real.label} className="inline-block w-1.5 h-1.5 rounded-full flex-shrink-0" style={{ backgroundColor: TRUST.real.color }} />
             <h2 className="text-xs font-sans font-semibold uppercase tracking-widest" style={{ color: '#94a3b8' }}>
-              Регионален Фискален Биланс
+              {t('section_regional_balance')}
             </h2>
           </div>
           <div className="px-5 pb-5">
@@ -608,7 +608,7 @@ export default function NakedBudget() {
           <div className="flex items-center gap-2 mb-4 px-5 pt-5">
             <span title={TRUST.derived.label} className="inline-block w-1.5 h-1.5 rounded-full flex-shrink-0" style={{ backgroundColor: TRUST.derived.color }} />
             <h2 className="text-xs font-sans font-semibold uppercase tracking-widest" style={{ color: '#94a3b8' }}>
-              Мапирање на Пазарот на Труд
+              {t('section_labor_market')}
             </h2>
           </div>
           <div className="px-5 pb-5">
@@ -773,14 +773,14 @@ export default function NakedBudget() {
                 </h2>
               </div>
               <p className="text-xs font-sans text-tertiary mt-1">
-                All data for 28 municipalities
+                {t('table_subtitle').replace('{n}', sortedResults.length)}
               </p>
             </div>
             <button
               onClick={() => setShowAdvancedColumns(!showAdvancedColumns)}
               className="flex items-center gap-1 text-[10px] font-mono text-secondary hover:text-primary transition-colors"
             >
-              {showAdvancedColumns ? '⏶ Основни колони' : '⏷ Напредни колони'}
+              {showAdvancedColumns ? t('toggle_basic') : t('toggle_advanced')}
             </button>
           </div>
           <MunicipalTable

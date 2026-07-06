@@ -577,10 +577,10 @@ export default function NakedBudget() {
         {/* ═══ CALLOUTS ═══ */}
         <section id="section-callouts" className="mb-12">
           <h2 className="text-xs font-mono uppercase tracking-widest mb-4" style={{ color: '#94a3b8' }}>
-            Најдобри и најлоши 5 општини
+            {t('callout_title')}
           </h2>
           <p className="text-xs font-mono text-slate-500 mt-1 mb-4">
-            Best and worst 5 municipalities by fiscal performance
+            {t('callout_subtitle')}
           </p>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {/* Worst */}
@@ -670,7 +670,7 @@ export default function NakedBudget() {
         </section>
 
         {/* ═══ KEY FINDINGS ═══ */}
-        <KeyFindingsCard />
+        <KeyFindingsCard skopjeSurplusEURm={Math.round(netFiscalAggs.skopjeNet / MKD_PER_EUR / 1_000_000)} />
 
         {/* ═══ CHARTS ═══ */}
         <section id="section-charts" className="rounded-xl relative overflow-hidden mb-14 transition-all duration-300 hover:shadow-[0_0_20px_rgba(99,102,241,0.05)] bg-gradient-to-b from-slate-900/[0.15] to-transparent" style={{ backgroundColor: 'rgba(11,17,32,0.5)', borderColor: '#1F3050', borderWidth: 1 }}>

@@ -105,7 +105,7 @@ export default function MunicipalTable({
                 aria-sort={getSortDir('drain', sortKey, sortAsc)}
               >
                 <div className="flex flex-col items-center gap-0.5">
-                  <span className="text-[10px] font-mono uppercase tracking-wider text-slate-500">Avg Balance</span>
+                  <span className="text-[10px] font-mono uppercase tracking-wider text-slate-500">{t('tbl_avg_balance')}</span>
                   <span className="text-xs font-bold text-[#F59E0B] font-mono tabular-nums">{fmt(totals.avgBalance, true)}</span>
                 </div>
               </th>
@@ -120,7 +120,7 @@ export default function MunicipalTable({
                 aria-sort={getSortDir('leakage', sortKey, sortAsc)}
               >
                 <div className="flex flex-col items-center gap-0.5">
-                  <span className="text-[10px] font-mono uppercase tracking-wider text-slate-500">Avg Leakage</span>
+                  <span className="text-[10px] font-mono uppercase tracking-wider text-slate-500">{t('tbl_avg_leakage')}</span>
                   <span className="text-xs font-bold text-[#F59E0B] font-mono tabular-nums">{fmt(totals.avgLeakage, true)}</span>
                 </div>
               </th>
@@ -135,7 +135,7 @@ export default function MunicipalTable({
                 aria-sort={getSortDir('welfare', sortKey, sortAsc)}
               >
                 <div className="flex flex-col items-center gap-0.5">
-                  <span className="text-[10px] font-mono uppercase tracking-wider text-slate-500">Avg Welfare</span>
+                  <span className="text-[10px] font-mono uppercase tracking-wider text-slate-500">{t('tbl_avg_welfare')}</span>
                   <span className="text-xs font-bold text-[#F87171] font-mono tabular-nums">{fmt(totals.avgWelfare, true)}</span>
                 </div>
               </th>
@@ -150,7 +150,7 @@ export default function MunicipalTable({
                 aria-sort={getSortDir('yearly', sortKey, sortAsc)}
               >
                 <div className="flex flex-col items-center gap-0.5">
-                  <span className="text-[10px] font-mono uppercase tracking-wider text-slate-500">Total Drain</span>
+                  <span className="text-[10px] font-mono uppercase tracking-wider text-slate-500">{t('tbl_total_drain')}</span>
                   <span className="text-xs font-bold text-[#F87171] font-mono tabular-nums">{fmt(totals.totalDrainMillions, false)}</span>
                 </div>
               </th>
@@ -165,7 +165,7 @@ export default function MunicipalTable({
                 aria-sort={getSortDir('arrears', sortKey, sortAsc)}
               >
                 <div className="flex flex-col items-center gap-0.5">
-                  <span className="text-[10px] font-mono uppercase tracking-wider text-slate-500">Total Arrears</span>
+                  <span className="text-[10px] font-mono uppercase tracking-wider text-slate-500">{t('tbl_total_arrears')}</span>
                   <span className="text-xs font-bold text-slate-400 font-mono tabular-nums">{fmt(totals.totalArrearsMillions, false)}</span>
                 </div>
               </th>
@@ -180,7 +180,7 @@ export default function MunicipalTable({
                 aria-sort={getSortDir('unemployment', sortKey, sortAsc)}
               >
                 <span className="inline-flex items-center gap-1 justify-center text-[10px] font-mono uppercase tracking-wider text-slate-500">
-                  Unemployed
+                  {t('tbl_unemployed')}
                   <SortIcon columnKey="unemployment" sortKey={sortKey} sortAsc={sortAsc} />
                 </span>
               </th>
@@ -189,7 +189,7 @@ export default function MunicipalTable({
                 <>
                   {/* Structural */}
                   <th className="relative group cursor-help whitespace-nowrap px-3 py-2 text-center align-middle min-w-[140px]">
-                    <span className="text-[10px] font-mono uppercase tracking-wider text-slate-500">STRUCTURAL</span>
+                    <span className="text-[10px] font-mono uppercase tracking-wider text-slate-500">{t('tbl_structural')}</span>
                     <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2 py-1 bg-slate-800 border border-slate-600 rounded text-[10px] text-slate-300 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap z-50">
                       Структурна компонента на одливот
                     </div>
@@ -197,7 +197,7 @@ export default function MunicipalTable({
 
                   {/* Correction */}
                   <th className="relative group cursor-help whitespace-nowrap px-3 py-2 text-center align-middle min-w-[110px]">
-                    <span className="text-[10px] font-mono uppercase tracking-wider text-slate-500">CORRECTION</span>
+                    <span className="text-[10px] font-mono uppercase tracking-wider text-slate-500">{t('tbl_correction')}</span>
                     <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2 py-1 bg-slate-800 border border-slate-600 rounded text-[10px] text-slate-300 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap z-50">
                       Корективен фактор
                     </div>

@@ -1,21 +1,35 @@
 /**
  * Key Findings Card — 3 critical insights for non-IT users
  */
-export default function KeyFindingsCard() {
+import { useLocale } from '../../context/LocaleContext.jsx';
+
+export default function KeyFindingsCard({ skopjeSurplusEURm }) {
+  const { t, locale } = useLocale();
+
+  // Compute dynamic surplus if not provided as prop
+  const surplusM = skopjeSurplusEURm ?? null;
+  const formattedSurplus = surplusM !== null ? `€${surplusM.toLocaleString(locale)}` : '€—';
+
+  const makeFinding2 = () => {
+    const prefix = t('key_finding_2_prefix');
+    const suffix = t('key_finding_2_suffix');
+    return `${prefix}${formattedSurplus}${suffix}`;
+  };
+
   return (
     <section id="section-findings" className="max-w-3xl mx-auto mb-8">
       <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
         <Finding 
           icon="🔴" 
-          text="20 од 28 општини имаат негативен фискален биланс — трошат повеќе отколку што собираат"
+          text={t('key_finding_1')}
         />
         <Finding 
           icon="🟢" 
-          text="Скопје има суфицит од +€400М, но внатрешен диспаритет: Центар 94% наплата, Шуто Оризари 67%"
+          text={makeFinding2()}
         />
         <Finding 
           icon="🟡" 
-          text="Општините во Фаза 2 на децентрализација имаат 30% помалку заостанати долгови"
+          text={t('key_finding_3')}
         />
       </div>
     </section>

@@ -68,6 +68,7 @@ function useFocusTrap(active, containerRef) {
 // ───────────────────────────────────────────────────────────────
 
 function BackToTop() {
+  const { t } = useLocale();
   const [showBackToTop, setShowBackToTop] = useState(false);
   useEffect(() => {
     const onScroll = () => setShowBackToTop(window.scrollY > 400);

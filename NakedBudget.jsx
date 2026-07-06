@@ -538,7 +538,7 @@ export default function NakedBudget() {
         <section id="section-balance" className="rounded-xl relative overflow-hidden mb-12 transition-all duration-300 hover:shadow-[0_0_20px_rgba(99,102,241,0.05)]" style={{ backgroundColor: 'rgba(11,17,32,0.4)', borderColor: '#1F3050', borderWidth: 1 }}>
           <div className="flex items-center gap-2 mb-4">
             <span title={TRUST.real.label} className="inline-block w-1.5 h-1.5 rounded-full flex-shrink-0" style={{ backgroundColor: TRUST.real.color }} />
-            <h2 className="text-xs font-mono uppercase tracking-widest" style={{ color: '#94a3b8' }}>
+            <h2 className="text-xs font-sans font-semibold uppercase tracking-widest" style={{ color: '#94a3b8' }}>
               {t('net_fiscal')}
             </h2>
             <span className="text-[10px] font-mono px-2 py-0.5 rounded" style={{ backgroundColor: '#334155', color: '#64748b' }}>
@@ -547,27 +547,27 @@ export default function NakedBudget() {
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3">
-            <div className="rounded-lg px-4 py-3 border hover:shadow-[0_0_12px_rgba(99,102,241,0.04)] transition-shadow duration-300" style={{ backgroundColor: '#243047', borderColor: '#1F3050' }}>
+            <div className="rounded-lg px-4 py-3 border hover:bg-white/[0.03] transition-colors duration-200" style={{ backgroundColor: '#243047', borderColor: '#1F3050' }}>
               <span className="text-xs font-mono" style={{ color: '#64748b' }}>{t('net_gainers')}</span>
               <span className="block text-2xl font-bold font-mono mt-0.5" style={{ color: '#10B981' }}>{netFiscalAggs.gainers.length}</span>
               <span className="text-xs font-mono" style={{ color: '#94a3b8' }}>{t('net_gainers').toLowerCase()} {t('surplus')}</span>
             </div>
-            <div className="rounded-lg px-4 py-3 border hover:shadow-[0_0_12px_rgba(99,102,241,0.04)] transition-shadow duration-300" style={{ backgroundColor: '#243047', borderColor: '#1F3050' }}>
+            <div className="rounded-lg px-4 py-3 border hover:bg-white/[0.03] transition-colors duration-200" style={{ backgroundColor: '#243047', borderColor: '#1F3050' }}>
               <span className="text-xs font-mono" style={{ color: '#64748b' }}>{t('net_losers')}</span>
               <span className="block text-2xl font-bold font-mono mt-0.5" style={{ color: '#F59E0B' }}>{netFiscalAggs.losers.length}</span>
               <span className="text-xs font-mono" style={{ color: '#94a3b8' }}>{t('net_losers').toLowerCase()} {t('deficit')}</span>
             </div>
-            <div className="rounded-lg px-4 py-3 border hover:shadow-[0_0_12px_rgba(99,102,241,0.04)] transition-shadow duration-300" style={{ backgroundColor: '#243047', borderColor: '#1F3050' }}>
+            <div className="rounded-lg px-4 py-3 border hover:bg-white/[0.03] transition-colors duration-200" style={{ backgroundColor: '#243047', borderColor: '#1F3050' }}>
               <span className="text-xs font-mono" style={{ color: '#64748b' }}>{t('net_deficit')}</span>
               <span className="block text-2xl font-bold font-mono mt-0.5" style={{ color: '#F59E0B' }}>{fmt(Math.abs(netFiscalAggs.totalNet) / MKD_PER_EUR / 1_000_000)}</span>
               <span className="text-xs font-mono" style={{ color: '#94a3b8' }}>{t('aggregate_text')} (MKD {Math.abs(Math.round(netFiscalAggs.totalNet/1000)).toLocaleString()}K)</span>
             </div>
-            <div className="rounded-lg px-4 py-3 border hover:shadow-[0_0_12px_rgba(99,102,241,0.04)] transition-shadow duration-300" style={{ backgroundColor: '#243047', borderColor: '#1F3050' }}>
+            <div className="rounded-lg px-4 py-3 border hover:bg-white/[0.03] transition-colors duration-200" style={{ backgroundColor: '#243047', borderColor: '#1F3050' }}>
               <span className="text-xs font-mono" style={{ color: '#64748b' }}>{t('net_arrears')}</span>
               <span className="block text-2xl font-bold font-mono mt-0.5" style={{ color: '#F43F5E' }}>{fmt(netFiscalAggs.totalArrears / MKD_PER_EUR / 1_000_000)}</span>
               <span className="text-xs font-mono" style={{ color: '#94a3b8' }}>{t('net_arrears').toLowerCase()}</span>
             </div>
-            <div className="rounded-lg px-4 py-3 border hover:shadow-[0_0_12px_rgba(99,102,241,0.04)] transition-shadow duration-300" style={{ backgroundColor: '#243047', borderColor: '#1F3050' }}>
+            <div className="rounded-lg px-4 py-3 border hover:bg-white/[0.03] transition-colors duration-200" style={{ backgroundColor: '#243047', borderColor: '#1F3050' }}>
               <span className="text-xs font-mono" style={{ color: '#64748b' }}>Скопје</span>
               <span className="block text-2xl font-bold font-mono mt-0.5" style={{ color: '#10B981' }}>+{fmt(netFiscalAggs.skopjeNetPC, true)}</span>
               <span className="text-xs font-mono" style={{ color: '#94a3b8' }}>{t('net_gainers').toLowerCase()} · 10 општини</span>
@@ -579,7 +579,7 @@ export default function NakedBudget() {
         <section id="section-regional-balance" className="rounded-xl relative overflow-hidden mb-12 transition-all duration-300 hover:shadow-[0_0_20px_rgba(99,102,241,0.05)]" style={{ backgroundColor: 'rgba(11,17,32,0.4)', borderColor: '#1F3050', borderWidth: 1 }}>
           <div className="flex items-center gap-2 mb-4 px-5 pt-5">
             <span title={TRUST.real.label} className="inline-block w-1.5 h-1.5 rounded-full flex-shrink-0" style={{ backgroundColor: TRUST.real.color }} />
-            <h2 className="text-xs font-mono uppercase tracking-widest" style={{ color: '#94a3b8' }}>
+            <h2 className="text-xs font-sans font-semibold uppercase tracking-widest" style={{ color: '#94a3b8' }}>
               Регионален Фискален Биланс
             </h2>
           </div>
@@ -607,7 +607,7 @@ export default function NakedBudget() {
         <section id="section-labor-market" className="rounded-xl relative overflow-hidden mb-12 transition-all duration-300 hover:shadow-[0_0_20px_rgba(99,102,241,0.05)]" style={{ backgroundColor: 'rgba(11,17,32,0.4)', borderColor: '#1F3050', borderWidth: 1 }}>
           <div className="flex items-center gap-2 mb-4 px-5 pt-5">
             <span title={TRUST.derived.label} className="inline-block w-1.5 h-1.5 rounded-full flex-shrink-0" style={{ backgroundColor: TRUST.derived.color }} />
-            <h2 className="text-xs font-mono uppercase tracking-widest" style={{ color: '#94a3b8' }}>
+            <h2 className="text-xs font-sans font-semibold uppercase tracking-widest" style={{ color: '#94a3b8' }}>
               Мапирање на Пазарот на Труд
             </h2>
           </div>
@@ -620,11 +620,11 @@ export default function NakedBudget() {
         <section id="section-callouts" className="mb-12">
           <div className="flex items-center gap-2 mb-4">
             <span title={TRUST.derived.label} className="inline-block w-1.5 h-1.5 rounded-full flex-shrink-0" style={{ backgroundColor: TRUST.derived.color }} />
-            <h2 className="text-xs font-mono uppercase tracking-widest mb-0" style={{ color: '#94a3b8' }}>
+            <h2 className="text-xs font-sans font-semibold uppercase tracking-widest mb-0" style={{ color: '#94a3b8' }}>
               {t('callout_title')}
             </h2>
           </div>
-          <p className="text-xs font-mono text-slate-500 mt-1 mb-4">
+          <p className="text-xs font-sans text-slate-500 mt-1 mb-4">
             {t('callout_subtitle')}
           </p>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -724,11 +724,11 @@ export default function NakedBudget() {
           <div className="relative">
             <div className="flex items-center gap-2 px-5 pt-5 pb-2">
               <span title={TRUST.derived.label} className="inline-block w-1.5 h-1.5 rounded-full flex-shrink-0" style={{ backgroundColor: TRUST.derived.color }} />
-              <h2 className="text-xs font-mono uppercase tracking-widest mb-0" style={{ color: '#94a3b8' }}>
+              <h2 className="text-xs font-sans font-semibold uppercase tracking-widest mb-0" style={{ color: '#94a3b8' }}>
                 {t('method_title')}
               </h2>
             </div>
-            <p className="text-xs font-mono text-slate-500 px-5 pb-4">
+            <p className="text-xs font-sans text-slate-500 px-5 pb-4">
               {t('method_how')}
             </p>
 
@@ -768,11 +768,11 @@ export default function NakedBudget() {
             <div>
               <div className="flex items-center gap-2">
                 <span title={TRUST.derived.label} className="inline-block w-1.5 h-1.5 rounded-full flex-shrink-0" style={{ backgroundColor: TRUST.derived.color }} />
-                <h2 className="text-xs font-mono uppercase tracking-widest mb-0" style={{ color: '#94a3b8' }}>
+                <h2 className="text-xs font-sans font-semibold uppercase tracking-widest mb-0" style={{ color: '#94a3b8' }}>
                   {t('muni_profiles')}
                 </h2>
               </div>
-              <p className="text-xs font-mono text-slate-500 mt-1">
+              <p className="text-xs font-sans text-slate-500 mt-1">
                 All data for 28 municipalities
               </p>
             </div>
@@ -800,14 +800,14 @@ export default function NakedBudget() {
         <section id="section-phases" className="mb-8">
           <div className="flex items-center gap-3 mb-4">
             <span title={TRUST.derived.label} className="inline-block w-1.5 h-1.5 rounded-full flex-shrink-0" style={{ backgroundColor: TRUST.derived.color }} />
-            <h2 className="text-sm font-mono font-bold text-white tracking-tight">
+            <h2 className="text-sm font-sans font-bold tracking-tight text-white">
               {t('section_phase_comparison')}
             </h2>
           </div>
-          <p className="text-xs font-mono text-slate-500 mt-1 mb-1">
+          <p className="text-xs font-sans text-slate-500 mt-1 mb-1">
             {t('section_phase_subtitle')}
           </p>
-          <p className="text-[10px] font-mono leading-relaxed max-w-3xl mb-4" style={{ color: '#64748b' }}>{t('phase_explanation')}</p>
+          <p className="text-[10px] font-sans leading-relaxed max-w-3xl mb-4" style={{ color: '#64748b' }}>{t('phase_explanation')}</p>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="rounded-xl p-5 border" style={{ backgroundColor: 'rgba(11,17,32,0.4)', borderColor: '#1F3050' }}>

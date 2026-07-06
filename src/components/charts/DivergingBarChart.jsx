@@ -33,8 +33,8 @@ export default function DivergingBarChart({ results, maxAbsNetPCEUR, fmt, netFis
           const skopjeBarPct = Math.sqrt(skopjePct) * 90;
           const skopjeBarW = Math.max(skopjeBarPct, 2);
           return (
-            <div key="__skopje_agg__" className="grid grid-cols-[110px_1fr_110px] gap-2 text-[11px] font-mono items-center pb-1.5 mb-1.5 border-b border-slate-700/30">
-              <span className="text-left truncate font-semibold" style={{ color: '#FFD700' }}>Скопје (10)</span>
+            <div key="__skopje_agg__" className="grid grid-cols-[80px_1fr_90px] gap-2 text-[11px] font-mono items-center pb-1.5 mb-1.5 border-b border-slate-700/30 hover:bg-white/[0.02] transition-colors duration-150">
+              <span className="text-left text-[10px] md:text-[11px] font-semibold" style={{ color: '#FFD700' }}>Скопје (10)</span>
               <div className="relative h-5 flex items-center">
                 <div className="absolute top-0 bottom-0 w-[2px] bg-slate-600/50 z-10" aria-hidden="true" />
                 <div className="absolute h-full rounded-sm transition-all duration-300"
@@ -64,8 +64,8 @@ export default function DivergingBarChart({ results, maxAbsNetPCEUR, fmt, netFis
           const isGainer = netPC > 0;
 
           return (
-            <div key={muni.id} className="grid grid-cols-[110px_1fr_110px] gap-2 text-[11px] font-mono items-center">
-              <span className="text-left truncate" style={{ color: '#94a3b8' }}>{getMuniName(muni, locale)}</span>
+            <div key={muni.id} className="grid grid-cols-[80px_1fr_90px] gap-2 text-[11px] font-mono items-center hover:bg-white/[0.02] transition-colors duration-150">
+              <span className="text-left text-[10px] md:text-[11px] truncate md:truncate-none" style={{ color: '#94a3b8' }}>{getMuniName(muni, locale)}</span>
               <div className="relative h-5 flex items-center">
                 {/* Zero axis */}
                 <div className="absolute top-0 bottom-0 w-[2px] bg-slate-600/50 z-10" aria-hidden="true" />

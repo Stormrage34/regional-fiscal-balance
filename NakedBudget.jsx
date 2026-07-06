@@ -4,8 +4,11 @@ import React, { useState, useMemo, useCallback, useRef, useEffect } from 'react'
 import { useLocale } from './src/context/LocaleContext.jsx';
 
 // ── Data & Model ──
-import { CONSTANTS, MUNICIPALITIES, NET_FISCAL, UNEMPLOYMENT_DATA, FISCAL_LOSS_PER_UNEMPLOYED, MKD_PER_EUR, formatCurrency as baseFormatCurrency, getMuniName } from './src/data/fiscalData.js';
+import { CONSTANTS, MUNICIPALITIES, NET_FISCAL, UNEMPLOYMENT_DATA, FISCAL_LOSS_PER_UNEMPLOYED, MKD_PER_EUR, formatCurrency as baseFormatCurrency, getMuniName, DECENTRALIZATION_PHASES, CREDIT_RATINGS, PILLAR_CONSTANTS, MUNICIPALITY_ETHNICITY, SKOPIE_BORROUGHS } from './src/data/fiscalData.js';
 import { computeMunicipalMetrics } from './src/models/bayesianInference.js';
+import { computeFiscalCapacity } from './src/models/fiscalCapacity.js';
+import { computePillarScores } from './src/models/pillarScoring.js';
+import { predictFiscalDisparity, LOGIT_COEFFICIENTS } from './src/models/logisticRegression.js';
 
 // ── UI Primitives ──
 import AnimatedNumber from './src/components/ui/AnimatedNumber.jsx';
@@ -17,6 +20,9 @@ import PieMatrix from './src/components/charts/PieMatrix.jsx';
 import ComplianceScatter from './src/components/charts/ComplianceScatter.jsx';
 import DonutChart from './src/components/charts/DonutChart.jsx';
 import DivergingBarChart from './src/components/charts/DivergingBarChart.jsx';
+import FiscalCapacityChart from './src/components/charts/FiscalCapacityChart.jsx';
+import ModelAccuracyChart from './src/components/charts/ModelAccuracyChart.jsx';
+import SkopjeCapitalSection from './src/components/charts/SkopjeCapitalSection.jsx';
 
 // ── Layout ──
 import Sidebar from './src/components/layout/Sidebar.jsx';
@@ -81,14 +87,21 @@ export default function NakedBudget() {
   const [sortAsc, setSortAsc] = useState(false);
 
   // ── Sidebar ──
-  const [sidebarOpen, setSidebarOpen] = useState(true);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   // ── Currency Display ──
   const [showMkd, setShowMkd] = useState(false);
 
   // ── Model Computation ──
   const results = useMemo(
-    () => MUNICIPALITIES.map((m) => computeMunicipalMetrics(m, enforcementStrength, digitalFiscalization, applyCorrection)),
+    () => MUNICIPALITIES.map((m) => {
+      const base = computeMunicipalMetrics(m, enforcementStrength, digitalFiscalization, applyCorrection);
+      const nf = NET_FISCAL[m.id] || { revenueInflow: 0, arrears: 0 };
+      const empData = UNEMPLOYMENT_DATA[m.id] || { employmentRate: 0.5 };
+      const pillarScores = computePillarScores(m, nf);
+      const prediction = predictFiscalDisparity(m, nf);
+      return { ...base, ...pillarScores, ...prediction };
+    }),
     [enforcementStrength, digitalFiscalization, applyCorrection]
   );
 
@@ -111,6 +124,16 @@ export default function NakedBudget() {
         const aa = NET_FISCAL[a.id]?.arrears || 0;
         const ab = NET_FISCAL[b.id]?.arrears || 0;
         cmp = aa - ab;
+      }
+      else if (sortKey === 'prediction') {
+        // Sort by predicted class: losers first, then gainers, then N/A
+        const pa = a.predictedReduced;
+        const pb = b.predictedReduced;
+        const order = { loser: 0, gainer: 1, na: 2 };
+        cmp = (order[pa] ?? 2) - (order[pb] ?? 2);
+      }
+      else if (sortKey === 'probability') {
+        cmp = a.probReduced - b.probReduced;
       }
       return sortAsc ? cmp : -cmp;
     });
@@ -159,6 +182,87 @@ export default function NakedBudget() {
 
   const gainerCount = results.filter(r => NET_FISCAL[r.id] && (NET_FISCAL[r.id].revenueInflow - NET_FISCAL[r.id].budgetOutflow) > 0).length;
   const loserCount = results.filter(r => NET_FISCAL[r.id] && (NET_FISCAL[r.id].revenueInflow - NET_FISCAL[r.id].budgetOutflow) <= 0).length;
+
+  // ── Phase Comparison Data ──
+  const phaseComparison = useMemo(() => {
+    const p1Munis = results.filter(r => (DECENTRALIZATION_PHASES[r.id]?.phase || 1) === 1);
+    const p2Munis = results.filter(r => (DECENTRALIZATION_PHASES[r.id]?.phase || 1) === 2);
+
+    const avgNetFiscalPC = (munis) => {
+      if (munis.length === 0) return 0;
+      const total = munis.reduce((s, r) => {
+        const nf = NET_FISCAL[r.id];
+        if (!nf) return s;
+        const netPC = r.workingAgePop > 0 ? ((nf.revenueInflow - nf.budgetOutflow) / MKD_PER_EUR) / r.workingAgePop : 0;
+        return s + netPC;
+      }, 0);
+      return Math.round(total / munis.length);
+    };
+
+    const avgArrearsPC = (munis) => {
+      if (munis.length === 0) return 0;
+      const total = munis.reduce((s, r) => {
+        const nf = NET_FISCAL[r.id];
+        if (!nf) return s;
+        const arrearsPC = r.workingAgePop > 0 ? (nf.arrears / MKD_PER_EUR) / r.workingAgePop : 0;
+        return s + arrearsPC;
+      }, 0);
+      return Math.round(total / munis.length);
+    };
+
+    const avgCompliance = (munis) => {
+      if (munis.length === 0) return 0;
+      return Math.round(munis.reduce((s, r) => s + r.baseCompliance, 0) / munis.length * 100);
+    };
+
+    return {
+      p1Count: p1Munis.length,
+      p2Count: p2Munis.length,
+      avgNetFiscalPC1: avgNetFiscalPC(p1Munis),
+      avgNetFiscalPC2: avgNetFiscalPC(p2Munis),
+      avgArrearsPC1: avgArrearsPC(p1Munis),
+      avgArrearsPC2: avgArrearsPC(p2Munis),
+      avgCompliance1: avgCompliance(p1Munis),
+      avgCompliance2: avgCompliance(p2Munis),
+    };
+  }, [results]);
+
+  // ── Model Accuracy (non-Skopje only) ──
+  const modelAccuracy = useMemo(() => {
+    // Only evaluate on municipalities that were in the original training set
+    const trainingSet = results.filter(r => r.inTrainingSet);
+    if (trainingSet.length === 0) return null;
+
+    let tp = 0, tn = 0, fp = 0, fn = 0; // true/false positive/negative
+    for (const r of trainingSet) {
+      const nf = NET_FISCAL[r.id];
+      if (!nf) continue;
+      const actualIsGainer = (nf.revenueInflow - nf.budgetOutflow) > 0;
+      const predictedIsGainer = r.predictedReduced === 'gainer';
+      if (actualIsGainer && predictedIsGainer) tp++;
+      else if (!actualIsGainer && !predictedIsGainer) tn++;
+      else if (actualIsGainer && !predictedIsGainer) fp++;
+      else fn++;
+    }
+    const total = tp + tn + fp + fn;
+    const accuracy = total > 0 ? Math.round((tp + tn) / total * 1000) / 10 : 0;
+    const sensitivity = (tp + fn) > 0 ? Math.round(tp / (tp + fn) * 1000) / 10 : 0;
+    const specificity = (tn + fp) > 0 ? Math.round(tn / (tn + fp) * 1000) / 10 : 0;
+
+    // Mismatches: where prediction ≠ actual
+    const mismatches = trainingSet.filter(r => {
+      const nf = NET_FISCAL[r.id];
+      if (!nf) return false;
+      const actualIsGainer = (nf.revenueInflow - nf.budgetOutflow) > 0;
+      const predictedIsGainer = r.predictedReduced === 'gainer';
+      return actualIsGainer !== predictedIsGainer;
+    });
+
+    // Sort mismatches by |probability - 0.5| descending (closest to threshold = most uncertain)
+    mismatches.sort((a, b) => Math.abs(b.probReduced - 0.5) - Math.abs(a.probReduced - 0.5));
+
+    return { tp, tn, fp, fn, total, accuracy, sensitivity, specificity, mismatches };
+  }, [results]);
 
   // ── Max abs net per capita EUR ──
   const maxAbsNetPCEUR = useMemo(() => {
@@ -217,6 +321,8 @@ export default function NakedBudget() {
     { value: 'stacked', label: t('tab_bars') },
     { value: 'pie',     label: t('tab_matrix') },
     { value: 'compliance-scatter', label: t('tab_scatter') },
+    { value: 'fiscal-capacity', label: t('tab_fiscal_capacity') || 'Fiscal Capacity' },
+    { value: 'model-accuracy', label: t('tab_model_accuracy') || 'Model Accuracy' },
   ];
 
   // ── RENDER ──
@@ -304,6 +410,17 @@ export default function NakedBudget() {
             </p>
             <button
               type="button"
+              onClick={() => setSidebarOpen(true)}
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-full font-mono text-xs text-slate-400 border border-slate-700/50 hover:text-slate-200 hover:border-slate-600 transition-colors"
+              aria-label={t('sidebar_open')}
+            >
+              <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+              </svg>
+              <span className="hidden sm:inline">{t('sidebar_policy')}</span>
+            </button>
+            <button
+              type="button"
               onClick={() => setSidebarOpen(!sidebarOpen)}
               className="md:hidden flex items-center justify-center w-8 h-8 rounded-lg border border-slate-700/50 hover:bg-slate-800 transition-colors ml-auto"
               aria-label={sidebarOpen ? t('sidebar_close') : t('sidebar_open')}
@@ -318,21 +435,41 @@ export default function NakedBudget() {
           </div>
 
           {/* Source badges */}
-          <div className="flex flex-wrap gap-x-3 gap-y-1.5 mt-4">
+          <div className="flex flex-wrap gap-x-2 gap-y-1 mt-4">
             {[
               { label: t('src_badge_1'), year: '', color: 'rgba(16,185,129,0.08)', dot: 'bg-emerald-500', borderColor: 'rgba(16,185,129,0.2)' },
               { label: t('src_badge_2'), year: '', color: 'rgba(99,102,241,0.08)', dot: 'bg-indigo-500', borderColor: 'rgba(99,102,241,0.2)' },
               { label: t('src_badge_3'), year: '', color: 'rgba(245,158,11,0.08)', dot: 'bg-amber-500', borderColor: 'rgba(245,158,11,0.2)' },
+              { label: t('source_badge_4'), year: '', color: 'rgba(139,92,246,0.08)', dot: 'bg-violet-500', borderColor: 'rgba(139,92,246,0.2)' },
+              { label: t('src_badge_5'), year: '', color: 'rgba(236,72,153,0.08)', dot: 'bg-pink-500', borderColor: 'rgba(236,72,153,0.2)' },
             ].map((badge) => (
-              <div key={badge.label} className="flex items-center gap-1.5 px-2.5 py-1 rounded border" style={{ backgroundColor: badge.color, borderColor: badge.borderColor }}>
-                <span className={`w-1.5 h-1.5 rounded-full ${badge.dot} flex-shrink-0`} />
-                <span className="text-[10px] font-mono" style={{ color: '#94a3b8' }}>{badge.label}</span>
-                <span className="text-[10px] font-mono font-semibold" style={{ color: '#e2e8f0' }}>{badge.year}</span>
+              <div key={badge.label} className="flex items-center gap-1 px-2 py-0.5 rounded border" style={{ backgroundColor: badge.color, borderColor: badge.borderColor }}>
+                <span className={`w-1 h-1 rounded-full ${badge.dot} flex-shrink-0`} />
+                <span className="text-[9px] font-mono" style={{ color: '#94a3b8' }}>{badge.label}</span>
               </div>
             ))}
           </div>
           <div className="absolute bottom-0 left-0 right-0 h-[1px] bg-gradient-to-r from-amber-500/40 via-cyan-500/30 to-emerald-500/20" />
         </header>
+
+        {/* ═══ HERO — TOTAL FISCAL DRAIN ═══ */}
+        <section className="text-center py-12 md:py-16">
+          <p className="text-[11px] font-mono uppercase tracking-widest text-slate-400 mb-4">
+            {t('hero_label')}
+          </p>
+          <p className="text-5xl md:text-7xl lg:text-8xl font-bold font-mono tabular-nums" style={{ color: '#F59E0B' }}>
+            €{Math.round(aggregates.totalYearlyDrain / 1_000_000)}M
+          </p>
+          <p className="text-xs font-mono text-slate-500 mt-4">
+            {results.length} {t('hero_municipalities').split('·')[0].trim()} · {aggregates.totalPop.toLocaleString()} {t('hero_municipalities').split('·')[1].trim()} · просек €{aggregates.weightedAvgDrain}/жител
+          </p>
+          <p className="text-[11px] leading-relaxed text-slate-400 max-w-2xl mx-auto mt-6 px-4">
+            {t('hero_description')}
+          </p>
+        </section>
+
+        {/* ═══ SKOPIE CAPITAL CITY SECTION ═══ */}
+        <SkopjeCapitalSection />
 
         {/* ═══ KPI RIBBON ═══ */}
         <KpiRibbon
@@ -344,6 +481,84 @@ export default function NakedBudget() {
           fmt={fmt}
           showMkd={showMkd}
         />
+
+        {/* ═══ PHASE COMPARISON ═══ */}
+        <section className="mb-8">
+          <div className="flex items-center gap-3 mb-4">
+            <h2 className="text-sm font-mono font-bold text-white tracking-tight">
+              {t('section_phase_comparison')}
+            </h2>
+            <span className="text-[10px] font-mono" style={{ color: '#94a3b8' }}>
+              {t('section_phase_subtitle')}
+            </span>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {/* Card 1: Avg Net Fiscal Balance per capita */}
+            <div className="rounded-xl p-5 border" style={{ backgroundColor: 'rgba(11,17,32,0.4)', borderColor: '#1F3050' }}>
+              <div className="flex items-center justify-between mb-3">
+                <span className="text-[10px] font-mono uppercase tracking-widest text-slate-500">
+                  Avg Net Fiscal Balance / capita
+                </span>
+                <span className="text-xs font-mono px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+                  Phase 1
+                </span>
+              </div>
+              <div className="flex items-baseline justify-between">
+                <span className="text-2xl font-bold font-mono text-emerald-400">{fmt(phaseComparison.avgNetFiscalPC1, true)}</span>
+                <span className="text-sm font-mono text-slate-500">Phase 2: {fmt(phaseComparison.avgNetFiscalPC2, true)}</span>
+              </div>
+            </div>
+
+            {/* Card 2: Avg Arrears per capita */}
+            <div className="rounded-xl p-5 border" style={{ backgroundColor: 'rgba(11,17,32,0.4)', borderColor: '#1F3050' }}>
+              <div className="flex items-center justify-between mb-3">
+                <span className="text-[10px] font-mono uppercase tracking-widest text-slate-500">
+                  Avg Arrears / capita
+                </span>
+                <span className="text-xs font-mono px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+                  Phase 1
+                </span>
+              </div>
+              <div className="flex items-baseline justify-between">
+                <span className="text-2xl font-bold font-mono text-emerald-400">{fmt(phaseComparison.avgArrearsPC1, true)}</span>
+                <span className="text-sm font-mono text-slate-500">Phase 2: {fmt(phaseComparison.avgArrearsPC2, true)}</span>
+              </div>
+            </div>
+
+            {/* Card 3: Avg Compliance Rate */}
+            <div className="rounded-xl p-5 border" style={{ backgroundColor: 'rgba(11,17,32,0.4)', borderColor: '#1F3050' }}>
+              <div className="flex items-center justify-between mb-3">
+                <span className="text-[10px] font-mono uppercase tracking-widest text-slate-500">
+                  Avg Compliance Rate
+                </span>
+                <span className="text-xs font-mono px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+                  Phase 1
+                </span>
+              </div>
+              <div className="flex items-baseline justify-between">
+                <span className="text-2xl font-bold font-mono text-emerald-400">{phaseComparison.avgCompliance1}%</span>
+                <span className="text-sm font-mono text-slate-500">Phase 2: {phaseComparison.avgCompliance2}%</span>
+              </div>
+            </div>
+
+            {/* Card 4: Count of municipalities */}
+            <div className="rounded-xl p-5 border" style={{ backgroundColor: 'rgba(11,17,32,0.4)', borderColor: '#1F3050' }}>
+              <div className="flex items-center justify-between mb-3">
+                <span className="text-[10px] font-mono uppercase tracking-widest text-slate-500">
+                  Municipalities per Phase
+                </span>
+                <span className="text-xs font-mono px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+                  Phase 1
+                </span>
+              </div>
+              <div className="flex items-baseline justify-between">
+                <span className="text-2xl font-bold font-mono text-emerald-400">{phaseComparison.p1Count}</span>
+                <span className="text-sm font-mono text-slate-500">Phase 2: {phaseComparison.p2Count}</span>
+              </div>
+            </div>
+          </div>
+        </section>
 
         {/* ═══ NET FISCAL IMPACT ═══ */}
         <section className="rounded-xl relative overflow-hidden mb-12 transition-all duration-300 hover:shadow-[0_0_20px_rgba(99,102,241,0.05)]" style={{ backgroundColor: 'rgba(11,17,32,0.4)', borderColor: '#1F3050', borderWidth: 1 }}>
@@ -513,6 +728,19 @@ export default function NakedBudget() {
             )}
             {chartView === 'compliance-scatter' && (
               <ComplianceScatter data={results} onMuniClick={handleMuniFocus} focusedId={focusedMuniId} />
+            )}
+            {chartView === 'fiscal-capacity' && (
+              <div className="max-h-[600px] overflow-y-auto">
+                <FiscalCapacityChart results={results} fmt={fmt} />
+              </div>
+            )}
+            {chartView === 'model-accuracy' && modelAccuracy && (
+              <ModelAccuracyChart
+                modelAccuracy={modelAccuracy}
+                results={results.filter(r => r.inTrainingSet)}
+                fmt={fmt}
+                t={t}
+              />
             )}
           </div>
         </section>

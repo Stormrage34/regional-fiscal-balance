@@ -91,6 +91,33 @@ export default function MethodologyPanel({ showMethodology, setShowMethodology }
                 </p>
               </div>
             </div>
+
+            {/* Logistic Regression Model */}
+            <div className="flex items-start gap-2.5">
+              <span className="mt-1.5 w-1.5 h-1.5 rounded-full flex-shrink-0" style={{ backgroundColor: '#8B5CF6' }} />
+              <div className="min-w-0 flex-1">
+                <div className="flex items-baseline gap-2 flex-wrap">
+                  <span className="text-[10px] font-mono font-semibold uppercase tracking-wide" style={{ color: '#d4d4d8' }}>{t('method_logit_title')}</span>
+                   <code className="text-[10px] font-mono" style={{ color: '#94a3b8', backgroundColor: 'rgba(139,92,246,0.18)', padding: '1px 5px', borderRadius: 3 }}>logit = 2.7879 + 3.87e-05·pop − 2.4627·urban − 0.00166·estOwnRevPC(MKD)</code>
+                </div>
+                <p className="text-[10px] leading-relaxed mt-0.5" style={{ color: '#94a3b8' }}>
+                  {t('method_logit_desc')}
+                </p>
+              </div>
+            </div>
+
+            {/* Property Tax Benchmark Note */}
+            <div className="flex items-start gap-2.5">
+              <span className="mt-1.5 w-1.5 h-1.5 rounded-full flex-shrink-0" style={{ backgroundColor: '#06B6D4' }} />
+              <div className="min-w-0 flex-1">
+                <div className="flex items-baseline gap-2 flex-wrap">
+                  <span className="text-[10px] font-mono font-semibold uppercase tracking-wide" style={{ color: '#d4d4d8' }}>Property Tax Benchmark</span>
+                </div>
+                <p className="text-[10px] leading-relaxed mt-0.5" style={{ color: '#94a3b8' }}>
+                  {t('method_property_note')}
+                </p>
+              </div>
+            </div>
           </div>
 
           <div className="mt-3 pt-2.5 border-t flex flex-col sm:flex-row sm:items-center justify-between gap-1.5" style={{ borderColor: 'rgba(51,65,85,0.3)' }}>

@@ -12,6 +12,13 @@ dist
 dist-ssr
 *.local
 
+# Local codegraph index
+.codegraph/
+
+# Downloaded research PDFs (too large for git)
+ugd_papers/
+live_data/
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json

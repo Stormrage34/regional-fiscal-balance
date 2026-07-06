@@ -1,4 +1,4 @@
-import { UNEMPLOYMENT_DATA, FISCAL_LOSS_PER_UNEMPLOYED, NET_FISCAL, MKD_PER_EUR, getMuniName } from '../../data/fiscalData.js';
+import { UNEMPLOYMENT_DATA, FISCAL_LOSS_PER_UNEMPLOYED, NET_FISCAL, MKD_PER_EUR, getMuniName, DECENTRALIZATION_PHASES, CREDIT_RATINGS, SKOPIE_BORROUGHS } from '../../data/fiscalData.js';
 import { useLocale } from '../../context/LocaleContext.jsx';
 import { useMemo } from 'react';
 
@@ -193,6 +193,56 @@ export default function MunicipalTable({
               <th className="px-3 py-2 text-center align-middle min-w-[110px] whitespace-nowrap text-[10px] font-mono uppercase tracking-wider text-slate-500 sticky top-0 z-20 bg-[#0f172a]">
                 Correction
               </th>
+
+              {/* Phase */}
+              <th className="px-3 py-2 text-center align-middle min-w-[60px] whitespace-nowrap text-[10px] font-mono uppercase tracking-wider text-slate-500 sticky top-0 z-20 bg-[#0f172a]">
+                {t('hdr_phase')}
+              </th>
+
+              {/* Risk / Discipline */}
+              <th className="px-3 py-2 text-center align-middle min-w-[80px] whitespace-nowrap text-[10px] font-mono uppercase tracking-wider text-slate-500 sticky top-0 z-20 bg-[#0f172a]">
+                {t('hdr_discipline')}
+              </th>
+
+              {/* Credit Rating */}
+              <th className="px-3 py-2 text-center align-middle min-w-[60px] whitespace-nowrap text-[10px] font-mono uppercase tracking-wider text-slate-500 sticky top-0 z-20 bg-[#0f172a]">
+                {t('hdr_credit_rating')}
+              </th>
+
+              {/* Predicted (Model) */}
+              <th
+                className="px-2 py-2 text-center align-middle min-w-[80px] whitespace-nowrap cursor-pointer select-none hover:text-slate-200 transition-colors sticky top-0 z-20 bg-[#0f172a]"
+                onClick={() => handleSort('prediction')}
+                onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); handleSort('prediction'); } }}
+                tabIndex={0}
+                role="columnheader"
+                aria-sort={getSortDir('prediction', sortKey, sortAsc)}
+              >
+                <span className="inline-flex items-center gap-1 justify-center text-[10px] font-mono uppercase tracking-wider text-slate-500">
+                  {t('hdr_predicted')}
+                  <SortIcon columnKey="prediction" sortKey={sortKey} sortAsc={sortAsc} />
+                </span>
+              </th>
+
+              {/* Match */}
+              <th className="px-2 py-2 text-center align-middle min-w-[70px] whitespace-nowrap text-[10px] font-mono uppercase tracking-wider text-slate-500 sticky top-0 z-20 bg-[#0f172a]">
+                {t('hdr_match')}
+              </th>
+
+              {/* Probability */}
+              <th
+                className="px-2 py-2 text-center align-middle min-w-[70px] whitespace-nowrap cursor-pointer select-none hover:text-slate-200 transition-colors sticky top-0 z-20 bg-[#0f172a]"
+                onClick={() => handleSort('probability')}
+                onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); handleSort('probability'); } }}
+                tabIndex={0}
+                role="columnheader"
+                aria-sort={getSortDir('probability', sortKey, sortAsc)}
+              >
+                <span className="inline-flex items-center gap-1 justify-center text-[10px] font-mono uppercase tracking-wider text-slate-500">
+                  {t('hdr_prob')}
+                  <SortIcon columnKey="probability" sortKey={sortKey} sortAsc={sortAsc} />
+                </span>
+              </th>
             </tr>
           </thead>
           <tbody>
@@ -297,6 +347,121 @@ export default function MunicipalTable({
                   {/* Correction */}
                   <td className="px-3 py-2.5 text-right tabular-nums text-sm" style={{ color: applyCorrection ? '#34d399' : '#475569' }}>
                     {applyCorrection ? `€${muni.corporateRetraction.toLocaleString()}` : '—'}
+                  </td>
+
+                  {/* Phase */}
+                  <td className="px-3 py-2.5 text-center">
+                    {(() => {
+                      const phase = muni.phase || 1;
+                      const isP2 = phase === 2;
+                      return (
+                        <span className={`inline-flex items-center justify-center px-1.5 py-0.5 rounded text-[10px] font-mono font-bold ${
+                          isP2
+                            ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20'
+                            : 'bg-amber-500/10 text-amber-400 border border-amber-500/20'
+                        }`}>
+                          {isP2 ? 'P2' : 'P1'}
+                        </span>
+                      );
+                    })()}
+                  </td>
+
+                  {/* Risk / Discipline */}
+                  <td className="px-3 py-2.5 text-center">
+                    {(() => {
+                      const tier = muni.p2_risk_tier || '—';
+                      let colorClass;
+                      if (tier === t('risk_low')) {
+                        colorClass = 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20';
+                      } else if (tier === t('risk_watch')) {
+                        colorClass = 'bg-amber-500/10 text-amber-400 border-amber-500/20';
+                      } else if (tier === t('risk_high')) {
+                        colorClass = 'bg-red-500/10 text-red-400 border-red-500/20';
+                      } else {
+                        colorClass = 'bg-slate-500/10 text-slate-400 border-slate-500/20';
+                      }
+                      return (
+                        <span className={`inline-flex items-center justify-center px-1.5 py-0.5 rounded text-[10px] font-mono font-bold border ${colorClass}`}>
+                          {tier}
+                        </span>
+                      );
+                    })()}
+                  </td>
+
+                  {/* Credit Rating */}
+                  <td className="px-3 py-2.5 text-center">
+                    {(() => {
+                      const rating = muni.creditRating || 'NR';
+                      if (rating === 'B1') {
+                        return (
+                          <span className="inline-flex items-center justify-center px-1.5 py-0.5 rounded text-[10px] font-mono font-bold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+                            {rating}
+                          </span>
+                        );
+                      }
+                      return (
+                        <span className="inline-flex items-center justify-center px-1.5 py-0.5 rounded text-[10px] font-mono font-bold bg-slate-500/10 text-slate-400 border border-slate-500/20">
+                          NR
+                        </span>
+                      );
+                    })()}
+                  </td>
+
+                  {/* Predicted (Model) */}
+                  <td className="px-2 py-2.5 text-center">
+                    {(() => {
+                      if (!muni.inTrainingSet) {
+                        return (
+                          <span className="inline-flex items-center justify-center px-1.5 py-0.5 rounded text-[10px] font-mono font-bold bg-slate-500/10 text-slate-400 border border-slate-500/20">
+                            {t('pred_na')}
+                          </span>
+                        );
+                      }
+                      const isGainer = muni.predictedReduced === 'gainer';
+                      return (
+                        <span className={`inline-flex items-center justify-center px-1.5 py-0.5 rounded text-[10px] font-mono font-bold ${
+                          isGainer
+                            ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20'
+                            : 'bg-red-500/10 text-red-400 border border-red-500/20'
+                        }`}>
+                          {isGainer ? t('pred_gainer') : t('pred_loser')}
+                        </span>
+                      );
+                    })()}
+                  </td>
+
+                  {/* Match / Mismatch */}
+                  <td className="px-2 py-2.5 text-center">
+                    {(() => {
+                      if (!muni.inTrainingSet) {
+                        return <span className="text-[10px] font-mono" style={{ color: '#475569' }}>—</span>;
+                      }
+                      const nf = NET_FISCAL[muni.id];
+                      if (!nf) return '—';
+                      const actualIsGainer = (nf.revenueInflow - nf.budgetOutflow) > 0;
+                      const predictedIsGainer = muni.predictedReduced === 'gainer';
+                      const isMatch = actualIsGainer === predictedIsGainer;
+                      return (
+                        <span style={{ color: isMatch ? '#10B981' : '#EF4444', fontSize: '12px' }}>
+                          {isMatch ? t('match_correct') : t('match_wrong')}
+                        </span>
+                      );
+                    })()}
+                  </td>
+
+                  {/* Probability */}
+                  <td className="px-2 py-2.5 text-center">
+                    {(() => {
+                      if (!muni.inTrainingSet) {
+                        return <span className="text-[10px] font-mono" style={{ color: '#475569' }}>—</span>;
+                      }
+                      const probStr = Math.round(muni.probReduced * 100) + '%';
+                      return (
+                        <span className="text-[11px] font-mono font-semibold tabular-nums" style={{ color: '#F59E0B' }}>
+                          {probStr}
+                        </span>
+                      );
+                    })()}
                   </td>
                 </tr>
               );

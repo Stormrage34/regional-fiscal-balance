@@ -174,6 +174,82 @@ export const FISCAL_LOSS_PER_UNEMPLOYED = {
   totalAnnual: 5810,          // USD/year per unemployed person
 };
 
+// ── DECENTRALIZATION PHASES (population-based heuristic) ──
+// Total population ≈ workingAgePop / 0.67; Phase 2 if total pop > 30,000 else Phase 1
+export const DECENTRALIZATION_PHASES = {};
+for (const m of MUNICIPALITIES) {
+  const totalPop = Math.round(m.workingAgePop / 0.67);
+  DECENTRALIZATION_PHASES[m.id] = { phase: totalPop > 30000 ? 2 : 1 };
+}
+
+// ── CREDIT RATINGS (per municipality) ──
+export const CREDIT_RATINGS = {
+  stip: { rating: 'B1', hasBonds: true, source: "Moody's 2017" },
+};
+// All other municipalities default to no rating
+for (const m of MUNICIPALITIES) {
+  if (!CREDIT_RATINGS[m.id]) {
+    CREDIT_RATINGS[m.id] = { rating: null, hasBonds: false, source: null };
+  }
+}
+
+// ── PILLAR CONSTANTS (Fiscal Decentralization Framework) ──
+export const PILLAR_CONSTANTS = {
+  arrearsThresholds: {
+    lowRisk: 0.05,    // arrears/revenue < 5%
+    watch: 0.15,      // arrears/revenue < 15%
+    highRisk: 0.15,   // arrears/revenue >= 15%
+  },
+  capacityBenchmark: {
+    nationalAvgRevenuePerCapita: null, // computed dynamically
+  },
+  phaseDescriptions: {
+    1: 'Partial competencies; heavy central government dependence',
+    2: 'Full block grant management (education, infrastructure)',
+  },
+};
+
+// ── MUNICIPALITY ETHNICITY (UDG / Gruevski & Gaber 2023) ──
+// nonMacedonian = 1 for municipalities with ethnic Albanian majority or Skopje mixed districts
+export const MUNICIPALITY_ETHNICITY = {};
+const nonMacedonianMajority = [
+  'tetovo', 'gostivar', 'struga', 'kicevo', 'debar', 'lipkovo', 'aracinovo',
+];
+// Skopje boroughs — excluded from paper's training set but ethnically mixed
+const skopjeEthnicMix = [
+  'cair', 'saraj', 'suto-orizari',
+];
+for (const m of MUNICIPALITIES) {
+  if (nonMacedonianMajority.includes(m.id)) {
+    MUNICIPALITY_ETHNICITY[m.id] = { nonMacedonian: 1 };
+  } else if (skopjeEthnicMix.includes(m.id)) {
+    MUNICIPALITY_ETHNICITY[m.id] = { nonMacedonian: 1 };
+  } else {
+    MUNICIPALITY_ETHNICITY[m.id] = { nonMacedonian: 0 };
+  }
+}
+
+// ── Skopje borough identifiers (excluded from original paper training set) ──
+export const SKOPIE_BORROUGHS = [
+  'aerodrom', 'karpos', 'centar', 'gazi-baba', 'kisela-voda',
+  'butel', 'cair', 'gjorce-petrov', 'saraj', 'suto-orizari',
+];
+
+// ── Skopje Property Tax Collection (CCC Open Data 2017-2019) ──
+// Source: Commission for Control of Public Procurement (CCC), open data portal
+// Represents per-borough property tax collection efficiency within the unified Skopje budget
+export const SKOPIE_PROPERTY_TAX = {
+  'gjorce-petrov': { collectionRate: 0.97, annualRevenueK: 558 },
+  'karpos':        { collectionRate: 0.95, annualRevenueK: 2027 },
+  'aerodrom':      { collectionRate: 0.95, annualRevenueK: 1372 },
+  'centar':        { collectionRate: 0.94, annualRevenueK: 2303 },
+  'kisela-voda':   { collectionRate: 0.86, annualRevenueK: 1333 },
+  'butel':         { collectionRate: 0.84, annualRevenueK: 558 },
+  'cair':          { collectionRate: 0.78, annualRevenueK: 543 },
+  'gazi-baba':     { collectionRate: 0.69, annualRevenueK: 1240 },
+  'suto-orizari':  { collectionRate: 0.67, annualRevenueK: 113 },
+};
+
 // ── Locale-aware municipality name ──
 export function getMuniName(muni, locale) {
   if (locale === 'mk' && muni.name_mk) return muni.name_mk;

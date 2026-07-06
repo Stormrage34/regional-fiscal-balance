@@ -4,11 +4,10 @@ import React, { useState, useMemo, useCallback, useRef, useEffect } from 'react'
 import { useLocale } from '../context/LocaleContext.jsx';
 
 // ── Data & Model ──
-import { CONSTANTS, MUNICIPALITIES, NET_FISCAL, UNEMPLOYMENT_DATA, FISCAL_LOSS_PER_UNEMPLOYED, MKD_PER_EUR, formatCurrency as baseFormatCurrency, getMuniName, DECENTRALIZATION_PHASES, CREDIT_RATINGS, PILLAR_CONSTANTS, MUNICIPALITY_ETHNICITY, SKOPIE_BORROUGHS } from '../data/fiscalData.js';
+import { MUNICIPALITIES, NET_FISCAL, UNEMPLOYMENT_DATA, FISCAL_LOSS_PER_UNEMPLOYED, MKD_PER_EUR, formatCurrency as baseFormatCurrency, getMuniName, DECENTRALIZATION_PHASES, SKOPIE_BORROUGHS } from '../data/fiscalData.js';
 import { computeMunicipalMetrics } from '../models/bayesianInference.js';
-import { computeFiscalCapacity } from '../models/fiscalCapacity.js';
 import { computePillarScores } from '../models/pillarScoring.js';
-import { predictFiscalDisparity, LOGIT_COEFFICIENTS } from '../models/logisticRegression.js';
+import { predictFiscalDisparity } from '../models/logisticRegression.js';
 
 // ── Analytics ──
 import { Analytics } from '@vercel/analytics/react';
@@ -161,7 +160,6 @@ export default function NakedBudget() {
     () => MUNICIPALITIES.map((m) => {
       const base = computeMunicipalMetrics(m, enforcementStrength, digitalFiscalization, applyCorrection);
       const nf = NET_FISCAL[m.id] || { revenueInflow: 0, arrears: 0 };
-      const empData = UNEMPLOYMENT_DATA[m.id] || { employmentRate: 0.5 };
       const pillarScores = computePillarScores(m, nf);
       const prediction = predictFiscalDisparity(m, nf);
       return { ...base, ...pillarScores, ...prediction };
@@ -456,7 +454,7 @@ export default function NakedBudget() {
                 <polygon points="14,2 25,8 25,20 14,26 3,20 3,8" fill="none" stroke="#f59e0b" strokeWidth="1.5" />
                 <circle cx="14" cy="14" r="2.5" fill="#f59e0b" />
               </svg>
-              <h1 className="text-lg font-bold tracking-tight text-white font-mono leading-none">
+              <h1 className="text-lg font-bold tracking-tight text-primary font-mono leading-none">
                 {t('brand_title')}
               </h1>
               <p className="text-xs font-mono flex-1" style={{ color: '#94a3b8' }}>
@@ -466,7 +464,7 @@ export default function NakedBudget() {
                 href="https://buymeacoffee.com/stefangel9b"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full font-mono text-sm font-semibold text-white transition-all duration-200 group ml-4 border"
+                className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full font-mono text-sm font-semibold text-primary transition-all duration-200 group ml-4 border"
                 style={{
                   backgroundColor: 'rgba(245,158,11,0.12)',
                   borderColor: 'rgba(245,158,11,0.35)',
@@ -870,7 +868,7 @@ export default function NakedBudget() {
         <section id="section-phases" className="mb-8">
           <div className="flex items-center gap-3 mb-4">
             <span title={TRUST.derived.label} className="inline-block w-1.5 h-1.5 rounded-full flex-shrink-0" style={{ backgroundColor: TRUST.derived.color }} />
-            <h2 className="text-sm font-sans font-bold tracking-tight text-white">
+            <h2 className="text-sm font-sans font-bold tracking-tight text-primary">
               {t('section_phase_comparison')}
             </h2>
           </div>
@@ -934,7 +932,7 @@ export default function NakedBudget() {
               href="https://buymeacoffee.com/stefangel9b"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full font-mono text-sm font-semibold text-white transition-all duration-200 group border"
+              className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full font-mono text-sm font-semibold text-primary transition-all duration-200 group border"
               style={{
                 backgroundColor: 'rgba(245,158,11,0.12)',
                 borderColor: 'rgba(245,158,11,0.35)',
@@ -1011,7 +1009,7 @@ export default function NakedBudget() {
 
             <div className="p-6 pt-12 space-y-6" style={{ paddingBottom: 'calc(1.5rem + env(safe-area-inset-bottom, 0px))' }}>
               <div className="mb-6">
-                <h3 id="panel-title" className="text-xl font-bold font-mono text-white tracking-tight">
+                <h3 id="panel-title" className="text-xl font-bold font-mono text-primary tracking-tight">
                   {getMuniName(focusedMuni, locale)}
                 </h3>
                 <p className="text-xs font-mono mt-1" style={{ color: '#64748b' }}>
@@ -1048,7 +1046,9 @@ export default function NakedBudget() {
               </div>
 
               <div className="flex items-center justify-center mb-6">
-                <DonutChart data={focusedMuni} size={220} />
+                <React.Suspense fallback={<div className="h-40 flex items-center justify-center"><span className="text-tertiary text-xs font-mono">Loading chart...</span></div>}>
+                  <LazyDonutChart data={focusedMuni} size={220} />
+                </React.Suspense>
               </div>
 
               {/* Net Fiscal Balance */}

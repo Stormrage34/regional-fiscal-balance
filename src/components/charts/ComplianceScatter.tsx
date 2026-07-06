@@ -2,6 +2,23 @@ import { useState, useEffect, useRef } from 'react';
 import { useLocale } from '../../context/LocaleContext.jsx';
 import { NET_FISCAL, getMuniName } from '../../data/fiscalData.js';
 
+function hashCode(str: string): number {
+  let hash = 0;
+  for (let i = 0; i < str.length; i++) {
+    const char = str.charCodeAt(i);
+    hash = ((hash << 5) - hash) + char;
+    hash |= 0;
+  }
+  return Math.abs(hash);
+}
+
+function jitter(id: string, magX: number, magY: number): { dx: number; dy: number } {
+  const h = hashCode(id);
+  const dx = ((h % 100) / 100 - 0.5) * 2 * magX;
+  const dy = (((h >> 8) % 100) / 100 - 0.5) * 2 * magY;
+  return { dx, dy };
+}
+
 function niceTicks(maxVal, targetCount = 5) {
   if (maxVal <= 0) return [0];
   const roughStep = maxVal / targetCount;
@@ -47,14 +64,27 @@ export default function ComplianceScatter({ data, onMuniClick, focusedId }) {
   const maxLeak = Math.ceil(Math.max(...data.map(d => d.uncollectedLeakage)) / 50) * 50;
   const maxComp = 100;
 
-  const points = data.map(m => ({
-    ...m,
-    x: m.adjustedCompliance,
-    y: m.uncollectedLeakage,
-    isGainer: NET_FISCAL[m.id] && (NET_FISCAL[m.id].revenueInflow - NET_FISCAL[m.id].budgetOutflow) > 0,
-  }));
+  // Jitter magnitude: small enough to preserve trends, large enough to separate clusters
+  const magX = maxComp * 0.02; // ±2 compliance points
+  const magY = maxLeak * 0.02; // ±2% of leakage range
 
-  points.sort((a, b) => (a.isGainer ? 1 : 0) - (b.isGainer ? 1 : 0));
+  const points = data.map(m => {
+    const { dx, dy } = jitter(m.id, magX, magY);
+    return {
+      ...m,
+      x: m.adjustedCompliance + dx,
+      y: m.uncollectedLeakage + dy,
+      origX: m.adjustedCompliance,
+      origY: m.uncollectedLeakage,
+      isGainer: NET_FISCAL[m.id] && (NET_FISCAL[m.id].revenueInflow - NET_FISCAL[m.id].budgetOutflow) > 0,
+    };
+  });
+
+  // Losers first (bottom), gainers on top; within each group larger dots first so small dots aren't buried
+  points.sort((a, b) => {
+    if (a.isGainer !== b.isGainer) return a.isGainer ? 1 : -1;
+    return b.workingAgePop - a.workingAgePop;
+  });
 
   const yTicks = niceTicks(maxLeak, 5);
   const xTicks = [0, 20, 40, 60, 80, 100];
@@ -134,7 +164,7 @@ export default function ComplianceScatter({ data, onMuniClick, focusedId }) {
           const isHovered = hoveredId === p.id;
           const dotColor = p.isGainer ? gainerColor : drainColor;
           const name = getMuniLabel(p);
-          const label = `${name}: ${p.adjustedCompliance}% compliance, €${p.uncollectedLeakage} leakage per capita${p.isGainer ? ` (${t('surplus')})` : ` (${t('deficit')})`}`;
+          const label = `${name}: ${p.origX}% compliance, €${p.origY} leakage per capita${p.isGainer ? ` (${t('surplus')})` : ` (${t('deficit')})`}`;
 
           return (
             <g

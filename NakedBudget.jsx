@@ -678,10 +678,10 @@ export default function NakedBudget() {
 
           <div className="relative">
             <h2 className="text-xs font-mono uppercase tracking-widest px-5 pt-5 pb-2" style={{ color: '#94a3b8' }}>
-              Charts & Visualizations
+              {t('method_title')}
             </h2>
             <p className="text-xs font-mono text-slate-500 px-5 pb-4">
-              Different views of the same data
+              {t('method_how')}
             </p>
 
             <MethodologyPanel showMethodology={showMethodology} setShowMethodology={setShowMethodology} />

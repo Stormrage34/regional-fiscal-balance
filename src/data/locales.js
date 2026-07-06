@@ -170,7 +170,7 @@ export const translations = {
   },
   mk: {
     brand_title: 'Отворен Фискален Биланс',
-    brand_sub: 'Регионален Биланс на Северна Македонија',
+    brand_sub: 'Регионален биланс на Македонија',
     hero_drain: 'Нето Фискален Баланс по Жител',
     tab_bars: 'По споредба',
     tab_matrix: 'По удел',
@@ -338,7 +338,7 @@ export const translations = {
   },
   sq: {
     brand_title: 'Regjistri Fiskal i Hapur',
-    brand_sub: 'Regjistri Rajonal i Maqedonisë së Veriut',
+    brand_sub: 'Regjistri Rajonal i Maqedonisë',
     hero_drain: 'Balanca Fiskale Neto për Frymë',
     tab_bars: 'Krahasimi',
     tab_matrix: 'Pjesa',

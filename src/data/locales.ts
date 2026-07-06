@@ -267,7 +267,7 @@ export const translations = {
     hdr_arrears: 'Задолжувања',
     footer: 'Отворен Фискален Биланс за Северна Македонија · Извори: Трезор 2025 (open.finance.gov.mk) · ДЗС Попис 2021 · АВРМ Регистар · Finance Think PS#50',
     skip_to_content: 'Прескокни до содржина',
-    buy_coffee: 'Кафе за авторот',
+    buy_coffee: 'Почасти ме кафе',
     chart_leakage: 'ДАНОЧНО ЗАТАЈУВАЊЕ',
     chart_welfare: 'СОЦИЈАЛНА ЗАШТИТА',
     chart_overhead: 'РЕЖИСКИ ТРОШОЦИ И КРЕДИТИ',

@@ -35,7 +35,7 @@ export default function ModelAccuracyChart({ modelAccuracy, results, fmt, t }) {
           { label: 'N (training)', value: String(total), color: '#94A3B8' },
         ].map((m) => (
           <div key={m.label} className="rounded-lg px-3 py-2 border text-center" style={{ backgroundColor: 'rgba(15,23,42,0.5)', borderColor: 'rgba(51,65,85,0.4)' }}>
-            <span className="text-[9px] font-mono uppercase tracking-wider block" style={{ color: '#64748b' }}>{m.label}</span>
+            <span className="text-[9px] font-mono uppercase tracking-wider block" style={{ color: '#94a3b8' }}>{m.label}</span>
             <span className="text-sm font-bold font-mono block mt-0.5" style={{ color: m.color }}>{m.value}</span>
           </div>
         ))}
@@ -43,18 +43,18 @@ export default function ModelAccuracyChart({ modelAccuracy, results, fmt, t }) {
 
       {/* Confusion Matrix 2×2 */}
       <div className="rounded-xl border mb-5 p-4" style={{ backgroundColor: 'rgba(15,23,42,0.5)', borderColor: 'rgba(51,65,85,0.4)' }}>
-        <div className="text-[10px] font-mono uppercase tracking-widest mb-3" style={{ color: '#64748b' }}>
+        <div className="text-[10px] font-mono uppercase tracking-widest mb-3" style={{ color: '#94a3b8' }}>
           Confusion Matrix (Reduced Model)
         </div>
 
         <div className="grid grid-cols-[auto_1fr_1fr] gap-1 text-center">
           {/* Header row */}
           <div />
-          <div className="text-[10px] font-mono uppercase tracking-wider" style={{ color: '#64748b' }}>Predicted Gainer</div>
-          <div className="text-[10px] font-mono uppercase tracking-wider" style={{ color: '#64748b' }}>Predicted Loser</div>
+          <div className="text-[10px] font-mono uppercase tracking-wider" style={{ color: '#94a3b8' }}>Predicted Gainer</div>
+          <div className="text-[10px] font-mono uppercase tracking-wider" style={{ color: '#94a3b8' }}>Predicted Loser</div>
 
           {/* Actual Gainer row */}
-          <div className="text-[10px] font-mono uppercase tracking-wider text-right pr-2" style={{ color: '#64748b' }}>Actual Gainer</div>
+          <div className="text-[10px] font-mono uppercase tracking-wider text-right pr-2" style={{ color: '#94a3b8' }}>Actual Gainer</div>
           <div className="rounded-lg py-2 px-3 border" style={{ backgroundColor: 'rgba(16,185,129,0.1)', borderColor: 'rgba(16,185,129,0.3)' }}>
             <span className="text-xl font-bold font-mono" style={{ color: '#10B981' }}>{tp}</span>
             <span className="text-[9px] block" style={{ color: '#34d399' }}>True Positive</span>
@@ -65,7 +65,7 @@ export default function ModelAccuracyChart({ modelAccuracy, results, fmt, t }) {
           </div>
 
           {/* Actual Loser row */}
-          <div className="text-[10px] font-mono uppercase tracking-wider text-right pr-2" style={{ color: '#64748b' }}>Actual Loser</div>
+          <div className="text-[10px] font-mono uppercase tracking-wider text-right pr-2" style={{ color: '#94a3b8' }}>Actual Loser</div>
           <div className="rounded-lg py-2 px-3 border" style={{ backgroundColor: 'rgba(239,68,68,0.1)', borderColor: 'rgba(239,68,68,0.3)' }}>
             <span className="text-xl font-bold font-mono" style={{ color: '#EF4444' }}>{fp}</span>
             <span className="text-[9px] block" style={{ color: '#f87171' }}>False Positive</span>
@@ -84,7 +84,7 @@ export default function ModelAccuracyChart({ modelAccuracy, results, fmt, t }) {
             <span className="text-[10px] font-mono uppercase tracking-widest" style={{ color: '#ef4444' }}>
               Mismatches ({mismatches.length})
             </span>
-            <span className="text-[10px] font-mono" style={{ color: '#64748b' }}>
+            <span className="text-[10px] font-mono" style={{ color: '#94a3b8' }}>
               Sorted by proximity to decision threshold (0.5)
             </span>
           </div>

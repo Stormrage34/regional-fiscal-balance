@@ -15,7 +15,7 @@ export default function MethodologyPanel({ showMethodology, setShowMethodology }
           style={{
             backgroundColor: showMethodology ? 'rgba(245,158,11,0.1)' : '#243047',
             borderColor: showMethodology ? 'rgba(245,158,11,0.25)' : 'rgba(100,116,139,0.2)',
-            color: showMethodology ? '#F59E0B' : '#64748b',
+            color: showMethodology ? '#F59E0B' : '#94a3b8',
           }}
           aria-expanded={showMethodology}
           aria-controls="methodology-panel"

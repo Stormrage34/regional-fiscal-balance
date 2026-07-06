@@ -192,7 +192,7 @@ export default function SkopjeCapitalSection({ aggregates = {} }) {
             <span className="text-[9px] font-mono uppercase tracking-wider px-1.5 py-0.5 rounded border" style={{ 
               backgroundColor: 'rgba(100,116,139,0.1)', 
               borderColor: 'rgba(100,116,139,0.3)',
-              color: '#64748b',
+              color: '#94a3b8',
             }}>
               ○ {ringMunis.length} no data
             </span>
@@ -208,7 +208,7 @@ export default function SkopjeCapitalSection({ aggregates = {} }) {
                   </span>
                   <span className="text-[8px] font-mono px-1 rounded" style={{ 
                     backgroundColor: 'rgba(100,116,139,0.15)',
-                    color: '#64748b',
+                    color: '#94a3b8',
                   }}>
                     {t('capital_ring_no_data')}
                   </span>

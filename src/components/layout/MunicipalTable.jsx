@@ -375,7 +375,7 @@ export default function MunicipalTable({
                   </td>
 
                   {/* Correction */}
-                  <td className="px-3 py-2.5 text-right tabular-nums text-sm" style={{ color: applyCorrection ? '#34d399' : '#64748b' }}>
+                  <td className="px-3 py-2.5 text-right tabular-nums text-sm" style={{ color: applyCorrection ? '#34d399' : '#94a3b8' }}>
                     {applyCorrection ? `€${muni.corporateRetraction.toLocaleString()}` : '—'}
                   </td>
 

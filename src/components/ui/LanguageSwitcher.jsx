@@ -18,7 +18,7 @@ export default function LanguageSwitcher() {
   return (
     <div className="flex flex-col gap-1.5 pt-2 mt-2">
       <div className="h-[1px] bg-gradient-to-r from-transparent via-slate-700/50 to-transparent" />
-      <span className="text-[10px] font-mono uppercase tracking-widest mt-2 mb-1" style={{ color: '#64748b' }}>
+      <span className="text-[10px] font-mono uppercase tracking-widest mt-2 mb-1" style={{ color: '#94a3b8' }}>
         Language / Јазик / Gjuha
       </span>
       <div className="flex gap-1">

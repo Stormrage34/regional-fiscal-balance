@@ -18,7 +18,7 @@ export default function Sidebar({
       )}
       <aside
         className={`fixed md:relative z-40 h-dvh md:h-auto w-72 md:w-64 shrink-0 border-r border-slate-800/70 bg-[var(--color-surface-card)] flex flex-col transition-transform duration-300 ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'} md:translate-x-0`}
-        style={{ overscrollBehavior: 'contain', touchAction: 'pan-y', height: '100dvh' }}
+        style={{ overscrollBehavior: 'contain', touchAction: 'pan-y' }}
       >
         {/* Brand Section */}
         <div className="flex flex-col gap-1 p-4 pt-5 pb-5 border-b relative overflow-hidden" style={{ borderColor: '#334155' }}>

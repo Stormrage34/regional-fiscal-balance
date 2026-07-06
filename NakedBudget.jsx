@@ -406,7 +406,7 @@ export default function NakedBudget() {
       />
 
       {/* ─── MAIN WORKSPACE ─── */}
-      <main className="flex-1 overflow-y-auto p-6 lg:p-12 max-w-6xl space-y-10">
+      <main className="flex-1 overflow-y-auto p-6 lg:p-12 max-w-6xl space-y-10" style={{ paddingBottom: 'calc(1.5rem + env(safe-area-inset-bottom, 0px))' }}>
         {/* ═══ HEADER ═══ */}
         <header className="pb-8 relative">
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">

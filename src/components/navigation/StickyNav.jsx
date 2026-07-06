@@ -1,15 +1,13 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
 
 const NAV_ITEMS = [
-  { id: 'section-hero',     label: 'Почеток' },
-  { id: 'section-findings', label: 'Наоди' },
-  { id: 'section-overview', label: 'Преглед' },
-  { id: 'section-phases',   label: 'Фази' },
-  { id: 'section-balance',  label: 'Биланс' },
-  { id: 'section-callouts', label: 'Рангирање' },
-  { id: 'section-skopje',   label: 'Скопје' },
-  { id: 'section-charts',   label: 'Графикони' },
-  { id: 'section-table',    label: 'Табела' },
+  { id: 'section-skopje',       label: 'Скопје' },
+  { id: 'section-balance',      label: 'Нето Влијание' },
+  { id: 'section-regional-balance', label: 'Регионален Биланс' },
+  { id: 'section-labor-market', label: 'Пазар на Труд' },
+  { id: 'section-phases',       label: 'Фази' },
+  { id: 'section-charts',       label: 'Графикони' },
+  { id: 'section-table',        label: 'Табела' },
 ];
 
 function BackToTopButton() {

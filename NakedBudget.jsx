@@ -479,102 +479,10 @@ export default function NakedBudget() {
           </p>
         </section>
 
-        {/* ═══ KEY FINDINGS ═══ */}
-        <KeyFindingsCard />
+        {/* ═══ SKOPIE CAPITAL CITY ═══ */}
+        <SkopjeCapitalSection aggregates={netFiscalAggs} />
 
-        {/* ═══ KPI RIBBON ═══ */}
-        <section id="section-overview">
-          <KpiRibbon
-            aggregates={aggregates}
-            gainerCount={gainerCount}
-            loserCount={loserCount}
-            MUNICIPALITIES={MUNICIPALITIES}
-            AnimatedNumber={AnimatedNumber}
-            fmt={fmt}
-            showMkd={showMkd}
-          />
-        </section>
-
-        {/* ═══ PHASE COMPARISON ═══ */}
-        <section id="section-phases" className="mb-8">
-          <div className="flex items-center gap-3 mb-4">
-            <h2 className="text-sm font-mono font-bold text-white tracking-tight">
-              {t('section_phase_comparison')}
-            </h2>
-          </div>
-          <p className="text-xs font-mono text-slate-500 mt-1 mb-1">
-            {t('section_phase_subtitle')}
-          </p>
-          <p className="text-[10px] font-mono leading-relaxed max-w-3xl mb-4" style={{ color: '#64748b' }}>{t('phase_explanation')}</p>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {/* Card 1: Avg Net Fiscal Balance per capita */}
-            <div className="rounded-xl p-5 border" style={{ backgroundColor: 'rgba(11,17,32,0.4)', borderColor: '#1F3050' }}>
-              <div className="flex items-center justify-between mb-3">
-                <span className="text-[10px] font-mono uppercase tracking-widest text-slate-500">
-                  {t('phase_balance_label')}
-                </span>
-                <span className="text-xs font-mono px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
-                  {t('phase_badge').replace('{n}', '1')}
-                </span>
-              </div>
-              <div className="flex items-baseline justify-between">
-                <span className="text-2xl font-bold font-mono text-emerald-400">{fmt(phaseComparison.avgNetFiscalPC1, true)}</span>
-                <span className="text-sm font-mono text-slate-500">{t('phase_2_prefix')}{fmt(phaseComparison.avgNetFiscalPC2, true)}</span>
-              </div>
-            </div>
-
-            {/* Card 2: Avg Arrears per capita */}
-            <div className="rounded-xl p-5 border" style={{ backgroundColor: 'rgba(11,17,32,0.4)', borderColor: '#1F3050' }}>
-              <div className="flex items-center justify-between mb-3">
-                <span className="text-[10px] font-mono uppercase tracking-widest text-slate-500">
-                  {t('phase_arrears_label')}
-                </span>
-                <span className="text-xs font-mono px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
-                  {t('phase_badge').replace('{n}', '1')}
-                </span>
-              </div>
-              <div className="flex items-baseline justify-between">
-                <span className="text-2xl font-bold font-mono text-emerald-400">{fmt(phaseComparison.avgArrearsPC1, true)}</span>
-                <span className="text-sm font-mono text-slate-500">{t('phase_2_prefix')}{fmt(phaseComparison.avgArrearsPC2, true)}</span>
-              </div>
-            </div>
-
-            {/* Card 3: Avg Compliance Rate */}
-            <div className="rounded-xl p-5 border" style={{ backgroundColor: 'rgba(11,17,32,0.4)', borderColor: '#1F3050' }}>
-              <div className="flex items-center justify-between mb-3">
-                <span className="text-[10px] font-mono uppercase tracking-widest text-slate-500">
-                  {t('phase_compliance_label')}
-                </span>
-                <span className="text-xs font-mono px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
-                  {t('phase_badge').replace('{n}', '1')}
-                </span>
-              </div>
-              <div className="flex items-baseline justify-between">
-                <span className="text-2xl font-bold font-mono text-emerald-400">{phaseComparison.avgCompliance1}%</span>
-                <span className="text-sm font-mono text-slate-500">{t('phase_2_prefix')}{phaseComparison.avgCompliance2}%</span>
-              </div>
-            </div>
-
-            {/* Card 4: Count of municipalities */}
-            <div className="rounded-xl p-5 border" style={{ backgroundColor: 'rgba(11,17,32,0.4)', borderColor: '#1F3050' }}>
-              <div className="flex items-center justify-between mb-3">
-                <span className="text-[10px] font-mono uppercase tracking-widest text-slate-500">
-                  {t('phase_count_label')}
-                </span>
-                <span className="text-xs font-mono px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
-                  {t('phase_badge').replace('{n}', '1')}
-                </span>
-              </div>
-              <div className="flex items-baseline justify-between">
-                <span className="text-2xl font-bold font-mono text-emerald-400">{phaseComparison.p1Count}</span>
-                <span className="text-sm font-mono text-slate-500">{t('phase_2_prefix')}{phaseComparison.p2Count}</span>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* ═══ NET FISCAL IMPACT ═══ */}
+        {/* ═══ NET FISCAL IMPACT — 5 CARD GRID ═══ */}
         <section id="section-balance" className="rounded-xl relative overflow-hidden mb-12 transition-all duration-300 hover:shadow-[0_0_20px_rgba(99,102,241,0.05)]" style={{ backgroundColor: 'rgba(11,17,32,0.4)', borderColor: '#1F3050', borderWidth: 1 }}>
           <div className="flex items-center gap-2 mb-4">
             <h2 className="text-xs font-mono uppercase tracking-widest" style={{ color: '#94a3b8' }}>
@@ -585,7 +493,7 @@ export default function NakedBudget() {
             </span>
           </div>
 
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3 mb-4">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3">
             <div className="rounded-lg px-4 py-3 border hover:shadow-[0_0_12px_rgba(99,102,241,0.04)] transition-shadow duration-300" style={{ backgroundColor: '#243047', borderColor: '#1F3050' }}>
               <span className="text-xs font-mono" style={{ color: '#64748b' }}>{t('net_gainers')}</span>
               <span className="block text-2xl font-bold font-mono mt-0.5" style={{ color: '#10B981' }}>{netFiscalAggs.gainers.length}</span>
@@ -612,9 +520,16 @@ export default function NakedBudget() {
               <span className="text-xs font-mono" style={{ color: '#94a3b8' }}>{t('net_gainers').toLowerCase()} · 10 општини</span>
             </div>
           </div>
+        </section>
 
-          {/* Diverging Bar Chart */}
-          <div>
+        {/* ═══ REGIONAL FISCAL BALANCE — DIVERGING BAR ═══ */}
+        <section id="section-regional-balance" className="rounded-xl relative overflow-hidden mb-12 transition-all duration-300 hover:shadow-[0_0_20px_rgba(99,102,241,0.05)]" style={{ backgroundColor: 'rgba(11,17,32,0.4)', borderColor: '#1F3050', borderWidth: 1 }}>
+          <div className="flex items-center gap-2 mb-4 px-5 pt-5">
+            <h2 className="text-xs font-mono uppercase tracking-widest" style={{ color: '#94a3b8' }}>
+              Регионален Фискален Биланс
+            </h2>
+          </div>
+          <div className="px-5 pb-5">
             <div className="flex items-center gap-4 mb-2">
               <span className="text-xs font-mono" style={{ color: '#64748b' }}>
                 {t('net_balance')}
@@ -631,6 +546,18 @@ export default function NakedBudget() {
               </div>
             </div>
             <DivergingBarChart results={results} maxAbsNetPCEUR={maxAbsNetPCEUR} fmt={fmt} netFiscalAggs={netFiscalAggs} />
+          </div>
+        </section>
+
+        {/* ═══ LABOR MARKET MAPPING — COMPLIANCE SCATTER ═══ */}
+        <section id="section-labor-market" className="rounded-xl relative overflow-hidden mb-12 transition-all duration-300 hover:shadow-[0_0_20px_rgba(99,102,241,0.05)]" style={{ backgroundColor: 'rgba(11,17,32,0.4)', borderColor: '#1F3050', borderWidth: 1 }}>
+          <div className="flex items-center gap-2 mb-4 px-5 pt-5">
+            <h2 className="text-xs font-mono uppercase tracking-widest" style={{ color: '#94a3b8' }}>
+              Мапирање на Пазарот на Труд
+            </h2>
+          </div>
+          <div className="px-5 pb-5">
+            <ComplianceScatter data={results} onMuniClick={handleMuniFocus} focusedId={focusedMuniId} />
           </div>
         </section>
 
@@ -729,8 +656,100 @@ export default function NakedBudget() {
           </div>
         </section>
 
-        {/* ═══ SKOPIE CAPITAL CITY SECTION ═══ */}
-        <SkopjeCapitalSection aggregates={netFiscalAggs} />
+        {/* ═══ KEY FINDINGS ═══ */}
+        <KeyFindingsCard />
+
+        {/* ═══ KPI RIBBON ═══ */}
+        <section id="section-overview">
+          <KpiRibbon
+            aggregates={aggregates}
+            gainerCount={gainerCount}
+            loserCount={loserCount}
+            MUNICIPALITIES={MUNICIPALITIES}
+            AnimatedNumber={AnimatedNumber}
+            fmt={fmt}
+            showMkd={showMkd}
+          />
+        </section>
+
+        {/* ═══ PHASE COMPARISON ═══ */}
+        <section id="section-phases" className="mb-8">
+          <div className="flex items-center gap-3 mb-4">
+            <h2 className="text-sm font-mono font-bold text-white tracking-tight">
+              {t('section_phase_comparison')}
+            </h2>
+          </div>
+          <p className="text-xs font-mono text-slate-500 mt-1 mb-1">
+            {t('section_phase_subtitle')}
+          </p>
+          <p className="text-[10px] font-mono leading-relaxed max-w-3xl mb-4" style={{ color: '#64748b' }}>{t('phase_explanation')}</p>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {/* Card 1: Avg Net Fiscal Balance per capita */}
+            <div className="rounded-xl p-5 border" style={{ backgroundColor: 'rgba(11,17,32,0.4)', borderColor: '#1F3050' }}>
+              <div className="flex items-center justify-between mb-3">
+                <span className="text-[10px] font-mono uppercase tracking-widest text-slate-500">
+                  {t('phase_balance_label')}
+                </span>
+                <span className="text-xs font-mono px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+                  {t('phase_badge').replace('{n}', '1')}
+                </span>
+              </div>
+              <div className="flex items-baseline justify-between">
+                <span className="text-2xl font-bold font-mono text-emerald-400">{fmt(phaseComparison.avgNetFiscalPC1, true)}</span>
+                <span className="text-sm font-mono text-slate-500">{t('phase_2_prefix')}{fmt(phaseComparison.avgNetFiscalPC2, true)}</span>
+              </div>
+            </div>
+
+            {/* Card 2: Avg Arrears per capita */}
+            <div className="rounded-xl p-5 border" style={{ backgroundColor: 'rgba(11,17,32,0.4)', borderColor: '#1F3050' }}>
+              <div className="flex items-center justify-between mb-3">
+                <span className="text-[10px] font-mono uppercase tracking-widest text-slate-500">
+                  {t('phase_arrears_label')}
+                </span>
+                <span className="text-xs font-mono px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+                  {t('phase_badge').replace('{n}', '1')}
+                </span>
+              </div>
+              <div className="flex items-baseline justify-between">
+                <span className="text-2xl font-bold font-mono text-emerald-400">{fmt(phaseComparison.avgArrearsPC1, true)}</span>
+                <span className="text-sm font-mono text-slate-500">{t('phase_2_prefix')}{fmt(phaseComparison.avgArrearsPC2, true)}</span>
+              </div>
+            </div>
+
+            {/* Card 3: Avg Compliance Rate */}
+            <div className="rounded-xl p-5 border" style={{ backgroundColor: 'rgba(11,17,32,0.4)', borderColor: '#1F3050' }}>
+              <div className="flex items-center justify-between mb-3">
+                <span className="text-[10px] font-mono uppercase tracking-widest text-slate-500">
+                  {t('phase_compliance_label')}
+                </span>
+                <span className="text-xs font-mono px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+                  {t('phase_badge').replace('{n}', '1')}
+                </span>
+              </div>
+              <div className="flex items-baseline justify-between">
+                <span className="text-2xl font-bold font-mono text-emerald-400">{phaseComparison.avgCompliance1}%</span>
+                <span className="text-sm font-mono text-slate-500">{t('phase_2_prefix')}{phaseComparison.avgCompliance2}%</span>
+              </div>
+            </div>
+
+            {/* Card 4: Count of municipalities */}
+            <div className="rounded-xl p-5 border" style={{ backgroundColor: 'rgba(11,17,32,0.4)', borderColor: '#1F3050' }}>
+              <div className="flex items-center justify-between mb-3">
+                <span className="text-[10px] font-mono uppercase tracking-widest text-slate-500">
+                  {t('phase_count_label')}
+                </span>
+                <span className="text-xs font-mono px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+                  {t('phase_badge').replace('{n}', '1')}
+                </span>
+              </div>
+              <div className="flex items-baseline justify-between">
+                <span className="text-2xl font-bold font-mono text-emerald-400">{phaseComparison.p1Count}</span>
+                <span className="text-sm font-mono text-slate-500">{t('phase_2_prefix')}{phaseComparison.p2Count}</span>
+              </div>
+            </div>
+          </div>
+        </section>
 
         {/* ═══ CHARTS ═══ */}
         <section id="section-charts" className="rounded-xl relative overflow-hidden mb-14 transition-all duration-300 hover:shadow-[0_0_20px_rgba(99,102,241,0.05)] bg-gradient-to-b from-slate-900/[0.15] to-transparent" style={{ backgroundColor: 'rgba(11,17,32,0.5)', borderColor: '#1F3050', borderWidth: 1 }}>
@@ -757,9 +776,6 @@ export default function NakedBudget() {
             )}
             {chartView === 'pie' && (
               <PieMatrix data={sortedResults} onMuniClick={handleMuniFocus} />
-            )}
-            {chartView === 'compliance-scatter' && (
-              <ComplianceScatter data={results} onMuniClick={handleMuniFocus} focusedId={focusedMuniId} />
             )}
             {chartView === 'fiscal-capacity' && (
               <div className="max-h-[600px] overflow-y-auto">

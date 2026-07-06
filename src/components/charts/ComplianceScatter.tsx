@@ -2,123 +2,211 @@ import { useState, useEffect, useRef } from 'react';
 import { useLocale } from '../../context/LocaleContext.jsx';
 import { NET_FISCAL, getMuniName } from '../../data/fiscalData.js';
 
+function niceTicks(maxVal, targetCount = 5) {
+  if (maxVal <= 0) return [0];
+  const roughStep = maxVal / targetCount;
+  const magnitude = Math.pow(10, Math.floor(Math.log10(roughStep)));
+  const residual = roughStep / magnitude;
+  let step;
+  if (residual <= 1.5) step = 1 * magnitude;
+  else if (residual <= 3.5) step = 2 * magnitude;
+  else if (residual <= 7.5) step = 5 * magnitude;
+  else step = 10 * magnitude;
+  const ticks = [];
+  for (let v = 0; v <= maxVal + step * 0.5; v += step) {
+    ticks.push(Math.round(v));
+  }
+  return ticks;
+}
+
 export default function ComplianceScatter({ data, onMuniClick, focusedId }) {
   const { t, locale } = useLocale();
-  const containerRef = useRef(null);
+  const containerRef = useRef<HTMLDivElement>(null);
   const [containerWidth, setContainerWidth] = useState(700);
+  const [hoveredId, setHoveredId] = useState(null);
 
   useEffect(() => {
     if (!containerRef.current) return;
-
     const observer = new ResizeObserver((entries) => {
       for (const entry of entries) {
         setContainerWidth(entry.contentRect.width);
       }
     });
-
     observer.observe(containerRef.current);
     return () => observer.disconnect();
   }, []);
 
   if (!data || data.length === 0) return null;
 
-  const margin = { top: 20, right: 20, bottom: 50, left: 60 };
+  const margin = { top: 20, right: 20, bottom: 56, left: 72 };
   const width = Math.max(containerWidth, 320);
-  const height = 400;
+  const height = Math.max(420, width * 0.6);
   const plotW = width - margin.left - margin.right;
   const plotH = height - margin.top - margin.bottom;
 
-  const maxLeak = Math.max(...data.map(d => d.uncollectedLeakage), 1);
+  const maxLeak = Math.ceil(Math.max(...data.map(d => d.uncollectedLeakage)) / 50) * 50;
   const maxComp = 100;
 
   const points = data.map(m => ({
     ...m,
     x: m.adjustedCompliance,
     y: m.uncollectedLeakage,
-    isGainer: typeof NET_FISCAL !== 'undefined' && NET_FISCAL[m.id] && (NET_FISCAL[m.id].revenueInflow - NET_FISCAL[m.id].budgetOutflow) > 0,
+    isGainer: NET_FISCAL[m.id] && (NET_FISCAL[m.id].revenueInflow - NET_FISCAL[m.id].budgetOutflow) > 0,
   }));
 
   points.sort((a, b) => (a.isGainer ? 1 : 0) - (b.isGainer ? 1 : 0));
+
+  const yTicks = niceTicks(maxLeak, 5);
+  const xTicks = [0, 20, 40, 60, 80, 100];
+
+  const isMobile = width < 480;
+  const dotRadius = (pop) => Math.max(5, Math.min(12, Math.sqrt(pop / 500)));
+  const hitRadius = (r) => r * 2.5;
+
+  const handleMouseLeave = () => setHoveredId(null);
+
+  const gainerColor = 'var(--color-gainer-green, #10b981)';
+  const drainColor = 'var(--color-drain-amber, #f59e0b)';
+
+  const getMuniLabel = (p) => getMuniName(p, locale);
 
   return (
     <div ref={containerRef} className="relative w-full">
       <svg
         viewBox={`0 0 ${width} ${height}`}
-        className="w-full h-auto"
+        className="w-full h-auto block"
         role="img"
         aria-label={t('chart_aria_scatter')}
+        onMouseLeave={handleMouseLeave}
       >
-        {/* Axes */}
-        <line x1={margin.left} y1={margin.top + plotH} x2={margin.left + plotW} y2={margin.top + plotH} stroke="var(--chart-axis)" strokeWidth="1" />
-        <line x1={margin.left} y1={margin.top} x2={margin.left} y2={margin.top + plotH} stroke="var(--chart-axis)" strokeWidth="1" />
+        {/* Plot background */}
+        <rect x={margin.left} y={margin.top} width={plotW} height={plotH} fill="var(--chart-bg, #1e293b)" rx="4" />
 
         {/* Y-axis grid lines + labels */}
-        {[0, 25, 50, 75, 100].map(pct => {
-          const y = margin.top + plotH - (pct / 100) * plotH;
-          const labelVal = Math.round((pct / 100) * maxLeak);
+        {yTicks.map((val) => {
+          const frac = val / maxLeak;
+          if (frac > 1.0001) return null;
+          const y = margin.top + plotH - frac * plotH;
           return (
-            <g key={pct}>
-              <line x1={margin.left} y1={y} x2={margin.left + plotW} y2={y} stroke="var(--chart-grid)" strokeWidth="0.8" strokeDasharray="3 3" />
-              <text x={margin.left - 8} y={y + 3} textAnchor="end" fill="var(--chart-label)" fontSize="11" fontFamily="monospace">
-                {labelVal > 0 ? `€${labelVal.toLocaleString()}` : '€0'}
+            <g key={`y-${val}`}>
+              <line x1={margin.left} y1={y} x2={margin.left + plotW} y2={y} stroke="var(--chart-grid, rgba(51,65,85,.3))" strokeWidth="0.8" strokeDasharray="3 3" />
+              <text x={margin.left - 10} y={y} textAnchor="end" dominantBaseline="middle" fill="var(--chart-label, #94a3b8)" fontSize={isMobile ? 10 : 11} fontFamily="'JetBrains Mono', monospace">
+                {val > 0 ? `€${val.toLocaleString()}` : '€0'}
               </text>
             </g>
           );
         })}
 
         {/* X-axis grid lines + labels */}
-        {[0, 20, 40, 60, 80, 100].map(pct => {
-          const x = margin.left + (pct / 100) * plotW;
+        {xTicks.map(pct => {
+          const x = margin.left + (pct / maxComp) * plotW;
           return (
-            <g key={pct}>
-              <line x1={x} y1={margin.top} x2={x} y2={margin.top + plotH} stroke="var(--chart-grid)" strokeWidth="0.8" strokeDasharray="3 3" />
-              <text x={x} y={margin.top + plotH + 18} textAnchor="middle" fill="var(--chart-label)" fontSize="10" fontFamily="monospace">
+            <g key={`x-${pct}`}>
+              <line x1={x} y1={margin.top} x2={x} y2={margin.top + plotH} stroke="var(--chart-grid, rgba(51,65,85,.3))" strokeWidth="0.8" strokeDasharray="3 3" />
+              <text x={x} y={margin.top + plotH + 16} textAnchor="middle" dominantBaseline="hanging" fill="var(--chart-label, #94a3b8)" fontSize={isMobile ? 10 : 11} fontFamily="'JetBrains Mono', monospace">
                 {pct}%
               </text>
             </g>
           );
         })}
 
-        {/* Axis labels */}
-        <text x={margin.left + plotW / 2} y={height - 6} textAnchor="middle" fill="var(--chart-label)" fontSize="11" fontFamily="monospace">
+        {/* Axes */}
+        <line x1={margin.left} y1={margin.top + plotH} x2={margin.left + plotW} y2={margin.top + plotH} stroke="var(--chart-axis, #334155)" strokeWidth="1.2" />
+        <line x1={margin.left} y1={margin.top} x2={margin.left} y2={margin.top + plotH} stroke="var(--chart-axis, #334155)" strokeWidth="1.2" />
+
+        {/* Axis titles */}
+        <text x={margin.left + plotW / 2} y={height - 4} textAnchor="middle" dominantBaseline="hanging" fill="var(--chart-label, #94a3b8)" fontSize={isMobile ? 10 : 11} fontWeight="500" fontFamily="'JetBrains Mono', monospace">
           {t('scatter_x')}
         </text>
-        <text x={12} y={margin.top + plotH / 2} textAnchor="middle" fill="var(--chart-label)" fontSize="11" fontFamily="monospace" transform={`rotate(-90, 12, ${margin.top + plotH / 2})`}>
+        <text x={16} y={margin.top + plotH / 2} textAnchor="middle" fill="var(--chart-label, #94a3b8)" fontSize={isMobile ? 10 : 11} fontWeight="500" fontFamily="'JetBrains Mono', monospace" transform={`rotate(-90, 16, ${margin.top + plotH / 2})`}>
           {t('scatter_y')}
         </text>
 
         {/* Data points */}
         {points.map((p) => {
-          const cx = margin.left + (p.x / maxComp) * plotW;
-          const cy = margin.top + plotH - (p.y / maxLeak) * plotH;
-          const r = Math.max(6, Math.min(14, Math.sqrt(p.workingAgePop / 500)));
+          const fracX = p.x / maxComp;
+          const fracY = p.y / maxLeak;
+          const cx = margin.left + fracX * plotW;
+          const cy = margin.top + plotH - fracY * plotH;
+          const r = dotRadius(p.workingAgePop);
+          const hr = hitRadius(r);
           const isFocused = p.id === focusedId;
-          const dotColor = p.isGainer ? '#10B981' : '#F59E0B';
+          const isHovered = hoveredId === p.id;
+          const dotColor = p.isGainer ? gainerColor : drainColor;
+          const name = getMuniLabel(p);
+          const label = `${name}: ${p.adjustedCompliance}% compliance, €${p.uncollectedLeakage} leakage per capita${p.isGainer ? ` (${t('surplus')})` : ` (${t('deficit')})`}`;
+
           return (
-            <g key={p.id} onClick={() => onMuniClick && onMuniClick(p.id)} className="cursor-pointer">
-              <title>{`${getMuniName(p, locale)}: ${p.adjustedCompliance}% compliance, €${p.uncollectedLeakage} leakage per capita${p.isGainer ? ` (${t('surplus')})` : ` (${t('deficit')})`}`}</title>
-              {/* Glow halo */}
-              <circle cx={cx} cy={cy} r={r + 2} fill={dotColor} fillOpacity={0.15} stroke="none" />
-              {/* Hit target */}
-              <circle cx={cx} cy={cy} r={r * 2.5} fill="transparent" />
+            <g
+              key={p.id}
+              onClick={() => onMuniClick?.(p.id)}
+              onMouseEnter={() => setHoveredId(p.id)}
+              role="button"
+              tabIndex={onMuniClick ? 0 : -1}
+              aria-label={label}
+              onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); onMuniClick?.(p.id); } }}
+            >
+              <title>{label}</title>
+              {/* Glow */}
+              <circle cx={cx} cy={cy} r={r + 3} fill={dotColor} fillOpacity={isHovered ? 0.25 : 0.12} />
+              {/* Hit target (invisible, large) */}
+              <circle cx={cx} cy={cy} r={hr} fill="transparent" />
               {/* Visible dot */}
-              <circle cx={cx} cy={cy} r={r + (isFocused ? 4 : 0)} fill={dotColor} fillOpacity={isFocused ? 1 : 0.85} stroke={isFocused ? 'var(--text-primary)' : dotColor} strokeWidth={isFocused ? 2 : 0.5} strokeOpacity={0.4} />
-              {isFocused && (
-                <text x={cx + r + 8} y={cy + 4} fill="var(--text-primary)" fontSize="11" fontFamily="monospace" fontWeight="bold">
-                  {getMuniName(p, locale)}
-                </text>
+              <circle
+                cx={cx} cy={cy}
+                r={r + (isFocused || isHovered ? 3 : 0)}
+                fill={dotColor}
+                fillOpacity={isFocused || isHovered ? 1 : 0.82}
+                stroke={isFocused ? 'var(--text-primary)' : dotColor}
+                strokeWidth={isFocused ? 2.5 : isHovered ? 1.5 : 0.5}
+                strokeOpacity={0.6}
+              />
+              {/* Focus label with background */}
+              {(isFocused || isHovered) && (
+                <>
+                  <rect
+                    x={cx + r + 8}
+                    y={cy - 14}
+                    width={name.length * 7.2 + 12}
+                    height={18}
+                    rx="3"
+                    fill="var(--bg-card, #1e293b)"
+                    fillOpacity={0.92}
+                    stroke="var(--border-card, #334155)"
+                    strokeWidth="0.8"
+                  />
+                  <text
+                    x={cx + r + 14}
+                    y={cy - 1}
+                    dominantBaseline="middle"
+                    fill="var(--text-primary, #f8fafc)"
+                    fontSize="11"
+                    fontWeight="600"
+                    fontFamily="'JetBrains Mono', monospace"
+                  >
+                    {name}
+                  </text>
+                </>
               )}
             </g>
           );
         })}
       </svg>
-      <div className="flex items-center gap-4 mt-2 justify-center">
-        <div className="flex items-center gap-1.5">
-          <span className="w-2.5 h-2.5 rounded-full bg-gainer-green" />
+
+      {/* Legend */}
+      <div className="flex flex-wrap items-center gap-x-5 gap-y-1.5 mt-2.5 justify-center">
+        <div className="flex items-center gap-1.5" aria-label={t('scatter_gainer')}>
+          <span
+            className="inline-block w-2.5 h-2.5 rounded-full"
+            style={{ backgroundColor: gainerColor }}
+          />
           <span className="text-[10px] font-mono text-secondary">{t('scatter_gainer')}</span>
         </div>
-        <div className="flex items-center gap-1.5">
-          <span className="w-2.5 h-2.5 rounded-full bg-drain-amber" />
+        <div className="flex items-center gap-1.5" aria-label={t('scatter_loser')}>
+          <span
+            className="inline-block w-2.5 h-2.5 rounded-full"
+            style={{ backgroundColor: drainColor }}
+          />
           <span className="text-[10px] font-mono text-secondary">{t('scatter_loser')}</span>
         </div>
         <span className="text-[10px] font-mono text-muted">{t('scatter_size')}</span>

@@ -28,8 +28,8 @@ export default function MethodologyPanel({ showMethodology, setShowMethodology }
       </div>
 
       {/* Collapsible panel */}
-      <div id="methodology-panel" className={`grid overflow-hidden transition-all duration-300 ease-in-out ${showMethodology ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]'}`} role="region" aria-label="Model methodology">
-        <div className="rounded-xl border p-3.5" style={{ backgroundColor: 'rgba(15,23,42,0.5)', borderColor: 'rgba(51,65,85,0.4)', boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.04)' }}>
+      <div id="methodology-panel" className={`grid overflow-hidden transition-all duration-300 ease-in-out min-h-0 ${showMethodology ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]'}`} role="region" aria-label="Model methodology">
+        <div className="rounded-xl border p-3.5 min-h-0 bg-section border-card" style={{ boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.04)' }}>
           <div className="flex items-center gap-2 mb-3 pb-2.5 border-b" style={{ borderColor: 'rgba(51,65,85,0.3)' }}>
             <span className="text-[10px] font-mono uppercase tracking-widest font-semibold" style={{ color: '#F59E0B' }}>{t('method_how')}</span>
             <span className="text-[10px] font-mono" style={{ color: '#94a3b8' }}>({t('method_collapse')})</span>

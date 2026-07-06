@@ -13,7 +13,7 @@ export default function MethodologyPanel({ showMethodology, setShowMethodology }
           onClick={() => setShowMethodology(!showMethodology)}
           className="flex items-center gap-1.5 px-2 py-0.5 rounded text-[10px] font-mono uppercase tracking-wider border transition-all duration-200 hover:brightness-125"
           style={{
-            backgroundColor: showMethodology ? 'rgba(245,158,11,0.1)' : '#243047',
+            backgroundColor: showMethodology ? 'rgba(245,158,11,0.1)' : 'var(--bg-elevated-strong)',
             borderColor: showMethodology ? 'rgba(245,158,11,0.25)' : 'rgba(100,116,139,0.2)',
             color: showMethodology ? '#F59E0B' : '#94a3b8',
           }}

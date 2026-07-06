@@ -9,7 +9,7 @@ export default function RangeSlider({ label, value, onChange, min, max, unit, ac
           {value.toFixed(1)}{unit}
         </span>
       </div>
-      <div className="relative h-6 flex items-center">
+      <div className="relative h-8 flex items-center -mx-1 px-1">
         <div
           className="absolute left-0 right-auto h-1 rounded-full pointer-events-none"
           style={{

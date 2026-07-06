@@ -582,7 +582,7 @@ export default function NakedBudget() {
 
         {/* ═══ NET FISCAL IMPACT — 5 CARD GRID ═══ */}
         <ErrorBoundary>
-        <section id="section-balance" className="rounded-xl relative overflow-hidden mb-12 transition-all duration-300 hover:shadow-[0_0_20px_rgba(99,102,241,0.05)]" style={{ backgroundColor: 'rgba(11,17,32,0.4)', borderColor: '#1F3050', borderWidth: 1 }}>
+        <section id="section-balance" className="rounded-xl relative overflow-hidden mb-12 transition-all duration-300 hover:shadow-[0_0_20px_rgba(99,102,241,0.05)]" style={{ backgroundColor: 'var(--bg-section)', borderColor: 'var(--border-card)', borderWidth: 1 }}>
           <div className="flex items-center gap-2 mb-4">
             <span title={TRUST.real.label} className="inline-block w-1.5 h-1.5 rounded-full flex-shrink-0" style={{ backgroundColor: TRUST.real.color }} />
             <h2 className="text-xs font-sans font-semibold uppercase tracking-widest text-secondary">
@@ -594,27 +594,27 @@ export default function NakedBudget() {
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3">
-            <div className="rounded-lg px-4 py-3 border hover:bg-white/[0.03] transition-colors duration-200" style={{ backgroundColor: '#243047', borderColor: '#1F3050' }}>
+            <div className="rounded-lg px-4 py-3 border hover:bg-white/[0.03] transition-colors duration-200" style={{ backgroundColor: 'var(--bg-elevated-strong)', borderColor: 'var(--border-card)' }}>
               <span className="text-xs font-mono" style={{ color: '#94a3b8' }}>{t('net_gainers')}</span>
               <span className="block text-2xl font-bold font-mono mt-0.5" style={{ color: '#10B981' }}>{netFiscalAggs.gainers.length}</span>
               <span className="text-xs font-mono" style={{ color: '#94a3b8' }}>{t('net_gainers').toLowerCase()} {t('surplus')}</span>
             </div>
-            <div className="rounded-lg px-4 py-3 border hover:bg-white/[0.03] transition-colors duration-200" style={{ backgroundColor: '#243047', borderColor: '#1F3050' }}>
+            <div className="rounded-lg px-4 py-3 border hover:bg-white/[0.03] transition-colors duration-200" style={{ backgroundColor: 'var(--bg-elevated-strong)', borderColor: 'var(--border-card)' }}>
               <span className="text-xs font-mono" style={{ color: '#94a3b8' }}>{t('net_losers')}</span>
               <span className="block text-2xl font-bold font-mono mt-0.5" style={{ color: '#F59E0B' }}>{netFiscalAggs.losers.length}</span>
               <span className="text-xs font-mono" style={{ color: '#94a3b8' }}>{t('net_losers').toLowerCase()} {t('deficit')}</span>
             </div>
-            <div className="rounded-lg px-4 py-3 border hover:bg-white/[0.03] transition-colors duration-200" style={{ backgroundColor: '#243047', borderColor: '#1F3050' }}>
+            <div className="rounded-lg px-4 py-3 border hover:bg-white/[0.03] transition-colors duration-200" style={{ backgroundColor: 'var(--bg-elevated-strong)', borderColor: 'var(--border-card)' }}>
               <span className="text-xs font-mono" style={{ color: '#94a3b8' }}>{t('net_deficit')}</span>
               <span className="block text-2xl font-bold font-mono mt-0.5" style={{ color: '#F59E0B' }}>{fmt(Math.abs(netFiscalAggs.totalNet) / MKD_PER_EUR / 1_000_000)}</span>
               <span className="text-xs font-mono" style={{ color: '#94a3b8' }}>{t('aggregate_text')} (MKD {Math.abs(Math.round(netFiscalAggs.totalNet/1000)).toLocaleString()}K)</span>
             </div>
-            <div className="rounded-lg px-4 py-3 border hover:bg-white/[0.03] transition-colors duration-200" style={{ backgroundColor: '#243047', borderColor: '#1F3050' }}>
+            <div className="rounded-lg px-4 py-3 border hover:bg-white/[0.03] transition-colors duration-200" style={{ backgroundColor: 'var(--bg-elevated-strong)', borderColor: 'var(--border-card)' }}>
               <span className="text-xs font-mono" style={{ color: '#94a3b8' }}>{t('net_arrears')}</span>
               <span className="block text-2xl font-bold font-mono mt-0.5" style={{ color: '#F43F5E' }}>{fmt(netFiscalAggs.totalArrears / MKD_PER_EUR / 1_000_000)}</span>
               <span className="text-xs font-mono" style={{ color: '#94a3b8' }}>{t('net_arrears').toLowerCase()}</span>
             </div>
-            <div className="rounded-lg px-4 py-3 border hover:bg-white/[0.03] transition-colors duration-200" style={{ backgroundColor: '#243047', borderColor: '#1F3050' }}>
+            <div className="rounded-lg px-4 py-3 border hover:bg-white/[0.03] transition-colors duration-200" style={{ backgroundColor: 'var(--bg-elevated-strong)', borderColor: 'var(--border-card)' }}>
               <span className="text-xs font-mono" style={{ color: '#94a3b8' }}>{t('skopje_label')}</span>
               <span className="block text-2xl font-bold font-mono mt-0.5" style={{ color: '#10B981' }}>+{fmt(netFiscalAggs.skopjeNetPC, true)}</span>
               <span className="text-xs font-mono" style={{ color: '#94a3b8' }}>{t('net_gainers').toLowerCase()} · {netFiscalAggs.skopjeBoroughsCount} {t('skopje_boroughs_unit')}</span>
@@ -626,7 +626,7 @@ export default function NakedBudget() {
         {/* ═══ REGIONAL FISCAL BALANCE — DIVERGING BAR ═══ */}
         <ErrorBoundary>
         <React.Suspense fallback={<ChartFallback />}>
-        <section id="section-regional-balance" className="rounded-xl relative overflow-hidden mb-12 transition-all duration-300 hover:shadow-[0_0_20px_rgba(99,102,241,0.05)]" style={{ backgroundColor: 'rgba(11,17,32,0.4)', borderColor: '#1F3050', borderWidth: 1 }}>
+        <section id="section-regional-balance" className="rounded-xl relative overflow-hidden mb-12 transition-all duration-300 hover:shadow-[0_0_20px_rgba(99,102,241,0.05)]" style={{ backgroundColor: 'var(--bg-section)', borderColor: 'var(--border-card)', borderWidth: 1 }}>
           <div className="flex items-center gap-2 mb-4 px-5 pt-5">
             <span title={TRUST.real.label} className="inline-block w-1.5 h-1.5 rounded-full flex-shrink-0" style={{ backgroundColor: TRUST.real.color }} />
             <h2 className="text-xs font-sans font-semibold uppercase tracking-widest text-secondary">
@@ -658,7 +658,7 @@ export default function NakedBudget() {
         {/* ═══ LABOR MARKET MAPPING — COMPLIANCE SCATTER ═══ */}
         <ErrorBoundary>
         <React.Suspense fallback={<ChartFallback />}>
-        <section id="section-labor-market" className="rounded-xl relative overflow-hidden mb-12 transition-all duration-300 hover:shadow-[0_0_20px_rgba(99,102,241,0.05)]" style={{ backgroundColor: 'rgba(11,17,32,0.4)', borderColor: '#1F3050', borderWidth: 1 }}>
+        <section id="section-labor-market" className="rounded-xl relative overflow-hidden mb-12 transition-all duration-300 hover:shadow-[0_0_20px_rgba(99,102,241,0.05)]" style={{ backgroundColor: 'var(--bg-section)', borderColor: 'var(--border-card)', borderWidth: 1 }}>
           <div className="flex items-center gap-2 mb-4 px-5 pt-5">
             <span title={TRUST.derived.label} className="inline-block w-1.5 h-1.5 rounded-full flex-shrink-0" style={{ backgroundColor: TRUST.derived.color }} />
             <h2 className="text-xs font-sans font-semibold uppercase tracking-widest text-secondary">
@@ -686,7 +686,7 @@ export default function NakedBudget() {
           </p>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {/* Worst */}
-          <div className="rounded-xl relative overflow-hidden transition-all duration-300" style={{ backgroundColor: 'rgba(11,17,32,0.4)', borderColor: '#1F3050', borderWidth: 1, borderLeftWidth: 3, borderLeftColor: '#ef4444' }}>
+          <div className="rounded-xl relative overflow-hidden transition-all duration-300" style={{ backgroundColor: 'var(--bg-section)', borderColor: 'var(--border-card)', borderWidth: 1, borderLeftWidth: 3, borderLeftColor: '#ef4444' }}>
             <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-red-500/25 to-transparent" />
             <div className="px-5 pt-4 pb-2">
               <h3 className="text-[10px] font-mono uppercase tracking-widest flex items-center gap-2" style={{ color: '#ef4444' }}>
@@ -728,7 +728,7 @@ export default function NakedBudget() {
           </div>
 
           {/* Best */}
-          <div className="rounded-xl relative overflow-hidden transition-all duration-300" style={{ backgroundColor: 'rgba(11,17,32,0.4)', borderColor: '#1F3050', borderWidth: 1, borderLeftWidth: 3, borderLeftColor: '#10b981' }}>
+          <div className="rounded-xl relative overflow-hidden transition-all duration-300" style={{ backgroundColor: 'var(--bg-section)', borderColor: 'var(--border-card)', borderWidth: 1, borderLeftWidth: 3, borderLeftColor: '#10b981' }}>
             <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-emerald-500/25 to-transparent" />
             <div className="px-5 pt-4 pb-2">
               <h3 className="text-[10px] font-mono uppercase tracking-widest flex items-center gap-2" style={{ color: '#10b981' }}>
@@ -780,7 +780,7 @@ export default function NakedBudget() {
         {/* ═══ CHARTS ═══ */}
         <ErrorBoundary>
         <React.Suspense fallback={<ChartFallback />}>
-        <section id="section-charts" className="rounded-xl relative overflow-hidden mb-14 transition-all duration-300 hover:shadow-[0_0_20px_rgba(99,102,241,0.05)] bg-gradient-to-b from-slate-900/[0.15] to-transparent" style={{ backgroundColor: 'rgba(11,17,32,0.5)', borderColor: '#1F3050', borderWidth: 1 }}>
+        <section id="section-charts" className="rounded-xl relative overflow-hidden mb-14 transition-all duration-300 hover:shadow-[0_0_20px_rgba(99,102,241,0.05)] bg-gradient-to-b from-slate-900/[0.15] to-transparent" style={{ backgroundColor: 'var(--bg-section-transparent)', borderColor: 'var(--border-card)', borderWidth: 1 }}>
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[60%] h-[60%] rounded-full pointer-events-none" style={{ background: 'radial-gradient(ellipse at center, rgba(99,102,241,0.03) 0%, transparent 70%)' }} />
 
           <div className="relative">
@@ -879,7 +879,7 @@ export default function NakedBudget() {
           <p className="text-[10px] font-sans leading-relaxed max-w-3xl mb-4" style={{ color: '#94a3b8' }}>{t('phase_explanation')}</p>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div className="rounded-xl p-5 border" style={{ backgroundColor: 'rgba(11,17,32,0.4)', borderColor: '#1F3050' }}>
+            <div className="rounded-xl p-5 border" style={{ backgroundColor: 'var(--bg-section)', borderColor: 'var(--border-card)' }}>
               <div className="flex items-center justify-between mb-3">
                 <span className="text-[10px] font-mono uppercase tracking-widest text-tertiary">{t('phase_balance_label')}</span>
                 <span className="text-xs font-mono px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">{t('phase_badge').replace('{n}', '1')}</span>
@@ -889,7 +889,7 @@ export default function NakedBudget() {
                 <span className="text-sm font-mono text-tertiary">{t('phase_2_prefix')}{fmt(phaseComparison.avgNetFiscalPC2, true)}</span>
               </div>
             </div>
-            <div className="rounded-xl p-5 border" style={{ backgroundColor: 'rgba(11,17,32,0.4)', borderColor: '#1F3050' }}>
+            <div className="rounded-xl p-5 border" style={{ backgroundColor: 'var(--bg-section)', borderColor: 'var(--border-card)' }}>
               <div className="flex items-center justify-between mb-3">
                 <span className="text-[10px] font-mono uppercase tracking-widest text-tertiary">{t('phase_arrears_label')}</span>
                 <span className="text-xs font-mono px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">{t('phase_badge').replace('{n}', '1')}</span>
@@ -899,7 +899,7 @@ export default function NakedBudget() {
                 <span className="text-sm font-mono text-tertiary">{t('phase_2_prefix')}{fmt(phaseComparison.avgArrearsPC2, true)}</span>
               </div>
             </div>
-            <div className="rounded-xl p-5 border" style={{ backgroundColor: 'rgba(11,17,32,0.4)', borderColor: '#1F3050' }}>
+            <div className="rounded-xl p-5 border" style={{ backgroundColor: 'var(--bg-section)', borderColor: 'var(--border-card)' }}>
               <div className="flex items-center justify-between mb-3">
                 <span className="text-[10px] font-mono uppercase tracking-widest text-tertiary">{t('phase_compliance_label')}</span>
                 <span className="text-xs font-mono px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">{t('phase_badge').replace('{n}', '1')}</span>
@@ -909,7 +909,7 @@ export default function NakedBudget() {
                 <span className="text-sm font-mono text-tertiary">{t('phase_2_prefix')}{phaseComparison.avgCompliance2}%</span>
               </div>
             </div>
-            <div className="rounded-xl p-5 border" style={{ backgroundColor: 'rgba(11,17,32,0.4)', borderColor: '#1F3050' }}>
+            <div className="rounded-xl p-5 border" style={{ backgroundColor: 'var(--bg-section)', borderColor: 'var(--border-card)' }}>
               <div className="flex items-center justify-between mb-3">
                 <span className="text-[10px] font-mono uppercase tracking-widest text-tertiary">{t('phase_count_label')}</span>
                 <span className="text-xs font-mono px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">{t('phase_badge').replace('{n}', '1')}</span>

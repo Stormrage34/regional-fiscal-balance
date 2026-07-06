@@ -1,11 +1,11 @@
-import { SKOPIE_PROPERTY_TAX, MUNICIPALITIES, getMuniName, MKD_PER_EUR } from '../../data/fiscalData.js';
+import { SKOPIE_PROPERTY_TAX, MUNICIPALITIES, getMuniName, MKD_PER_EUR, SKOPIE_BORROUGHS } from '../../data/fiscalData.js';
 import { useLocale } from '../../context/LocaleContext.jsx';
 
 /**
  * Capital City Deep Dive — Skopje Borough Analysis
  * 
  * Highlights the unique fiscal status of Skopje as North Macedonia's capital,
- * with 10 constituent boroughs under a unified LSGU budget (permanent asymmetric
+ * with constituent boroughs under a unified LSGU budget (permanent asymmetric
  * decentralization since 2005/2011). Shows internal property tax collection
  * disparities and academic context from Gruevski & Gaber (2023).
  */
@@ -16,6 +16,7 @@ export default function SkopjeCapitalSection({ aggregates = {} }) {
   const skopjeNetEUR = aggregates.skopjeNet ? aggregates.skopjeNet / MKD_PER_EUR : 0;
   const skopjeSurplusM = Math.round(skopjeNetEUR / 1_000_000);
   const skopjeNetPC = aggregates.skopjeNetPC || 0;
+  const subtitle = t('capital_section_subtitle').replace('{n}', SKOPIE_BORROUGHS.length);
   
   // Sort boroughs by collection rate descending
   const boroughs = Object.entries(SKOPIE_PROPERTY_TAX)
@@ -64,7 +65,7 @@ export default function SkopjeCapitalSection({ aggregates = {} }) {
           </span>
         </div>
         <p className="text-[11px] font-mono ml-7" style={{ color: '#94a3b8' }}>
-          {t('capital_section_subtitle')}
+          {subtitle}
         </p>
       </div>
 
@@ -91,8 +92,8 @@ export default function SkopjeCapitalSection({ aggregates = {} }) {
           <div className="text-[10px] font-mono uppercase tracking-wider mb-1" style={{ color: '#64748b' }}>
             {t('capital_boroughs')}
           </div>
-          <div className="text-xl font-bold font-mono text-amber-400">10</div>
-          <div className="text-[10px] font-mono mt-0.5" style={{ color: '#475569' }}>unified LSGU</div>
+          <div className="text-xl font-bold font-mono text-amber-400">{SKOPIE_BORROUGHS.length}</div>
+          <div className="text-[10px] font-mono mt-0.5" style={{ color: '#475569' }}>total</div>
         </div>
       </div>
 

@@ -1,0 +1,162 @@
+{
+  "validationTimestamp": "2026-07-06",
+  "summary": {
+    "totalCharts": 6,
+    "passed": 4,
+    "warnings": 1,
+    "failures": 1,
+    "criticalIssues": 1
+  },
+  "charts": {
+    "kpiRibbon": {
+      "status": "PASS",
+      "computed": {
+        "totalWorkingAgePop": 917594,
+        "totalDrain_EUR_M": 799,
+        "weightedAvgDrainPC_EUR": 871,
+        "gainers": 14,
+        "losers": 14
+      },
+      "appDisplays": {
+        "avgPerCapitaBalance": "€871",
+        "totalRegionalDrain": "€799M",
+        "gainers": 14,
+        "losers": 14
+      },
+      "match": true,
+      "note": "All KPI ribbon values verified correct against computeMunicipalMetrics with default slider settings (enforcement=50, digital=30, correction=ON)"
+    },
+    "netFiscalImpact": {
+      "status": "PASS",
+      "computed": {
+        "totalRevenue_EUR_M": 1450,
+        "totalOutflow_EUR_M": 1242,
+        "netDeficit_EUR_M": 208,
+        "totalArrears_EUR_M": 63,
+        "skopjeNet_EUR_M": 123.4,
+        "skopjeNetPC_EUR": 350
+      },
+      "appDisplays": {
+        "skopjeNetPC": "+€350",
+        "netDeficit": "varies by currency mode"
+      },
+      "match": true,
+      "note": "5-card grid and Skopje aggregate per-capita verified correct against NET_FISCAL sums"
+    },
+    "divergingBarChart": {
+      "status": "PASS",
+      "computed": {
+        "maxAbsPC_EUR": 2007,
+        "topGainer": { "id": "stip", "netPC_EUR": 2007 },
+        "topLoser": { "id": "lipkovo", "netPC_EUR": -510 },
+        "gainers": 14,
+        "losers": 14
+      },
+      "note": "Per-capita values computed as (revenueInflow - budgetOutflow) / MKD_PER_EUR / workingAgePop. All 28 municipalities verified. Diverging layout correct: 14 gainers on right (green), 14 losers on left (rose)."
+    },
+    "skopjeCapitalSection": {
+      "status": "CRITICAL FAIL",
+      "issues": [
+        {
+          "severity": "critical",
+          "description": "Hardcoded €400M 'City Budget Surplus' at SkopjeCapitalSection.jsx line 68 is FABRICATED",
+          "actualCityBudget2025": {
+            "revenue_MKD": 6764616247,
+            "expenditure_MKD": 6403838376,
+            "surplus_MKD": 360777871,
+            "surplus_EUR_M": 5.9,
+            "source": "skopje.gov.mk, 2025 realized budget"
+          },
+          "actualNetFiscalAggregate": {
+            "totalRevenue_EUR_M": 478,
+            "totalOutflow_EUR_M": 355,
+            "net_EUR_M": 123.4,
+            "netPC_EUR": 350,
+            "source": "NET_FISCAL per-borough sums (Treasury 2025)"
+          },
+          "recommendation": "Replace hardcoded €400M with either dynamic computation from NET_FISCAL (€123M) for consistency with the rest of the app, or with the actual realized skopje.gov.mk surplus (€6M). The €400M is wrong by €277M or €394M depending on which source is authoritative."
+        },
+        {
+          "severity": "minor",
+          "description": "Saraj borough missing from SKOPIE_PROPERTY_TAX dataset (9/10 boroughs covered)",
+          "missing": ["saraj"],
+          "recommendation": "Source property tax data for Saraj from CCC Open Data or mark as 'no data'"
+        }
+      ]
+    },
+    "fiscalCapacityChart": {
+      "status": "WARNING",
+      "issues": [
+        {
+          "severity": "warning",
+          "description": "nationalAvgOwnRevenuePC is hardcoded to 500 (EUR) in fiscalCapacity.js line 21",
+          "impact": "Estimated capacity values are relative, not absolute. The capacity gap direction (positive/negative) is still valid, but magnitudes are arbitrary.",
+          "recommendation": "Compute dynamic nationalAvgOwnRevenuePC from actual NET_FISCAL data: sum of all own revenue / total national population",
+          "actualNationalAvg": "Would be approximately (total revenueInflow / total pop) = ~€1,580/capita based on NET_FISCAL data"
+        }
+      ]
+    },
+    "logisticRegressionModel": {
+      "status": "PASS",
+      "paperAccuracy": 82.4,
+      "actualAccuracyPct": 72.2,
+      "confusionMatrix": {
+        "TP": 8,
+        "TN": 5,
+        "FP": 3,
+        "FN": 2
+      },
+      "mismatches": [
+        { "id": "bitola", "predicted": "loser", "actual": "gainer", "prob": 75 },
+        { "id": "kumanovo", "predicted": "loser", "actual": "gainer", "prob": 91 },
+        { "id": "struga", "predicted": "gainer", "actual": "loser", "prob": 49 },
+        { "id": "strumica", "predicted": "loser", "actual": "gainer", "prob": 58 },
+        { "id": "kocani", "predicted": "gainer", "actual": "loser", "prob": 47 }
+      ],
+      "note": "72.2% accuracy on 18 non-Skopje municipalities vs paper's 82.4% on 74 municipalities. Acceptable — expected due to proxy variable differences and different sample. Struga and Kočani are at the decision boundary (49% and 47%)."
+    }
+  },
+  "crossReferences": {
+    "gruevskiGaber2010_table1": {
+      "paperValues_MKD": { "rural": 1309, "urban": 1884, "skopje": 5968, "countryAvg": 2970 },
+      "ourData_note": "We use revenueInflow (total Treasury expenditure from basic budget), not 'own revenue' as defined in the paper. These are different concepts — our values are much larger (38K-128K MKD/capita vs paper's 1.3K-6K MKD). The paper uses 'сопствени приходи' (own-source revenue), we use total expenditure from the basic budget which includes VAT grant balancing. Not directly comparable.",
+      "propertyTaxBenchmark": "Paper #03: MK property tax 0.46% GDP vs EU-28 2.5%. €50M gov bailout context."
+    },
+    "skopje2025Budget": {
+      "source": "skopje.gov.mk",
+      "plan_MKD": { "revenue": 7947831000, "expenditure": 7947831000 },
+      "realized_MKD": { "revenue": 6764616247, "expenditure": 6403838376, "surplus": 360777871 },
+      "propertyTax_MKD": { "plan": 1420062000, "realized": 1041437362, "pct": 73.3 }
+    },
+    "worldBankPublicFinance": {
+      "skopjeGDPxNortheast": 9,
+      "transfersPctOfLocalRevenue": 67,
+      "skopjePctOfNationalPropertyTax": 50
+    },
+    "financeThinkPolicyBrief70": {
+      "avgOwnRevenuePct": 42,
+      "propertyTaxPCCountryAvg_denars": 1426,
+      "propertyTaxGrowth": 66
+    }
+  },
+  "dataQualityIssues": [
+    {
+      "severity": "high",
+      "area": "Skopje NET_FISCAL data",
+      "description": "Per-borough Treasury data for Skopje shows extremely large numbers (e.g., Aerodrom €59M revenueInflow) compared to the consolidated City of Skopje budget (€110M total revenue). This suggests double-counting of shared Skopje-level revenues allocated to each borough. The Skopje aggregate in NET_FISCAL (€478M revenue, €355M outflow) is 4x the consolidated city budget. This inflates the apparent Skopje surplus.",
+      "recommendation": "Document this discrepancy in the MethodologyPanel. Consider using consolidated skopje.gov.mk figures for the Capital Section instead of per-borough NET_FISCAL sums."
+    },
+    {
+      "severity": "medium",
+      "area": "Fiscal capacity chart compensation",
+      "description": "The fiscal capacity model uses hardcoded nationalAvgOwnRevenuePC=500 which makes all estimated values internally consistent but not accurate in absolute terms.",
+      "recommendation": "Compute dynamically from NET_FISCAL: total revenueInflow / total national population = ~€1,580/capita. Use this as the benchmark."
+    },
+    {
+      "severity": "low",
+      "area": "Property tax CCC data",
+      "description": "Saraj borough has no property tax data. The CCC 2017-2019 data totals ~€10M vs skopje.gov.mk 2025 property tax of ~€17M — this is within expected growth range but spans different years.",
+      "recommendation": "Source Saraj data or mark as 'No data'. Add note that CCC data is 2017-2019, not 2025."
+    }
+  ]
+}

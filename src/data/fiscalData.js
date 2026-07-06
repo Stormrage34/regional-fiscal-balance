@@ -248,6 +248,7 @@ export const SKOPIE_PROPERTY_TAX = {
   'cair':          { collectionRate: 0.78, annualRevenueK: 543 },
   'gazi-baba':     { collectionRate: 0.69, annualRevenueK: 1240 },
   'suto-orizari':  { collectionRate: 0.67, annualRevenueK: 113 },
+  // Saraj — no data available in CCC Open Data source
 };
 
 // ── Locale-aware municipality name ──

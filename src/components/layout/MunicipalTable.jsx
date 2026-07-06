@@ -35,6 +35,7 @@ export default function MunicipalTable({
   sortKey,
   sortAsc,
   handleSort,
+  showAdvancedColumns = false,
 }) {
   const { t, locale } = useLocale();
 
@@ -184,65 +185,88 @@ export default function MunicipalTable({
                 </span>
               </th>
 
-              {/* Structural */}
-              <th className="px-3 py-2 text-center align-middle min-w-[140px] whitespace-nowrap text-[10px] font-mono uppercase tracking-wider text-slate-500 sticky top-0 z-20 bg-[#0f172a]">
-                Structural
-              </th>
+              {showAdvancedColumns && (
+                <>
+                  {/* Structural */}
+                  <th className="relative group cursor-help whitespace-nowrap px-3 py-2 text-center align-middle min-w-[140px]">
+                    <span className="text-[10px] font-mono uppercase tracking-wider text-slate-500">STRUCTURAL</span>
+                    <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2 py-1 bg-slate-800 border border-slate-600 rounded text-[10px] text-slate-300 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap z-50">
+                      Структурна компонента на одливот
+                    </div>
+                  </th>
 
-              {/* Correction */}
-              <th className="px-3 py-2 text-center align-middle min-w-[110px] whitespace-nowrap text-[10px] font-mono uppercase tracking-wider text-slate-500 sticky top-0 z-20 bg-[#0f172a]">
-                Correction
-              </th>
+                  {/* Correction */}
+                  <th className="relative group cursor-help whitespace-nowrap px-3 py-2 text-center align-middle min-w-[110px]">
+                    <span className="text-[10px] font-mono uppercase tracking-wider text-slate-500">CORRECTION</span>
+                    <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2 py-1 bg-slate-800 border border-slate-600 rounded text-[10px] text-slate-300 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap z-50">
+                      Корективен фактор
+                    </div>
+                  </th>
 
-              {/* Phase */}
-              <th className="px-3 py-2 text-center align-middle min-w-[60px] whitespace-nowrap text-[10px] font-mono uppercase tracking-wider text-slate-500 sticky top-0 z-20 bg-[#0f172a]">
-                {t('hdr_phase')}
-              </th>
+                  {/* Phase */}
+                  <th className="px-3 py-2 text-center align-middle min-w-[60px] whitespace-nowrap text-[10px] font-mono uppercase tracking-wider text-slate-500">
+                    {t('hdr_phase')}
+                  </th>
 
-              {/* Risk / Discipline */}
-              <th className="px-3 py-2 text-center align-middle min-w-[80px] whitespace-nowrap text-[10px] font-mono uppercase tracking-wider text-slate-500 sticky top-0 z-20 bg-[#0f172a]">
-                {t('hdr_discipline')}
-              </th>
+                  {/* Risk / Discipline */}
+                  <th className="relative group cursor-help whitespace-nowrap px-3 py-2 text-center align-middle min-w-[80px]">
+                    <span className="text-[10px] font-mono uppercase tracking-wider text-slate-500">{t('hdr_discipline')}</span>
+                    <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2 py-1 bg-slate-800 border border-slate-600 rounded text-[10px] text-slate-300 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap z-50">
+                      Ризик базиран на однос заостанати долгови/приходи
+                    </div>
+                  </th>
 
-              {/* Credit Rating */}
-              <th className="px-3 py-2 text-center align-middle min-w-[60px] whitespace-nowrap text-[10px] font-mono uppercase tracking-wider text-slate-500 sticky top-0 z-20 bg-[#0f172a]">
-                {t('hdr_credit_rating')}
-              </th>
+                  {/* Credit Rating */}
+                  <th className="relative group cursor-help whitespace-nowrap px-3 py-2 text-center align-middle min-w-[60px]">
+                    <span className="text-[10px] font-mono uppercase tracking-wider text-slate-500">RATING*</span>
+                    <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2 py-1 bg-slate-800 border border-slate-600 rounded text-[10px] text-slate-300 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap z-50">
+                      Кредитен рејтинг: B1 (Moody's, Штип 2017) или NR
+                    </div>
+                  </th>
 
-              {/* Predicted (Model) */}
-              <th
-                className="px-2 py-2 text-center align-middle min-w-[80px] whitespace-nowrap cursor-pointer select-none hover:text-slate-200 transition-colors sticky top-0 z-20 bg-[#0f172a]"
-                onClick={() => handleSort('prediction')}
-                onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); handleSort('prediction'); } }}
-                tabIndex={0}
-                role="columnheader"
-                aria-sort={getSortDir('prediction', sortKey, sortAsc)}
-              >
-                <span className="inline-flex items-center gap-1 justify-center text-[10px] font-mono uppercase tracking-wider text-slate-500">
-                  {t('hdr_predicted')}
-                  <SortIcon columnKey="prediction" sortKey={sortKey} sortAsc={sortAsc} />
-                </span>
-              </th>
+                  {/* Predicted (Model) */}
+                  <th
+                    className="relative group cursor-pointer select-none whitespace-nowrap px-2 py-2 text-center align-middle min-w-[80px]"
+                    onClick={() => handleSort('prediction')}
+                    onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); handleSort('prediction'); } }}
+                    tabIndex={0}
+                    role="columnheader"
+                    aria-sort={getSortDir('prediction', sortKey, sortAsc)}
+                  >
+                    <div className="inline-flex flex-col items-center gap-1">
+                      <span className="text-[10px] font-mono uppercase tracking-wider text-slate-500">MODEL</span>
+                      <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2 py-1 bg-slate-800 border border-slate-600 rounded text-[10px] text-slate-300 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap z-50">
+                        Gainer/Loser предвидување од логистички модел
+                      </div>
+                    </div>
+                  </th>
 
-              {/* Match */}
-              <th className="px-2 py-2 text-center align-middle min-w-[70px] whitespace-nowrap text-[10px] font-mono uppercase tracking-wider text-slate-500 sticky top-0 z-20 bg-[#0f172a]">
-                {t('hdr_match')}
-              </th>
+                  {/* Match */}
+                  <th className="relative group cursor-help whitespace-nowrap px-2 py-2 text-center align-middle min-w-[70px]">
+                    <span className="text-[10px] font-mono uppercase tracking-wider text-slate-500">{t('hdr_match')}</span>
+                    <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2 py-1 bg-slate-800 border border-slate-600 rounded text-[10px] text-slate-300 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap z-50">
+                      Моделот точно/неточно ја предвидел класификацијата
+                    </div>
+                  </th>
 
-              {/* Probability */}
-              <th
-                className="px-2 py-2 text-center align-middle min-w-[70px] whitespace-nowrap cursor-pointer select-none hover:text-slate-200 transition-colors sticky top-0 z-20 bg-[#0f172a]"
-                onClick={() => handleSort('probability')}
-                onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); handleSort('probability'); } }}
-                tabIndex={0}
-                role="columnheader"
-                aria-sort={getSortDir('probability', sortKey, sortAsc)}
-              >
-                <span className="inline-flex items-center gap-1 justify-center text-[10px] font-mono uppercase tracking-wider text-slate-500">
-                  {t('hdr_prob')}
-                  <SortIcon columnKey="probability" sortKey={sortKey} sortAsc={sortAsc} />
-                </span>
-              </th>
+                  {/* Probability */}
+                  <th
+                    className="relative group cursor-pointer select-none whitespace-nowrap px-2 py-2 text-center align-middle min-w-[70px]"
+                    onClick={() => handleSort('probability')}
+                    onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); handleSort('probability'); } }}
+                    tabIndex={0}
+                    role="columnheader"
+                    aria-sort={getSortDir('probability', sortKey, sortAsc)}
+                  >
+                    <div className="inline-flex flex-col items-center gap-1">
+                      <span className="text-[10px] font-mono uppercase tracking-wider text-slate-500">PROB</span>
+                      <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2 py-1 bg-slate-800 border border-slate-600 rounded text-[10px] text-slate-300 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap z-50">
+                        Веројатност од логистички модел
+                      </div>
+                    </div>
+                  </th>
+                </>
+              )}
             </tr>
           </thead>
           <tbody>
@@ -468,6 +492,13 @@ export default function MunicipalTable({
             })}
           </tbody>
         </table>
+      </div>
+
+      {/* Legend */}
+      <div className="mt-2 flex flex-wrap gap-4 text-[10px] font-mono text-slate-500 px-5 pb-4">
+        <span>Фаза: <span className="text-emerald-400">🟢 P2</span> = целосни компетенции</span>
+        <span><span className="text-amber-400">🟡 P1</span> = делумни компетенции</span>
+        <span>Ризик: <span className="text-red-400">🔴 High</span> · <span className="text-amber-400">🟡 Watch</span> · <span className="text-emerald-400">🟢 Low</span></span>
       </div>
     </section>
   );

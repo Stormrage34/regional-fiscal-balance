@@ -1,4 +1,4 @@
-import { SKOPIE_PROPERTY_TAX, getMuniName } from '../../data/fiscalData.js';
+import { SKOPIE_PROPERTY_TAX, getMuniName, MKD_PER_EUR } from '../../data/fiscalData.js';
 import { useLocale } from '../../context/LocaleContext.jsx';
 
 /**
@@ -9,8 +9,13 @@ import { useLocale } from '../../context/LocaleContext.jsx';
  * decentralization since 2005/2011). Shows internal property tax collection
  * disparities and academic context from Gruevski & Gaber (2023).
  */
-export default function SkopjeCapitalSection() {
+export default function SkopjeCapitalSection({ aggregates = {} }) {
   const { t, locale } = useLocale();
+  
+  // Compute Skopje net surplus from per-borough Treasury data
+  const skopjeNetEUR = aggregates.skopjeNet ? aggregates.skopjeNet / MKD_PER_EUR : 0;
+  const skopjeSurplusM = Math.round(skopjeNetEUR / 1_000_000);
+  const skopjeNetPC = aggregates.skopjeNetPC || 0;
   
   // Sort boroughs by collection rate descending
   const boroughs = Object.entries(SKOPIE_PROPERTY_TAX)
@@ -65,8 +70,8 @@ export default function SkopjeCapitalSection() {
           <div className="text-[10px] font-mono uppercase tracking-wider mb-1" style={{ color: '#64748b' }}>
             {t('capital_budget_surplus')}
           </div>
-          <div className="text-xl font-bold font-mono text-emerald-400">€400M</div>
-          <div className="text-[10px] font-mono mt-0.5" style={{ color: '#475569' }}>2025 realized</div>
+          <div className="text-xl font-bold font-mono text-emerald-400">€{skopjeSurplusM}M</div>
+          <div className="text-[10px] font-mono mt-0.5" style={{ color: '#475569' }}>+€{skopjeNetPC}/жител · Трезор 2025</div>
         </div>
         <div className="text-center">
           <div className="text-[10px] font-mono uppercase tracking-wider mb-1" style={{ color: '#64748b' }}>

@@ -23,6 +23,7 @@ import DivergingBarChart from './src/components/charts/DivergingBarChart.jsx';
 import FiscalCapacityChart from './src/components/charts/FiscalCapacityChart.jsx';
 import ModelAccuracyChart from './src/components/charts/ModelAccuracyChart.jsx';
 import SkopjeCapitalSection from './src/components/charts/SkopjeCapitalSection.jsx';
+import KeyFindingsCard from './src/components/charts/KeyFindingsCard.jsx';
 
 // ── Layout ──
 import Sidebar from './src/components/layout/Sidebar.jsx';
@@ -91,6 +92,9 @@ export default function NakedBudget() {
 
   // ── Currency Display ──
   const [showMkd, setShowMkd] = useState(false);
+
+  // ── Advanced Columns Toggle ──
+  const [showAdvancedColumns, setShowAdvancedColumns] = useState(false);
 
   // ── Model Computation ──
   const results = useMemo(
@@ -457,7 +461,7 @@ export default function NakedBudget() {
           <p className="text-[11px] font-mono uppercase tracking-widest text-slate-400 mb-4">
             {t('hero_label')}
           </p>
-          <p className="text-5xl md:text-7xl lg:text-8xl font-bold font-mono tabular-nums" style={{ color: '#F59E0B' }}>
+          <p className="text-4xl md:text-6xl lg:text-8xl font-bold font-mono tabular-nums" style={{ color: '#F59E0B' }}>
             €{Math.round(aggregates.totalYearlyDrain / 1_000_000)}M
           </p>
           <p className="text-xs font-mono text-slate-500 mt-4">
@@ -468,8 +472,8 @@ export default function NakedBudget() {
           </p>
         </section>
 
-        {/* ═══ SKOPIE CAPITAL CITY SECTION ═══ */}
-        <SkopjeCapitalSection />
+        {/* ═══ KEY FINDINGS ═══ */}
+        <KeyFindingsCard />
 
         {/* ═══ KPI RIBBON ═══ */}
         <KpiRibbon
@@ -488,10 +492,10 @@ export default function NakedBudget() {
             <h2 className="text-sm font-mono font-bold text-white tracking-tight">
               {t('section_phase_comparison')}
             </h2>
-            <span className="text-[10px] font-mono" style={{ color: '#94a3b8' }}>
-              {t('section_phase_subtitle')}
-            </span>
           </div>
+          <p className="text-xs font-mono text-slate-500 mt-1 mb-4">
+            Споредба помеѓу фази 1 и 2 на децентрализација
+          </p>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {/* Card 1: Avg Net Fiscal Balance per capita */}
@@ -621,7 +625,14 @@ export default function NakedBudget() {
         </section>
 
         {/* ═══ CALLOUTS ═══ */}
-        <section className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
+        <section className="mb-12">
+          <h2 className="text-xs font-mono uppercase tracking-widest mb-4" style={{ color: '#94a3b8' }}>
+            Најдобри и најлоши 5 општини
+          </h2>
+          <p className="text-xs font-mono text-slate-500 mt-1 mb-4">
+            Best and worst 5 municipalities by fiscal performance
+          </p>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {/* Worst */}
           <div className="rounded-xl relative overflow-hidden transition-all duration-300" style={{ backgroundColor: 'rgba(11,17,32,0.4)', borderColor: '#1F3050', borderWidth: 1, borderLeftWidth: 3, borderLeftColor: '#ef4444' }}>
             <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-red-500/25 to-transparent" />
@@ -705,16 +716,27 @@ export default function NakedBudget() {
               })()}
             </div>
           </div>
+          </div>
         </section>
+
+        {/* ═══ SKOPIE CAPITAL CITY SECTION ═══ */}
+        <SkopjeCapitalSection aggregates={netFiscalAggs} />
 
         {/* ═══ CHARTS ═══ */}
         <section className="rounded-xl relative overflow-hidden mb-14 transition-all duration-300 hover:shadow-[0_0_20px_rgba(99,102,241,0.05)] bg-gradient-to-b from-slate-900/[0.15] to-transparent" style={{ backgroundColor: 'rgba(11,17,32,0.5)', borderColor: '#1F3050', borderWidth: 1 }}>
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[60%] h-[60%] rounded-full pointer-events-none" style={{ background: 'radial-gradient(ellipse at center, rgba(99,102,241,0.03) 0%, transparent 70%)' }} />
 
           <div className="relative">
+            <h2 className="text-xs font-mono uppercase tracking-widest px-5 pt-5 pb-2" style={{ color: '#94a3b8' }}>
+              Charts & Visualizations
+            </h2>
+            <p className="text-xs font-mono text-slate-500 px-5 pb-4">
+              Different views of the same data
+            </p>
+
             <MethodologyPanel showMethodology={showMethodology} setShowMethodology={setShowMethodology} />
 
-            <div className="flex items-center justify-between mb-5">
+            <div className="flex items-center justify-between mb-5 px-5">
               <SegmentControl value={chartView} onChange={setChartView} segments={chartSegments} />
             </div>
 
@@ -746,16 +768,35 @@ export default function NakedBudget() {
         </section>
 
         {/* ═══ MUNICIPAL TABLE ═══ */}
-        <MunicipalTable
-          sortedResults={sortedResults}
-          focusedMuniId={focusedMuniId}
-          setFocusedMuniId={setFocusedMuniId}
-          fmt={fmt}
-          applyCorrection={applyCorrection}
-          sortKey={sortKey}
-          sortAsc={sortAsc}
-          handleSort={handleSort}
-        />
+        <section className="mb-10">
+          <div className="flex items-center justify-between mb-3">
+            <div>
+              <h2 className="text-xs font-mono uppercase tracking-widest" style={{ color: '#94a3b8' }}>
+                {t('muni_profiles')}
+              </h2>
+              <p className="text-xs font-mono text-slate-500 mt-1">
+                All data for 28 municipalities
+              </p>
+            </div>
+            <button
+              onClick={() => setShowAdvancedColumns(!showAdvancedColumns)}
+              className="flex items-center gap-1 text-[10px] font-mono text-slate-400 hover:text-slate-200 transition-colors"
+            >
+              {showAdvancedColumns ? '⏶ Основни колони' : '⏷ Напредни колони'}
+            </button>
+          </div>
+          <MunicipalTable
+            sortedResults={sortedResults}
+            focusedMuniId={focusedMuniId}
+            setFocusedMuniId={setFocusedMuniId}
+            fmt={fmt}
+            applyCorrection={applyCorrection}
+            sortKey={sortKey}
+            sortAsc={sortAsc}
+            handleSort={handleSort}
+            showAdvancedColumns={showAdvancedColumns}
+          />
+        </section>
 
         {/* ═══ FOOTER ═══ */}
         <footer className="mt-16 py-8 border-t border-slate-800/60 text-center">

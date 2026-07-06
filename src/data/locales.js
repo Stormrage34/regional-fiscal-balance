@@ -1,7 +1,7 @@
 export const translations = {
   en: {
     brand_title: 'Open Fiscal Ledger',
-    brand_sub: 'North Macedonia Regional Ledger',
+    brand_sub: 'Macedonian Regional Ledger',
     hero_drain: 'Per Capita Net Fiscal Balance',
     tab_bars: 'Comparison',
     tab_matrix: 'Share',

@@ -21,6 +21,33 @@
     <meta name="twitter:image" content="https://fiskalenradar.org/assets/og/og-default.png" />
 
     <meta name="description" content="Interactive dashboard analyzing net fiscal balance across all 77 municipalities in North Macedonia. Sources: Ministry of Finance Treasury 2025, SSO Census 2021, AVRM Employment Registry." />
+
+    <!-- ═══ Hreflang ═══ -->
+    <link rel="alternate" hreflang="en" href="https://fiskalenradar.org" />
+    <link rel="alternate" hreflang="mk" href="https://fiskalenradar.org" />
+    <link rel="alternate" hreflang="sq" href="https://fiskalenradar.org" />
+    <link rel="alternate" hreflang="x-default" href="https://fiskalenradar.org" />
+
+    <!-- ═══ JSON-LD Structured Data ═══ -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Dataset",
+      "name": "Open Fiscal Ledger — Macedonian Municipal Fiscal Data",
+      "description": "Net fiscal balance, leakage, welfare burden, unemployment, and fiscal capacity data for 77 municipalities in North Macedonia",
+      "spatialCoverage": "North Macedonia",
+      "temporalCoverage": "2025-2026",
+      "variableMeasured": [
+        {"@type": "PropertyValue", "name": "Net Fiscal Balance per Capita", "unitText": "EUR"},
+        {"@type": "PropertyValue", "name": "Uncollected Leakage", "unitText": "EUR"},
+        {"@type": "PropertyValue", "name": "Welfare Burden", "unitText": "EUR"}
+      ],
+      "creator": {
+        "@type": "Organization",
+        "name": "Open Fiscal Ledger"
+      }
+    }
+    </script>
   </head>
   <body>
     <div id="root"></div>

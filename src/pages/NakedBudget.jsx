@@ -1,37 +1,67 @@
 import React, { useState, useMemo, useCallback, useRef, useEffect } from 'react';
 
 // ── Locale ──
-import { useLocale } from './src/context/LocaleContext.jsx';
+import { useLocale } from '../context/LocaleContext.jsx';
 
 // ── Data & Model ──
-import { CONSTANTS, MUNICIPALITIES, NET_FISCAL, UNEMPLOYMENT_DATA, FISCAL_LOSS_PER_UNEMPLOYED, MKD_PER_EUR, formatCurrency as baseFormatCurrency, getMuniName, DECENTRALIZATION_PHASES, CREDIT_RATINGS, PILLAR_CONSTANTS, MUNICIPALITY_ETHNICITY, SKOPIE_BORROUGHS } from './src/data/fiscalData.js';
-import { computeMunicipalMetrics } from './src/models/bayesianInference.js';
-import { computeFiscalCapacity } from './src/models/fiscalCapacity.js';
-import { computePillarScores } from './src/models/pillarScoring.js';
-import { predictFiscalDisparity, LOGIT_COEFFICIENTS } from './src/models/logisticRegression.js';
+import { CONSTANTS, MUNICIPALITIES, NET_FISCAL, UNEMPLOYMENT_DATA, FISCAL_LOSS_PER_UNEMPLOYED, MKD_PER_EUR, formatCurrency as baseFormatCurrency, getMuniName, DECENTRALIZATION_PHASES, CREDIT_RATINGS, PILLAR_CONSTANTS, MUNICIPALITY_ETHNICITY, SKOPIE_BORROUGHS } from '../data/fiscalData.js';
+import { computeMunicipalMetrics } from '../models/bayesianInference.js';
+import { computeFiscalCapacity } from '../models/fiscalCapacity.js';
+import { computePillarScores } from '../models/pillarScoring.js';
+import { predictFiscalDisparity, LOGIT_COEFFICIENTS } from '../models/logisticRegression.js';
+
+// ── Analytics ──
+import { Analytics } from '@vercel/analytics/react';
+import { track } from '@vercel/analytics';
+
+// ── Error Boundary ──
+import ErrorBoundary from '../components/layout/ErrorBoundary.jsx';
 
 // ── UI Primitives ──
-import { Analytics } from '@vercel/analytics/react';
-import AnimatedNumber from './src/components/ui/AnimatedNumber.jsx';
-import SegmentControl from './src/components/ui/SegmentControl.jsx';
+import AnimatedNumber from '../components/ui/AnimatedNumber.jsx';
+import SegmentControl from '../components/ui/SegmentControl.jsx';
 
-// ── Charts ──
-import StackedBarChart from './src/components/charts/StackedBarChart.jsx';
-import PieMatrix from './src/components/charts/PieMatrix.jsx';
-import ComplianceScatter from './src/components/charts/ComplianceScatter.jsx';
-import DonutChart from './src/components/charts/DonutChart.jsx';
-import DivergingBarChart from './src/components/charts/DivergingBarChart.jsx';
-import FiscalCapacityChart from './src/components/charts/FiscalCapacityChart.jsx';
-import ModelAccuracyChart from './src/components/charts/ModelAccuracyChart.jsx';
-import SkopjeCapitalSection from './src/components/charts/SkopjeCapitalSection.jsx';
-import KeyFindingsCard from './src/components/charts/KeyFindingsCard.jsx';
+// ── Charts — above-fold (eager) ──
+import KeyFindingsCard from '../components/charts/KeyFindingsCard.jsx';
 
-// ── Layout ──
-import Sidebar from './src/components/layout/Sidebar.jsx';
-import KpiRibbon from './src/components/layout/KpiRibbon.jsx';
-import MethodologyPanel from './src/components/layout/MethodologyPanel.jsx';
-import MunicipalTable from './src/components/layout/MunicipalTable.jsx';
-import StickyNav from './src/components/navigation/StickyNav.jsx';
+// ── Charts — below-fold (lazy) ──
+const LazyStackedBarChart = React.lazy(() => import('../components/charts/StackedBarChart.jsx'));
+const LazyPieMatrix = React.lazy(() => import('../components/charts/PieMatrix.jsx'));
+const LazyComplianceScatter = React.lazy(() => import('../components/charts/ComplianceScatter.jsx'));
+const LazyDonutChart = React.lazy(() => import('../components/charts/DonutChart.jsx'));
+const LazyDivergingBarChart = React.lazy(() => import('../components/charts/DivergingBarChart.jsx'));
+const LazyFiscalCapacityChart = React.lazy(() => import('../components/charts/FiscalCapacityChart.jsx'));
+const LazyModelAccuracyChart = React.lazy(() => import('../components/charts/ModelAccuracyChart.jsx'));
+const LazySkopjeCapitalSection = React.lazy(() => import('../components/charts/SkopjeCapitalSection.jsx'));
+
+// ── Layout — below-fold (lazy) ──
+const LazyMunicipalTable = React.lazy(() => import('../components/layout/MunicipalTable.jsx'));
+
+// ── Layout — above-fold ──
+import Sidebar from '../components/layout/Sidebar.jsx';
+import KpiRibbon from '../components/layout/KpiRibbon.jsx';
+import MethodologyPanel from '../components/layout/MethodologyPanel.jsx';
+import StickyNav from '../components/navigation/StickyNav.jsx';
+
+// ── Loading fallback ──
+const ChartFallback = () => (
+  <div className="h-40 flex items-center justify-center">
+    <span className="text-tertiary text-xs font-mono">Loading...</span>
+  </div>
+);
+
+// ───────────────────────────────────────────────────────────────
+// DEBOUNCED STATE HOOK — slider values skip 80ms of intermediate frames
+// ───────────────────────────────────────────────────────────────
+function useDebouncedState(initialValue, delay = 80) {
+  const [value, setValue] = useState(initialValue);
+  const [debounced, setDebounced] = useState(initialValue);
+  useEffect(() => {
+    const timer = setTimeout(() => setDebounced(value), delay);
+    return () => clearTimeout(timer);
+  }, [value, delay]);
+  return [debounced, setValue];
+}
 
 // ───────────────────────────────────────────────────────────────
 // FOCUS TRAP HOOK
@@ -98,9 +128,9 @@ function BackToTop() {
 export default function NakedBudget() {
   const { t, locale } = useLocale();
 
-  // ── Slider State ──
-  const [enforcementStrength, setEnforcementStrength] = useState(50);
-  const [digitalFiscalization, setDigitalFiscalization] = useState(30);
+  // ── Slider State (debounced — heavy recomputation uses debounced value) ──
+  const [enforcementStrength, setEnforcementStrength] = useDebouncedState(50);
+  const [digitalFiscalization, setDigitalFiscalization] = useDebouncedState(30);
   const [applyCorrection, setApplyCorrection] = useState(true);
 
   // ── Focused Municipality ──
@@ -325,7 +355,13 @@ export default function NakedBudget() {
   // ── Focus Handler ──
   const handleMuniFocus = useCallback((id) => {
     triggerRef.current = document.activeElement;
-    setFocusedMuniId((prev) => (prev === id ? null : id));
+    setFocusedMuniId((prev) => {
+      const nextId = prev === id ? null : id;
+      if (nextId) {
+        track('municipality_panel', { id: nextId });
+      }
+      return nextId;
+    });
   }, []);
 
   const closePanel = useCallback(() => {
@@ -372,7 +408,7 @@ export default function NakedBudget() {
 
   // ── RENDER ──
   return (
-    <div className="flex min-h-screen" style={{ backgroundColor: '#0F172A', color: '#F8FAFC' }}>
+    <div className="flex min-h-screen bg-root text-primary">
       {/* Bloomberg grid lines */}
       <div className="fixed inset-0 pointer-events-none" style={{
         backgroundImage: `
@@ -408,6 +444,10 @@ export default function NakedBudget() {
 
       {/* ─── MAIN WORKSPACE ─── */}
       <main className="flex-1 overflow-y-auto p-6 lg:p-12 max-w-6xl space-y-10" style={{ paddingBottom: 'calc(1.5rem + env(safe-area-inset-bottom, 0px))' }}>
+        {/* Skip-to-content link */}
+        <a href="#section-hero" className="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-[60] focus:px-4 focus:py-2 focus:rounded focus:bg-card focus:text-primary focus:text-xs focus:font-mono focus:shadow-lg">
+          {t('skip_to_content')}
+        </a>
         {/* ═══ HEADER ═══ */}
         <header className="pb-8 relative">
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
@@ -450,7 +490,7 @@ export default function NakedBudget() {
                   <line x1="10" y1="1" x2="10" y2="4" />
                   <line x1="14" y1="1" x2="14" y2="4" />
                 </svg>
-                <span className="text-amber-300 group-hover:text-amber-200 transition-colors">Buy me a coffee</span>
+                <span className="text-amber-300 group-hover:text-amber-200 transition-colors">{t('buy_coffee')}</span>
               </a>
             </div>
             <button
@@ -520,6 +560,7 @@ export default function NakedBudget() {
         </section>
 
         {/* ═══ KPI RIBBON ═══ */}
+        <ErrorBoundary>
         <section id="section-overview">
           <KpiRibbon
             aggregates={aggregates}
@@ -531,11 +572,17 @@ export default function NakedBudget() {
             showMkd={showMkd}
           />
         </section>
+        </ErrorBoundary>
 
-        {/* ═══ SKOPIE CAPITAL CITY ═══ */}
-        <SkopjeCapitalSection aggregates={netFiscalAggs} />
+        {/* ═══ SKOPJE CAPITAL CITY ═══ */}
+        <ErrorBoundary>
+        <React.Suspense fallback={<ChartFallback />}>
+          <LazySkopjeCapitalSection aggregates={netFiscalAggs} />
+        </React.Suspense>
+        </ErrorBoundary>
 
         {/* ═══ NET FISCAL IMPACT — 5 CARD GRID ═══ */}
+        <ErrorBoundary>
         <section id="section-balance" className="rounded-xl relative overflow-hidden mb-12 transition-all duration-300 hover:shadow-[0_0_20px_rgba(99,102,241,0.05)]" style={{ backgroundColor: 'rgba(11,17,32,0.4)', borderColor: '#1F3050', borderWidth: 1 }}>
           <div className="flex items-center gap-2 mb-4">
             <span title={TRUST.real.label} className="inline-block w-1.5 h-1.5 rounded-full flex-shrink-0" style={{ backgroundColor: TRUST.real.color }} />
@@ -575,8 +622,11 @@ export default function NakedBudget() {
             </div>
           </div>
         </section>
+        </ErrorBoundary>
 
         {/* ═══ REGIONAL FISCAL BALANCE — DIVERGING BAR ═══ */}
+        <ErrorBoundary>
+        <React.Suspense fallback={<ChartFallback />}>
         <section id="section-regional-balance" className="rounded-xl relative overflow-hidden mb-12 transition-all duration-300 hover:shadow-[0_0_20px_rgba(99,102,241,0.05)]" style={{ backgroundColor: 'rgba(11,17,32,0.4)', borderColor: '#1F3050', borderWidth: 1 }}>
           <div className="flex items-center gap-2 mb-4 px-5 pt-5">
             <span title={TRUST.real.label} className="inline-block w-1.5 h-1.5 rounded-full flex-shrink-0" style={{ backgroundColor: TRUST.real.color }} />
@@ -600,11 +650,15 @@ export default function NakedBudget() {
                 </div>
               </div>
             </div>
-            <DivergingBarChart results={results} maxAbsNetPCEUR={maxAbsNetPCEUR} fmt={fmt} netFiscalAggs={netFiscalAggs} />
+            <LazyDivergingBarChart results={results} maxAbsNetPCEUR={maxAbsNetPCEUR} fmt={fmt} netFiscalAggs={netFiscalAggs} />
           </div>
         </section>
+        </React.Suspense>
+        </ErrorBoundary>
 
         {/* ═══ LABOR MARKET MAPPING — COMPLIANCE SCATTER ═══ */}
+        <ErrorBoundary>
+        <React.Suspense fallback={<ChartFallback />}>
         <section id="section-labor-market" className="rounded-xl relative overflow-hidden mb-12 transition-all duration-300 hover:shadow-[0_0_20px_rgba(99,102,241,0.05)]" style={{ backgroundColor: 'rgba(11,17,32,0.4)', borderColor: '#1F3050', borderWidth: 1 }}>
           <div className="flex items-center gap-2 mb-4 px-5 pt-5">
             <span title={TRUST.derived.label} className="inline-block w-1.5 h-1.5 rounded-full flex-shrink-0" style={{ backgroundColor: TRUST.derived.color }} />
@@ -613,11 +667,14 @@ export default function NakedBudget() {
             </h2>
           </div>
           <div className="px-5 pb-5">
-            <ComplianceScatter data={results} onMuniClick={handleMuniFocus} focusedId={focusedMuniId} />
+            <LazyComplianceScatter data={results} onMuniClick={handleMuniFocus} focusedId={focusedMuniId} />
           </div>
         </section>
+        </React.Suspense>
+        </ErrorBoundary>
 
         {/* ═══ CALLOUTS ═══ */}
+        <ErrorBoundary>
         <section id="section-callouts" className="mb-12">
           <div className="flex items-center gap-2 mb-4">
             <span title={TRUST.derived.label} className="inline-block w-1.5 h-1.5 rounded-full flex-shrink-0" style={{ backgroundColor: TRUST.derived.color }} />
@@ -714,11 +771,16 @@ export default function NakedBudget() {
           </div>
           </div>
         </section>
+        </ErrorBoundary>
 
         {/* ═══ KEY FINDINGS ═══ */}
-        <KeyFindingsCard skopjeSurplusEURm={Math.round(netFiscalAggs.skopjeNet / MKD_PER_EUR / 1_000_000)} />
+        <ErrorBoundary>
+          <KeyFindingsCard skopjeSurplusEURm={Math.round(netFiscalAggs.skopjeNet / MKD_PER_EUR / 1_000_000)} />
+        </ErrorBoundary>
 
         {/* ═══ CHARTS ═══ */}
+        <ErrorBoundary>
+        <React.Suspense fallback={<ChartFallback />}>
         <section id="section-charts" className="rounded-xl relative overflow-hidden mb-14 transition-all duration-300 hover:shadow-[0_0_20px_rgba(99,102,241,0.05)] bg-gradient-to-b from-slate-900/[0.15] to-transparent" style={{ backgroundColor: 'rgba(11,17,32,0.5)', borderColor: '#1F3050', borderWidth: 1 }}>
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[60%] h-[60%] rounded-full pointer-events-none" style={{ background: 'radial-gradient(ellipse at center, rgba(99,102,241,0.03) 0%, transparent 70%)' }} />
 
@@ -736,24 +798,24 @@ export default function NakedBudget() {
             <MethodologyPanel showMethodology={showMethodology} setShowMethodology={setShowMethodology} />
 
             <div className="flex items-center justify-between mb-5 px-5">
-              <SegmentControl value={chartView} onChange={setChartView} segments={chartSegments} />
+              <SegmentControl value={chartView} onChange={(val) => { setChartView(val); track('chart_view', { chart: val }); }} segments={chartSegments} />
             </div>
 
             {chartView === 'stacked' && (
               <div className="max-h-[600px] overflow-y-auto">
-                <StackedBarChart data={sortedResults} onMuniClick={handleMuniFocus} focusedMuniId={focusedMuniId} />
+                <LazyStackedBarChart data={sortedResults} onMuniClick={handleMuniFocus} focusedMuniId={focusedMuniId} />
               </div>
             )}
             {chartView === 'pie' && (
-              <PieMatrix data={sortedResults} onMuniClick={handleMuniFocus} />
+              <LazyPieMatrix data={sortedResults} onMuniClick={handleMuniFocus} />
             )}
             {chartView === 'fiscal-capacity' && (
               <div className="max-h-[600px] overflow-y-auto">
-                <FiscalCapacityChart results={results} fmt={fmt} nationalAvgRevPC={netFiscalAggs.nationalAvgRevPC} />
+                <LazyFiscalCapacityChart results={results} fmt={fmt} nationalAvgRevPC={netFiscalAggs.nationalAvgRevPC} />
               </div>
             )}
             {chartView === 'model-accuracy' && modelAccuracy && (
-              <ModelAccuracyChart
+              <LazyModelAccuracyChart
                 modelAccuracy={modelAccuracy}
                 results={results.filter(r => r.inTrainingSet)}
                 fmt={fmt}
@@ -762,8 +824,12 @@ export default function NakedBudget() {
             )}
           </div>
         </section>
+        </React.Suspense>
+        </ErrorBoundary>
 
         {/* ═══ MUNICIPAL TABLE ═══ */}
+        <ErrorBoundary>
+        <React.Suspense fallback={<ChartFallback />}>
         <section id="section-table" className="mb-10">
           <div className="flex items-center justify-between mb-3">
             <div>
@@ -784,7 +850,7 @@ export default function NakedBudget() {
               {showAdvancedColumns ? t('toggle_basic') : t('toggle_advanced')}
             </button>
           </div>
-          <MunicipalTable
+          <LazyMunicipalTable
             sortedResults={sortedResults}
             focusedMuniId={focusedMuniId}
             setFocusedMuniId={setFocusedMuniId}
@@ -796,8 +862,11 @@ export default function NakedBudget() {
             showAdvancedColumns={showAdvancedColumns}
           />
         </section>
+        </React.Suspense>
+        </ErrorBoundary>
 
         {/* ═══ PHASE COMPARISON ═══ */}
+        <ErrorBoundary>
         <section id="section-phases" className="mb-8">
           <div className="flex items-center gap-3 mb-4">
             <span title={TRUST.derived.label} className="inline-block w-1.5 h-1.5 rounded-full flex-shrink-0" style={{ backgroundColor: TRUST.derived.color }} />
@@ -853,6 +922,7 @@ export default function NakedBudget() {
             </div>
           </div>
         </section>
+        </ErrorBoundary>
 
         {/* ═══ FOOTER ═══ */}
         <footer className="mt-16 py-8 border-t border-card text-center">
@@ -888,7 +958,7 @@ export default function NakedBudget() {
                 <line x1="10" y1="1" x2="10" y2="4" />
                 <line x1="14" y1="1" x2="14" y2="4" />
               </svg>
-              <span className="text-amber-300 group-hover:text-amber-200 transition-colors">Buy me a coffee</span>
+              <span className="text-amber-300 group-hover:text-amber-200 transition-colors">{t('buy_coffee')}</span>
             </a>
           </p>
           <p className="mt-4 font-mono text-[11px] text-muted tracking-wide">

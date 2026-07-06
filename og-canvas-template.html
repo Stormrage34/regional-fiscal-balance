@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>OG Image Template</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg-root: #0F172A;
+    --bg-card: #1E293B;
+    --gold: #F59E0B;
+    --emerald: #10B981;
+    --rose: #EF4444;
+    --text-primary: #F8FAFC;
+    --text-secondary: #94A3B8;
+    --text-muted: #475569;
+    --border-card: #334155;
+  }
+
+  body {
+    width: 1200px;
+    height: 630px;
+    overflow: hidden;
+    background: var(--bg-root);
+    font-family: 'Courier New', Courier, 'Liberation Mono', 'DejaVu Sans Mono', monospace;
+    -webkit-font-smoothing: antialiased;
+    position: relative;
+  }
+
+  /* ── Grid background ── */
+  .grid-bg {
+    position: absolute; inset: 0; z-index: 0; pointer-events: none;
+    background-image:
+      linear-gradient(rgba(51,65,85,0.15) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(51,65,85,0.15) 1px, transparent 1px);
+    background-size: 40px 40px;
+    background-position: -1px -1px;
+  }
+  .grid-bg::after {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse at 50% 0%, rgba(245,158,11,0.06) 0%, transparent 65%);
+    pointer-events: none;
+  }
+
+  /* ── Accent line ── */
+  .accent-line {
+    position: absolute; top: 0; left: 0; right: 0; height: 3px; z-index: 2;
+    background: linear-gradient(90deg, var(--gold) 0%, rgba(245,158,11,0.3) 50%, var(--gold) 100%);
+  }
+
+  /* ── Main container ── */
+  .og-root {
+    position: relative; z-index: 1;
+    width: 1200px; height: 630px;
+    display: flex; flex-direction: column;
+    padding: 48px 64px 44px;
+  }
+
+  /* ── Top bar ── */
+  .top-bar {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 28px;
+  }
+  .brand-label {
+    font-size: 13px; font-weight: 700; letter-spacing: 0.18em;
+    color: var(--text-muted); text-transform: uppercase;
+  }
+  .hex-logo {
+    width: 36px; height: 36px;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .hex-logo svg { width: 32px; height: 32px; }
+
+  /* ── Municipality name ── */
+  .muni-name {
+    font-size: 52px; font-weight: 700; line-height: 1.1;
+    color: var(--text-primary);
+    margin-bottom: 8px;
+    letter-spacing: -0.01em;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    max-width: 100%;
+  }
+
+  /* ── Per-capita balance ── */
+  .per-capita-row {
+    display: flex; align-items: baseline; gap: 14px;
+    margin-bottom: 18px;
+  }
+  .net-pc-value {
+    font-size: 56px; font-weight: 700; line-height: 1;
+    /* color set via data-status-color */;
+    letter-spacing: -0.02em;
+  }
+  .per-capita-label {
+    font-size: 15px; color: var(--text-secondary);
+    letter-spacing: 0.04em;
+  }
+
+  /* ── Status badge ── */
+  .status-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 6px 18px; border-radius: 9999px;
+    font-size: 14px; font-weight: 700; letter-spacing: 0.10em;
+    margin-bottom: 24px;
+    border: 1px solid;
+    width: fit-content;
+  }
+  .status-badge .dot {
+    width: 8px; height: 8px; border-radius: 50%;
+  }
+
+  /* ── Divider ── */
+  .divider {
+    height: 1px;
+    background: linear-gradient(90deg, transparent 0%, var(--border-card) 20%, var(--border-card) 80%, transparent 100%);
+    margin-bottom: 22px; margin-top: auto;
+  }
+
+  /* ── Bottom row ── */
+  .bottom-row {
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .stat-box {
+    display: flex; flex-direction: column; gap: 4px;
+  }
+  .stat-label {
+    font-size: 12px; font-weight: 600; letter-spacing: 0.12em;
+    color: var(--text-muted); text-transform: uppercase;
+  }
+  .stat-value {
+    font-size: 22px; font-weight: 700; color: var(--text-primary);
+  }
+  .stat-value.gold { color: var(--gold); }
+
+  /* ── Footer ── */
+  .source-line {
+    font-size: 11px; color: var(--text-muted); margin-top: 16px;
+    letter-spacing: 0.04em;
+  }
+</style>
+</head>
+<body>
+  <div class="grid-bg"></div>
+  <div class="accent-line"></div>
+
+  <div id="og-root" class="og-root">
+
+    <!-- Top bar -->
+    <div class="top-bar">
+      <span class="brand-label">Open Fiscal Ledger</span>
+      <div class="hex-logo">
+        <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <!-- Hexagon -->
+          <polygon points="20,3 37,13 37,27 20,37 3,27 3,13"
+                   fill="none" stroke="#F59E0B" stroke-width="1.8"
+                   stroke-linejoin="round" />
+          <!-- Inner bars (fiscal chart) -->
+          <rect x="10" y="16" width="5" height="12" rx="1" fill="#10B981" opacity="0.9" />
+          <rect x="17" y="20" width="5" height="16" rx="1" fill="#EF4444" opacity="0.9" />
+          <rect x="24" y="8"  width="5" height="20" rx="1" fill="#F59E0B" opacity="0.9" />
+        </svg>
+      </div>
+    </div>
+
+    <!-- Municipality name -->
+    <div class="muni-name" id="muni-name">Општина Штип</div>
+
+    <!-- Per-capita balance -->
+    <div class="per-capita-row">
+      <span class="net-pc-value" id="net-pc-value" style="color: var(--emerald)">+€1,247</span>
+      <span class="per-capita-label">net fiscal balance / per capita</span>
+    </div>
+
+    <!-- Status badge -->
+    <div class="status-badge" id="status-badge" style="color: var(--emerald); border-color: var(--emerald); background: rgba(16,185,129,0.1);">
+      <span class="dot" style="background: var(--emerald);"></span>
+      SURPLUS
+    </div>
+
+    <!-- Divider -->
+    <div class="divider"></div>
+
+    <!-- Bottom stats -->
+    <div class="bottom-row">
+      <div class="stat-box">
+        <span class="stat-label">Total Regional Drain</span>
+        <span class="stat-value gold" id="total-drain">€38M</span>
+      </div>
+      <div class="stat-box" style="text-align:right;">
+        <span class="stat-label">National Rank</span>
+        <span class="stat-value" id="rank">#3 of 77</span>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="source-line">Sources: Ministry of Finance Treasury 2025 · SSO Census 2021 · AVRM Employment Registry</div>
+
+  </div>
+</body>
+</html>

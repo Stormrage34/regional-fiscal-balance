@@ -923,8 +923,8 @@ export default function NakedBudget() {
             aria-labelledby="panel-title"
             tabIndex={-1}
             onKeyDown={(e) => { if (e.key === 'Escape') closePanel(); }}
-            className="fixed top-0 right-0 h-screen w-[420px] max-w-[90vw] bg-[#243047]/98 backdrop-blur-2xl border-l border-slate-800/60 z-50 transition-transform duration-500 ease-in-out overflow-y-auto"
-            style={{ boxShadow: '-8px 0 32px rgba(0,0,0,0.5)' }}
+            className="fixed top-0 right-0 h-dvh w-[420px] max-w-[90vw] bg-[#243047]/98 backdrop-blur-2xl border-l border-slate-800/60 z-50 transition-transform duration-500 ease-in-out overflow-y-auto"
+            style={{ boxShadow: '-8px 0 32px rgba(0,0,0,0.5)', height: '100dvh' }}
           >
             <button
               type="button"
@@ -938,7 +938,7 @@ export default function NakedBudget() {
               </svg>
             </button>
 
-            <div className="p-6 pt-12 space-y-6">
+            <div className="p-6 pt-12 space-y-6" style={{ paddingBottom: 'calc(1.5rem + env(safe-area-inset-bottom, 0px))' }}>
               <div className="mb-6">
                 <h3 id="panel-title" className="text-xl font-bold font-mono text-white tracking-tight">
                   {getMuniName(focusedMuni, locale)}

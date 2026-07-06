@@ -17,8 +17,8 @@ export default function Sidebar({
         <div className="fixed inset-0 bg-black/40 z-30 md:hidden" onClick={() => setSidebarOpen(false)} />
       )}
       <aside
-        className={`fixed md:relative z-40 h-screen md:h-auto w-72 md:w-64 shrink-0 border-r border-slate-800/70 bg-[var(--color-surface-card)] flex flex-col transition-transform duration-300 ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'} md:translate-x-0`}
-        style={{ overscrollBehavior: 'contain', touchAction: 'pan-y' }}
+        className={`fixed md:relative z-40 h-dvh md:h-auto w-72 md:w-64 shrink-0 border-r border-slate-800/70 bg-[var(--color-surface-card)] flex flex-col transition-transform duration-300 ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'} md:translate-x-0`}
+        style={{ overscrollBehavior: 'contain', touchAction: 'pan-y', height: '100dvh' }}
       >
         {/* Brand Section */}
         <div className="flex flex-col gap-1 p-4 pt-5 pb-5 border-b relative overflow-hidden" style={{ borderColor: '#334155' }}>
@@ -36,7 +36,7 @@ export default function Sidebar({
           </span>
         </div>
 
-        <div className="p-4 flex-1 space-y-6 overflow-y-auto overflow-x-hidden" style={{ overscrollBehavior: 'contain', touchAction: 'pan-y' }}>
+        <div className="p-4 flex-1 space-y-6 overflow-y-auto overflow-x-hidden" style={{ overscrollBehavior: 'contain', touchAction: 'pan-y', paddingBottom: 'calc(1rem + env(safe-area-inset-bottom, 0px))' }}>
           <div className="h-[1px] bg-gradient-to-r from-transparent via-slate-700/50 to-transparent" />
 
           <h3 className="text-[10px] font-mono uppercase tracking-widest" style={{ color: '#94a3b8' }}>

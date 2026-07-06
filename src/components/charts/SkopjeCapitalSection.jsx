@@ -18,22 +18,13 @@ export default function SkopjeCapitalSection({ aggregates = {} }) {
   const skopjeNetPC = aggregates.skopjeNetPC || 0;
   const subtitle = t('capital_section_subtitle').replace('{n}', SKOPIE_BORROUGHS.length);
   
-  // Build borough list from all SKOPIE_BORROUGHS, filling missing property tax with "no data"
-  const boroughs = SKOPIE_BORROUGHS.map(id => {
-    const taxData = SKOPIE_PROPERTY_TAX[id];
-    const muni = MUNICIPALITIES.find(m => m.id === id) || { id, name: id, name_mk: id, name_sq: id };
-    return {
-      id, muni,
-      collectionRate: taxData?.collectionRate ?? null,
-      annualRevenueK: taxData?.annualRevenueK ?? 0,
-    };
-  }).sort((a, b) => {
-    // Null collection rates sort last
-    if (a.collectionRate === null && b.collectionRate === null) return 0;
-    if (a.collectionRate === null) return 1;
-    if (b.collectionRate === null) return -1;
-    return b.collectionRate - a.collectionRate;
-  });
+  // Build borough list from SKOPIE_PROPERTY_TAX (only entries with data)
+  const boroughs = Object.entries(SKOPIE_PROPERTY_TAX)
+    .map(([id, data]) => ({ 
+      id, ...data, 
+      muni: MUNICIPALITIES.find(m => m.id === id) || { id, name: id, name_mk: id, name_sq: id }
+    }))
+    .sort((a, b) => b.collectionRate - a.collectionRate);
 
   const maxRevenue = Math.max(...boroughs.map(b => b.annualRevenueK));
 
@@ -131,42 +122,32 @@ export default function SkopjeCapitalSection({ aggregates = {} }) {
 
               {/* Collection rate bar */}
               <div className="flex-1 h-4 rounded-sm bg-slate-800 overflow-hidden relative">
-                {b.collectionRate !== null ? (
-                  <>
-                    <div 
-                      className="h-full rounded-sm transition-all duration-300"
-                      style={{ 
-                        width: `${b.collectionRate * 100}%`,
-                        backgroundColor: b.collectionRate >= 0.90 ? '#10B981' : 
-                                        b.collectionRate >= 0.80 ? '#F59E0B' : '#EF4444',
-                      }}
-                    />
-                    <span className="absolute right-1 top-1/2 -translate-y-1/2 text-[9px] font-bold font-mono text-white drop-shadow-[0_1px_2px_rgba(0,0,0,0.8)]">
-                      {(b.collectionRate * 100).toFixed(0)}%
-                    </span>
-                  </>
-                ) : (
-                  <span className="absolute inset-0 flex items-center justify-center text-[9px] font-mono text-slate-600">
-                    —
-                  </span>
-                )}
+                <div 
+                  className="h-full rounded-sm transition-all duration-300"
+                  style={{ 
+                    width: `${b.collectionRate * 100}%`,
+                    backgroundColor: b.collectionRate >= 0.90 ? '#10B981' : 
+                                    b.collectionRate >= 0.80 ? '#F59E0B' : '#EF4444',
+                  }}
+                />
+                <span className="absolute right-1 top-1/2 -translate-y-1/2 text-[9px] font-bold font-mono text-white drop-shadow-[0_1px_2px_rgba(0,0,0,0.8)]">
+                  {(b.collectionRate * 100).toFixed(0)}%
+                </span>
               </div>
 
               {/* Annual revenue */}
               <div className="w-12 md:w-16 text-right flex-shrink-0">
-                <span className="text-[11px] font-mono tabular-nums" style={{ color: b.annualRevenueK > 0 ? '#94a3b8' : '#475569' }}>
-                  {b.annualRevenueK > 0 ? `€${(b.annualRevenueK / 1000).toFixed(1)}M` : '—'}
+                <span className="text-[11px] font-mono tabular-nums" style={{ color: '#94a3b8' }}>
+                  €{(b.annualRevenueK / 1000).toFixed(1)}M
                 </span>
               </div>
 
               {/* Revenue bar (normalized) */}
               <div className="w-12 md:w-16 h-4 rounded-sm bg-slate-800 overflow-hidden flex-shrink-0">
-                {b.annualRevenueK > 0 ? (
-                  <div 
-                    className="h-full rounded-sm bg-amber-500/60"
-                    style={{ width: `${(b.annualRevenueK / maxRevenue) * 100}%` }}
-                  />
-                ) : null}
+                <div 
+                  className="h-full rounded-sm bg-amber-500/60"
+                  style={{ width: `${(b.annualRevenueK / maxRevenue) * 100}%` }}
+                />
               </div>
             </div>
           ))}

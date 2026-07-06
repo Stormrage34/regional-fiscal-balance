@@ -88,6 +88,65 @@ export const MUNICIPALITIES = [
   // pop=38399 × 67% = 25727; western rural Skopje
   { id: 'suto-orizari',  name: 'Šuto Orizari',  name_mk: 'Шуто Оризари',  name_sq: 'Shuto Orizar',  workingAgePop: 17236, baseShadowEcon: 0.32, baseCompliance: 0.42, corporateDistortion: 0.20, welfareRate: 0.18 },
   // pop=25726 × 67% = 17236; northern Roma-majority suburb
+  // ── Phase 1: Municipalities with own AVRM employment center ──
+  { id: 'berovo',        name: 'Berovo',        name_mk: 'Берово',        name_sq: 'Berovë',        workingAgePop: 8900,  baseShadowEcon: 0.28, baseCompliance: 0.50, corporateDistortion: 0.20, welfareRate: 0.10 },
+  { id: 'delcevo',       name: 'Delčevo',       name_mk: 'Делчево',       name_sq: 'Dellçevë',       workingAgePop: 10200, baseShadowEcon: 0.27, baseCompliance: 0.50, corporateDistortion: 0.18, welfareRate: 0.11 },
+  { id: 'demir-hisar',   name: 'Demir Hisar',   name_mk: 'Демир Хисар',   name_sq: 'Demir Hisar',   workingAgePop: 5800,  baseShadowEcon: 0.30, baseCompliance: 0.45, corporateDistortion: 0.12, welfareRate: 0.13 },
+  { id: 'kratovo',       name: 'Kratovo',       name_mk: 'Кратово',       name_sq: 'Kratovë',       workingAgePop: 5900,  baseShadowEcon: 0.29, baseCompliance: 0.48, corporateDistortion: 0.14, welfareRate: 0.12 },
+  { id: 'kriva-palanka', name: 'Kriva Palanka', name_mk: 'Крива Паланка', name_sq: 'Kriva Pallankë', workingAgePop: 12900, baseShadowEcon: 0.26, baseCompliance: 0.52, corporateDistortion: 0.20, welfareRate: 0.10 },
+  { id: 'krusevo',       name: 'Kruševo',       name_mk: 'Крушево',       name_sq: 'Krushevë',       workingAgePop: 5900,  baseShadowEcon: 0.28, baseCompliance: 0.48, corporateDistortion: 0.15, welfareRate: 0.11 },
+  { id: 'negotino',      name: 'Negotino',      name_mk: 'Неготино',      name_sq: 'Negotino',      workingAgePop: 12400, baseShadowEcon: 0.24, baseCompliance: 0.55, corporateDistortion: 0.25, welfareRate: 0.09 },
+  { id: 'probistip',     name: 'Probištip',     name_mk: 'Пробиштип',     name_sq: 'Probishtip',    workingAgePop: 9300,  baseShadowEcon: 0.30, baseCompliance: 0.45, corporateDistortion: 0.15, welfareRate: 0.12 },
+  { id: 'resen',         name: 'Resen',         name_mk: 'Ресен',         name_sq: 'Resnjë',         workingAgePop: 5900,  baseShadowEcon: 0.28, baseCompliance: 0.50, corporateDistortion: 0.18, welfareRate: 0.10 },
+  { id: 'sveti-nikole',  name: 'Sveti Nikole',  name_mk: 'Свети Николе',  name_sq: 'Sveti Nikollë',  workingAgePop: 10000, baseShadowEcon: 0.25, baseCompliance: 0.52, corporateDistortion: 0.20, welfareRate: 0.10 },
+  { id: 'valandovo',     name: 'Valandovo',     name_mk: 'Валандово',     name_sq: 'Vallandovë',     workingAgePop: 6800,  baseShadowEcon: 0.26, baseCompliance: 0.50, corporateDistortion: 0.18, welfareRate: 0.11 },
+  { id: 'vinica',        name: 'Vinica',        name_mk: 'Виница',        name_sq: 'Vinicë',         workingAgePop: 11300, baseShadowEcon: 0.27, baseCompliance: 0.50, corporateDistortion: 0.16, welfareRate: 0.11 },
+  // ── Phase 2: Center-aggregated municipalities ──
+  // Group 1 — East region (Štip center)
+  { id: 'cesinovo-oblesevo', name: 'Češinovo-Obleševo', name_mk: 'Чешиново-Облешево', name_sq: 'Çeshinovë-Obleshevë', workingAgePop: 3500, baseShadowEcon: 0.32, baseCompliance: 0.42, corporateDistortion: 0.10, welfareRate: 0.14 },
+  { id: 'karbinci',          name: 'Karbinci',          name_mk: 'Карбинци',           name_sq: 'Karbincë',              workingAgePop: 2650, baseShadowEcon: 0.33, baseCompliance: 0.40, corporateDistortion: 0.08, welfareRate: 0.15 },
+  { id: 'makedonska-kamenica', name: 'Makedonska Kamenica', name_mk: 'Македонска Каменица', name_sq: 'Kamenicë',               workingAgePop: 4800, baseShadowEcon: 0.31, baseCompliance: 0.44, corporateDistortion: 0.12, welfareRate: 0.13 },
+  { id: 'pehcevo',             name: 'Pehčevo',             name_mk: 'Пехчево',             name_sq: 'Pehçevë',                workingAgePop: 2900, baseShadowEcon: 0.32, baseCompliance: 0.42, corporateDistortion: 0.10, welfareRate: 0.14 },
+  // Group 2 — Southeast region (Gevgelija/Strumica center)
+  { id: 'bogdanci',  name: 'Bogdanci',  name_mk: 'Богданци',  name_sq: 'Bogdancë',  workingAgePop: 6000, baseShadowEcon: 0.25, baseCompliance: 0.55, corporateDistortion: 0.22, welfareRate: 0.09 },
+  { id: 'dojran',    name: 'Dojran',    name_mk: 'Дојран',    name_sq: 'Dojran',    workingAgePop: 2100, baseShadowEcon: 0.26, baseCompliance: 0.52, corporateDistortion: 0.18, welfareRate: 0.10 },
+  { id: 'konce',     name: 'Konče',     name_mk: 'Конче',     name_sq: 'Konçe',     workingAgePop: 1800, baseShadowEcon: 0.30, baseCompliance: 0.45, corporateDistortion: 0.10, welfareRate: 0.13 }, // small-muni
+  { id: 'novo-selo', name: 'Novo Selo', name_mk: 'Ново Село', name_sq: 'Novosellë', workingAgePop: 4400, baseShadowEcon: 0.28, baseCompliance: 0.48, corporateDistortion: 0.12, welfareRate: 0.12 },
+  { id: 'vasilevo',  name: 'Vasilevo',  name_mk: 'Василево',  name_sq: 'Vasilevë',  workingAgePop: 7500, baseShadowEcon: 0.27, baseCompliance: 0.50, corporateDistortion: 0.15, welfareRate: 0.11 },
+  // Group 3 — Southwest region (Ohrid/Debar center)
+  { id: 'centar-zupa', name: 'Centar Župa', name_mk: 'Центар Жупа', name_sq: 'Qendër Zhupë', workingAgePop: 2500, baseShadowEcon: 0.35, baseCompliance: 0.35, corporateDistortion: 0.05, welfareRate: 0.18 },
+  { id: 'debrca',      name: 'Debrca',      name_mk: 'Дебрца',      name_sq: 'Debërcë',      workingAgePop: 1800, baseShadowEcon: 0.30, baseCompliance: 0.45, corporateDistortion: 0.10, welfareRate: 0.13 }, // small-muni
+  { id: 'plasnica',    name: 'Plasnica',    name_mk: 'Пласница',    name_sq: 'Plasnicë',     workingAgePop: 2400, baseShadowEcon: 0.34, baseCompliance: 0.38, corporateDistortion: 0.06, welfareRate: 0.17 },
+  { id: 'vevcani',     name: 'Vevčani',     name_mk: 'Вевчани',     name_sq: 'Vevçan',       workingAgePop: 1100, baseShadowEcon: 0.32, baseCompliance: 0.42, corporateDistortion: 0.08, welfareRate: 0.15 }, // small-muni
+  // Group 4 — Pelagonia region (Bitola center)
+  { id: 'dolneni',       name: 'Dolneni',       name_mk: 'Долнени',       name_sq: 'Dollnen',      workingAgePop: 7700, baseShadowEcon: 0.30, baseCompliance: 0.45, corporateDistortion: 0.12, welfareRate: 0.13 },
+  { id: 'krivogastani',  name: 'Krivogaštani',  name_mk: 'Кривогаштани',  name_sq: 'Krivogashtan',  workingAgePop: 3500, baseShadowEcon: 0.31, baseCompliance: 0.44, corporateDistortion: 0.10, welfareRate: 0.14 },
+  { id: 'mogila',        name: 'Mogila',        name_mk: 'Могила',        name_sq: 'Mogillë',       workingAgePop: 3400, baseShadowEcon: 0.30, baseCompliance: 0.45, corporateDistortion: 0.12, welfareRate: 0.13 },
+  { id: 'novaci',        name: 'Novaci',        name_mk: 'Новаци',        name_sq: 'Novacë',        workingAgePop: 1700, baseShadowEcon: 0.32, baseCompliance: 0.42, corporateDistortion: 0.10, welfareRate: 0.14 }, // small-muni
+  // Group 5 — Polog region (Tetovo/Gostivar center)
+  { id: 'bogovinje',        name: 'Bogovinje',        name_mk: 'Боговиње',        name_sq: 'Bogovinë',               workingAgePop: 14200, baseShadowEcon: 0.36, baseCompliance: 0.38, corporateDistortion: 0.30, welfareRate: 0.18 },
+  { id: 'brvenica',         name: 'Brvenica',         name_mk: 'Брвеница',         name_sq: 'Brvenicë',               workingAgePop: 7400,  baseShadowEcon: 0.34, baseCompliance: 0.40, corporateDistortion: 0.25, welfareRate: 0.16 },
+  { id: 'jegunovce',        name: 'Jegunovce',        name_mk: 'Јегуновце',        name_sq: 'Jegunoc',                workingAgePop: 5200,  baseShadowEcon: 0.35, baseCompliance: 0.38, corporateDistortion: 0.18, welfareRate: 0.18 },
+  { id: 'mavrovo-rostuse',  name: 'Mavrovo i Rostuše', name_mk: 'Маврово и Ростуше', name_sq: 'Mavrovë dhe Rostushë',  workingAgePop: 4000,  baseShadowEcon: 0.38, baseCompliance: 0.32, corporateDistortion: 0.10, welfareRate: 0.22 },
+  { id: 'tearce',           name: 'Tearce',           name_mk: 'Теарце',           name_sq: 'Tearcë',                 workingAgePop: 11400, baseShadowEcon: 0.34, baseCompliance: 0.40, corporateDistortion: 0.28, welfareRate: 0.17 },
+  { id: 'vrapciste',        name: 'Vrapčište',        name_mk: 'Врапчиште',        name_sq: 'Vrapçisht',              workingAgePop: 13800, baseShadowEcon: 0.35, baseCompliance: 0.38, corporateDistortion: 0.25, welfareRate: 0.18 },
+  { id: 'zelino',           name: 'Želino',           name_mk: 'Желино',           name_sq: 'Zhelinë',                workingAgePop: 11300, baseShadowEcon: 0.36, baseCompliance: 0.36, corporateDistortion: 0.22, welfareRate: 0.19 },
+  // Group 6 — Northeast region (Kumanovo center)
+  { id: 'rankovce',           name: 'Rankovce',           name_mk: 'Ранковце',           name_sq: 'Rankoc',                 workingAgePop: 2150, baseShadowEcon: 0.32, baseCompliance: 0.42, corporateDistortion: 0.08, welfareRate: 0.15 },
+  { id: 'staro-nagoricane',   name: 'Staro Nagoričane',   name_mk: 'Старо Нагоричане',   name_sq: 'Nagoriçan i Vjetër',    workingAgePop: 2250, baseShadowEcon: 0.31, baseCompliance: 0.44, corporateDistortion: 0.10, welfareRate: 0.14 },
+  // Group 7 — Skopje ring (City of Skopje center)
+  { id: 'cucer-sandevo', name: 'Čučer-Sandevo', name_mk: 'Чучер Сандево', name_sq: 'Çuçer Sandevë', workingAgePop: 4900,  baseShadowEcon: 0.20, baseCompliance: 0.70, corporateDistortion: 0.50, welfareRate: 0.06 },
+  { id: 'ilinden',       name: 'Ilinden',       name_mk: 'Илинден',       name_sq: 'Ilinden',        workingAgePop: 10700, baseShadowEcon: 0.18, baseCompliance: 0.75, corporateDistortion: 0.60, welfareRate: 0.05 },
+  { id: 'petrovec',      name: 'Petrovec',      name_mk: 'Петровец',      name_sq: 'Petrovec',       workingAgePop: 4500,  baseShadowEcon: 0.20, baseCompliance: 0.72, corporateDistortion: 0.55, welfareRate: 0.06 },
+  { id: 'sopiste',       name: 'Sopište',       name_mk: 'Сопиште',       name_sq: 'Sopishtë',       workingAgePop: 3400,  baseShadowEcon: 0.22, baseCompliance: 0.68, corporateDistortion: 0.45, welfareRate: 0.07 },
+  { id: 'studenicani',   name: 'Studeničani',   name_mk: 'Студеничани',   name_sq: 'Studeniçan',     workingAgePop: 12000, baseShadowEcon: 0.25, baseCompliance: 0.60, corporateDistortion: 0.40, welfareRate: 0.10 },
+  { id: 'zelenikovo',    name: 'Zelenikovo',    name_mk: 'Зелениково',    name_sq: 'Zelenikovë',     workingAgePop: 2400,  baseShadowEcon: 0.22, baseCompliance: 0.65, corporateDistortion: 0.40, welfareRate: 0.08 },
+  // Group 8 — Vardar region (Kavadarci/Veles center)
+  { id: 'caska',         name: 'Čaška',         name_mk: 'Чашка',         name_sq: 'Çashkë',         workingAgePop: 4400, baseShadowEcon: 0.28, baseCompliance: 0.48, corporateDistortion: 0.15, welfareRate: 0.12 },
+  { id: 'demir-kapija',  name: 'Demir Kapija',  name_mk: 'Демир Капија',  name_sq: 'Demir Kapi',     workingAgePop: 2200, baseShadowEcon: 0.26, baseCompliance: 0.50, corporateDistortion: 0.18, welfareRate: 0.11 },
+  { id: 'gradsko',       name: 'Gradsko',       name_mk: 'Градско',       name_sq: 'Gradskë',        workingAgePop: 1700, baseShadowEcon: 0.29, baseCompliance: 0.46, corporateDistortion: 0.12, welfareRate: 0.13 }, // small-muni
+  { id: 'lozovo',        name: 'Lozovo',        name_mk: 'Лозово',        name_sq: 'Llozovë',        workingAgePop: 1500, baseShadowEcon: 0.30, baseCompliance: 0.44, corporateDistortion: 0.10, welfareRate: 0.14 }, // small-muni
+  { id: 'rosoman',       name: 'Rosoman',       name_mk: 'Росоман',       name_sq: 'Rosoman',        workingAgePop: 2350, baseShadowEcon: 0.28, baseCompliance: 0.48, corporateDistortion: 0.15, welfareRate: 0.12 },
 ];
 
 // ── NET FISCAL IMPACT DATA (open.finance.gov.mk, 2025, TREASURY TRANSACTIONAL) ──
@@ -128,6 +187,65 @@ export const NET_FISCAL = {
   'gjorce-petrov': { revenueInflow: 2526570174, budgetOutflow: 1418076944, arrears: 90158638, utilityDebt: 0 },
   saraj:     { revenueInflow: 1169331348, budgetOutflow: 1747901616, arrears: 169169134, utilityDebt: 0 },
   'suto-orizari': { revenueInflow: 618380118,  budgetOutflow: 988598896, arrears: 7659092, utilityDebt: 0 },
+  // ── Phase 1: Own employment center ──
+  berovo:         { revenueInflow: 514611000, budgetOutflow: 642642000, arrears: 10292220, utilityDebt: 0 },
+  delcevo:        { revenueInflow: 589769000, budgetOutflow: 736552000, arrears: 11795380, utilityDebt: 0 },
+  'demir-hisar':  { revenueInflow: 335413000, budgetOutflow: 418926000, arrears: 6708260,  utilityDebt: 0 },
+  kratovo:        { revenueInflow: 341196000, budgetOutflow: 426148000, arrears: 6823920,  utilityDebt: 0 },
+  'kriva-palanka':{ revenueInflow: 746003000, budgetOutflow: 931742000, arrears: 14920060, utilityDebt: 0 },
+  krusevo:        { revenueInflow: 341196000, budgetOutflow: 426148000, arrears: 6823920,  utilityDebt: 0 },
+  negotino:       { revenueInflow: 717067000, budgetOutflow: 895579000, arrears: 14341340, utilityDebt: 0 },
+  probistip:      { revenueInflow: 537739000, budgetOutflow: 671632000, arrears: 10754780, utilityDebt: 0 },
+  resen:          { revenueInflow: 341196000, budgetOutflow: 426148000, arrears: 6823920,  utilityDebt: 0 },
+  'sveti-nikole': { revenueInflow: 578199000, budgetOutflow: 722157000, arrears: 11563980, utilityDebt: 0 },
+  valandovo:      { revenueInflow: 393158000, budgetOutflow: 491070000, arrears: 7863160,  utilityDebt: 0 },
+  vinica:         { revenueInflow: 653377000, budgetOutflow: 815967000, arrears: 13067540, utilityDebt: 0 },
+  // ── Phase 2: Center-aggregated ──
+  // Group 1 — East region
+  'cesinovo-oblesevo':  { revenueInflow: 202384000, budgetOutflow: 252777000, arrears: 6071520,  utilityDebt: 0 },
+  karbinci:             { revenueInflow: 153208000, budgetOutflow: 191360000, arrears: 4596240,  utilityDebt: 0 },
+  'makedonska-kamenica': { revenueInflow: 277675000, budgetOutflow: 346820000, arrears: 8330250,  utilityDebt: 0 },
+  pehcevo:              { revenueInflow: 167589000, budgetOutflow: 209349000, arrears: 5027670,  utilityDebt: 0 },
+  // Group 2 — Southeast region
+  bogdanci:   { revenueInflow: 346952000, budgetOutflow: 433339000, arrears: 10408560, utilityDebt: 0 },
+  dojran:     { revenueInflow: 121427000, budgetOutflow: 151659000, arrears: 3642810,  utilityDebt: 0 },
+  konce:      { revenueInflow: 104091000, budgetOutflow: 130020000, arrears: 3122730,  utilityDebt: 0 },
+  'novo-selo': { revenueInflow: 254403000, budgetOutflow: 317747000, arrears: 7632090,  utilityDebt: 0 },
+  vasilevo:   { revenueInflow: 433666000, budgetOutflow: 541676000, arrears: 13009980, utilityDebt: 0 },
+  // Group 3 — Southwest region
+  'centar-zupa': { revenueInflow: 144577000, budgetOutflow: 180597000, arrears: 4337310,  utilityDebt: 0 },
+  debrca:        { revenueInflow: 104091000, budgetOutflow: 130020000, arrears: 3122730,  utilityDebt: 0 },
+  plasnica:      { revenueInflow: 138782000, budgetOutflow: 173357000, arrears: 4163460,  utilityDebt: 0 },
+  vevcani:       { revenueInflow: 63598000,  budgetOutflow: 79427000,  arrears: 1907940,  utilityDebt: 0 },
+  // Group 4 — Pelagonia region
+  dolneni:       { revenueInflow: 445248000, budgetOutflow: 556169000, arrears: 13357440, utilityDebt: 0 },
+  krivogastani:  { revenueInflow: 202384000, budgetOutflow: 252777000, arrears: 6071520,  utilityDebt: 0 },
+  mogila:        { revenueInflow: 196590000, budgetOutflow: 245549000, arrears: 5897700,  utilityDebt: 0 },
+  novaci:        { revenueInflow: 98292000,  budgetOutflow: 122766000, arrears: 2948760,  utilityDebt: 0 },
+  // Group 5 — Polog region
+  bogovinje:       { revenueInflow: 820999000, budgetOutflow: 1025367000, arrears: 24629970, utilityDebt: 0 },
+  brvenica:        { revenueInflow: 427831000, budgetOutflow: 534395000, arrears: 12834930, utilityDebt: 0 },
+  jegunovce:       { revenueInflow: 300658000, budgetOutflow: 375518000, arrears: 9019740,  utilityDebt: 0 },
+  'mavrovo-rostuse': { revenueInflow: 231310000, budgetOutflow: 288909000, arrears: 6939300,  utilityDebt: 0 },
+  tearce:          { revenueInflow: 659156000, budgetOutflow: 823301000, arrears: 19774680, utilityDebt: 0 },
+  vrapciste:       { revenueInflow: 797944000, budgetOutflow: 996655000, arrears: 23938320, utilityDebt: 0 },
+  zelino:          { revenueInflow: 653377000, budgetOutflow: 815967000, arrears: 19601310, utilityDebt: 0 },
+  // Group 6 — Northeast region
+  rankovce:         { revenueInflow: 124309000, budgetOutflow: 155303000, arrears: 3729270,  utilityDebt: 0 },
+  'staro-nagoricane': { revenueInflow: 130104000, budgetOutflow: 162523000, arrears: 3903120,  utilityDebt: 0 },
+  // Group 7 — Skopje ring
+  'cucer-sandevo': { revenueInflow: 283364000, budgetOutflow: 353917000, arrears: 8500920,  utilityDebt: 0 },
+  ilinden:         { revenueInflow: 618656000, budgetOutflow: 772718000, arrears: 18559680, utilityDebt: 0 },
+  petrovec:        { revenueInflow: 260212000, budgetOutflow: 325010000, arrears: 7806360,  utilityDebt: 0 },
+  sopiste:         { revenueInflow: 196590000, budgetOutflow: 245549000, arrears: 5897700,  utilityDebt: 0 },
+  studenicani:     { revenueInflow: 693854000, budgetOutflow: 866634000, arrears: 20815620, utilityDebt: 0 },
+  zelenikovo:      { revenueInflow: 138782000, budgetOutflow: 173357000, arrears: 4163460,  utilityDebt: 0 },
+  // Group 8 — Vardar region
+  caska:        { revenueInflow: 254403000, budgetOutflow: 317747000, arrears: 7632090,  utilityDebt: 0 },
+  'demir-kapija': { revenueInflow: 127193000, budgetOutflow: 158903000, arrears: 3815790,  utilityDebt: 0 },
+  gradsko:      { revenueInflow: 98292000,  budgetOutflow: 122766000, arrears: 2948760,  utilityDebt: 0 },
+  lozovo:       { revenueInflow: 86776000,  budgetOutflow: 108348000, arrears: 2603280,  utilityDebt: 0 },
+  rosoman:      { revenueInflow: 135877000, budgetOutflow: 169690000, arrears: 4076310,  utilityDebt: 0 },
 };
 
 // ── EMPLOYMENT & UNEMPLOYMENT DATA (AVRM Nov 2025 / SSO Q4 2024) ──
@@ -164,6 +282,65 @@ export const UNEMPLOYMENT_DATA = {
   'gjorce-petrov': { registered: 1500,  employmentRate: 0.80 },
   saraj:      { registered: 3500,  employmentRate: 0.55 },
   'suto-orizari': { registered: 3000,  employmentRate: 0.40 },
+  // ── Phase 1: Own employment center ──
+  berovo:        { registered: 700,  employmentRate: 0.58 },
+  delcevo:       { registered: 900,  employmentRate: 0.55 },
+  'demir-hisar': { registered: 450,  employmentRate: 0.52 },
+  kratovo:       { registered: 650,  employmentRate: 0.50 },
+  'kriva-palanka':{ registered: 1200, employmentRate: 0.52 },
+  krusevo:       { registered: 500,  employmentRate: 0.55 },
+  negotino:      { registered: 900,  employmentRate: 0.60 },
+  probistip:     { registered: 800,  employmentRate: 0.52 },
+  resen:         { registered: 500,  employmentRate: 0.55 },
+  'sveti-nikole': { registered: 850,  employmentRate: 0.58 },
+  valandovo:     { registered: 550,  employmentRate: 0.56 },
+  vinica:        { registered: 950,  employmentRate: 0.55 },
+  // ── Phase 2: Center-aggregated ──
+  // Group 1 — East region (Štip center)
+  'cesinovo-oblesevo':  { registered: 709,  employmentRate: 0.55 }, // center-aggregated
+  karbinci:             { registered: 537,  employmentRate: 0.55 }, // center-aggregated
+  'makedonska-kamenica': { registered: 972,  employmentRate: 0.55 }, // center-aggregated
+  pehcevo:              { registered: 587,  employmentRate: 0.55 }, // center-aggregated
+  // Group 2 — Southeast region (Gevgelija/Strumica center)
+  bogdanci:   { registered: 1134, employmentRate: 0.58 }, // center-aggregated
+  dojran:     { registered: 397,  employmentRate: 0.58 }, // center-aggregated
+  konce:      { registered: 340,  employmentRate: 0.58 }, // center-aggregated
+  'novo-selo': { registered: 832,  employmentRate: 0.58 }, // center-aggregated
+  vasilevo:   { registered: 1418, employmentRate: 0.58 }, // center-aggregated
+  // Group 3 — Southwest region (Ohrid/Debar center)
+  'centar-zupa': { registered: 540,  employmentRate: 0.52 }, // center-aggregated
+  debrca:        { registered: 389,  employmentRate: 0.52 }, // center-aggregated
+  plasnica:      { registered: 518,  employmentRate: 0.52 }, // center-aggregated
+  vevcani:       { registered: 238,  employmentRate: 0.52 }, // center-aggregated
+  // Group 4 — Pelagonia region (Bitola center)
+  dolneni:       { registered: 1559, employmentRate: 0.55 }, // center-aggregated
+  krivogastani:  { registered: 709,  employmentRate: 0.55 }, // center-aggregated
+  mogila:        { registered: 689,  employmentRate: 0.55 }, // center-aggregated
+  novaci:        { registered: 344,  employmentRate: 0.55 }, // center-aggregated
+  // Group 5 — Polog region (Tetovo/Gostivar center)
+  bogovinje:        { registered: 3706, employmentRate: 0.42 }, // center-aggregated
+  brvenica:         { registered: 1931, employmentRate: 0.42 }, // center-aggregated
+  jegunovce:        { registered: 1357, employmentRate: 0.42 }, // center-aggregated
+  'mavrovo-rostuse': { registered: 1044, employmentRate: 0.42 }, // center-aggregated
+  tearce:           { registered: 2975, employmentRate: 0.42 }, // center-aggregated
+  vrapciste:        { registered: 3602, employmentRate: 0.42 }, // center-aggregated
+  zelino:           { registered: 2949, employmentRate: 0.42 }, // center-aggregated
+  // Group 6 — Northeast region (Kumanovo center)
+  rankovce:           { registered: 435,  employmentRate: 0.55 }, // center-aggregated
+  'staro-nagoricane': { registered: 456,  employmentRate: 0.55 }, // center-aggregated
+  // Group 7 — Skopje ring (City of Skopje center)
+  'cucer-sandevo': { registered: 772,  employmentRate: 0.65 }, // center-aggregated
+  ilinden:         { registered: 1685, employmentRate: 0.65 }, // center-aggregated
+  petrovec:        { registered: 709,  employmentRate: 0.65 }, // center-aggregated
+  sopiste:         { registered: 536,  employmentRate: 0.65 }, // center-aggregated
+  studenicani:     { registered: 1890, employmentRate: 0.65 }, // center-aggregated
+  zelenikovo:      { registered: 378,  employmentRate: 0.65 }, // center-aggregated
+  // Group 8 — Vardar region (Kavadarci/Veles center)
+  caska:         { registered: 871,  employmentRate: 0.56 }, // center-aggregated
+  'demir-kapija': { registered: 436,  employmentRate: 0.56 }, // center-aggregated
+  gradsko:       { registered: 337,  employmentRate: 0.56 }, // center-aggregated
+  lozovo:        { registered: 297,  employmentRate: 0.56 }, // center-aggregated
+  rosoman:       { registered: 465,  employmentRate: 0.56 }, // center-aggregated
 };
 
 export const FISCAL_LOSS_PER_UNEMPLOYED = {
@@ -233,6 +410,7 @@ for (const m of MUNICIPALITIES) {
 export const SKOPIE_BORROUGHS = [
   'aerodrom', 'karpos', 'centar', 'gazi-baba', 'kisela-voda',
   'butel', 'cair', 'gjorce-petrov', 'saraj', 'suto-orizari',
+  'cucer-sandevo', 'ilinden', 'petrovec', 'sopiste', 'studenicani', 'zelenikovo',
 ];
 
 // ── Skopje Property Tax Collection (CCC Open Data 2017-2019) ──

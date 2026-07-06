@@ -63,6 +63,33 @@ function useFocusTrap(active, containerRef) {
 }
 
 // ───────────────────────────────────────────────────────────────
+// BACK TO TOP BUTTON — standalone, independent of StickyNav lifecycle
+// ───────────────────────────────────────────────────────────────
+
+function BackToTop() {
+  const [showBackToTop, setShowBackToTop] = useState(false);
+  useEffect(() => {
+    const onScroll = () => setShowBackToTop(window.scrollY > 400);
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
+  if (!showBackToTop) return null;
+  return (
+    <button
+      type="button"
+      onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+      className="fixed bottom-6 right-6 z-50 w-10 h-10 rounded-full border border-slate-600/50 bg-slate-800/90 backdrop-blur-sm text-slate-400 hover:text-amber-300 hover:border-amber-500/30 transition-all duration-200 flex items-center justify-center shadow-lg"
+      aria-label="Врати се на почеток"
+      title="Врти се на почеток"
+    >
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5}>
+        <path d="M18 15l-6-6-6 6" strokeLinecap="round" strokeLinejoin="round" />
+      </svg>
+    </button>
+  );
+}
+
+// ───────────────────────────────────────────────────────────────
 // MAIN DASHBOARD COMPONENT — Orchestration Layer
 // ───────────────────────────────────────────────────────────────
 
@@ -874,6 +901,9 @@ export default function NakedBudget() {
           </p>
         </footer>
       </main>
+
+      {/* ═══ BACK TO TOP (standalone — independent of StickyNav lifecycle) ═══ */}
+      <BackToTop />
 
       {/* ═══ SLIDE-OUT PANEL ═══ */}
       {focusedMuni && (

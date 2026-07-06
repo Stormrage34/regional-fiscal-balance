@@ -112,7 +112,7 @@ export default function MunicipalTable({
                 aria-sort={getSortDir('drain', sortKey, sortAsc)}
               >
                 <div className="flex flex-col items-center gap-0.5">
-                  <span className="text-[10px] font-mono uppercase tracking-wider text-slate-500">{t('tbl_avg_balance')}</span>
+                  <span className="text-[10px] font-mono uppercase tracking-wider text-slate-500 flex items-center gap-1"><span className="inline-block w-1.5 h-1.5 rounded-full" style={{ backgroundColor: '#10B981' }} title="Real Treasury data" />{t('tbl_avg_balance')}</span>
                   <span className="text-xs font-bold text-[#F59E0B] font-mono tabular-nums">{fmt(totals.avgBalance, true)}</span>
                 </div>
               </th>
@@ -127,7 +127,7 @@ export default function MunicipalTable({
                 aria-sort={getSortDir('leakage', sortKey, sortAsc)}
               >
                 <div className="flex flex-col items-center gap-0.5">
-                  <span className="text-[10px] font-mono uppercase tracking-wider text-slate-500">{t('tbl_avg_leakage')}</span>
+                  <span className="text-[10px] font-mono uppercase tracking-wider text-slate-500 flex items-center gap-1"><span className="inline-block w-1.5 h-1.5 rounded-full" style={{ backgroundColor: '#F59E0B' }} title="Model-derived estimate" />{t('tbl_avg_leakage')}</span>
                   <span className="text-xs font-bold text-[#F59E0B] font-mono tabular-nums">{fmt(totals.avgLeakage, true)}</span>
                 </div>
               </th>
@@ -142,7 +142,7 @@ export default function MunicipalTable({
                 aria-sort={getSortDir('welfare', sortKey, sortAsc)}
               >
                 <div className="flex flex-col items-center gap-0.5">
-                  <span className="text-[10px] font-mono uppercase tracking-wider text-slate-500">{t('tbl_avg_welfare')}</span>
+                  <span className="text-[10px] font-mono uppercase tracking-wider text-slate-500 flex items-center gap-1"><span className="inline-block w-1.5 h-1.5 rounded-full" style={{ backgroundColor: '#F59E0B' }} title="Model-derived estimate" />{t('tbl_avg_welfare')}</span>
                   <span className="text-xs font-bold text-[#F87171] font-mono tabular-nums">{fmt(totals.avgWelfare, true)}</span>
                 </div>
               </th>
@@ -157,7 +157,7 @@ export default function MunicipalTable({
                 aria-sort={getSortDir('yearly', sortKey, sortAsc)}
               >
                 <div className="flex flex-col items-center gap-0.5">
-                  <span className="text-[10px] font-mono uppercase tracking-wider text-slate-500">{t('tbl_total_drain')}</span>
+                  <span className="text-[10px] font-mono uppercase tracking-wider text-slate-500 flex items-center gap-1"><span className="inline-block w-1.5 h-1.5 rounded-full" style={{ backgroundColor: '#3B82F6' }} title="Published source data" />{t('tbl_total_drain')}</span>
                   <span className="text-xs font-bold text-[#F87171] font-mono tabular-nums">{fmt(totals.totalDrainMillions, false)}</span>
                 </div>
               </th>
@@ -172,7 +172,7 @@ export default function MunicipalTable({
                 aria-sort={getSortDir('arrears', sortKey, sortAsc)}
               >
                 <div className="flex flex-col items-center gap-0.5">
-                  <span className="text-[10px] font-mono uppercase tracking-wider text-slate-500">{t('tbl_total_arrears')}</span>
+                  <span className="text-[10px] font-mono uppercase tracking-wider text-slate-500 flex items-center gap-1"><span className="inline-block w-1.5 h-1.5 rounded-full" style={{ backgroundColor: '#10B981' }} title="Real Treasury data" />{t('tbl_total_arrears')}</span>
                   <span className="text-xs font-bold text-slate-400 font-mono tabular-nums">{fmt(totals.totalArrearsMillions, false)}</span>
                 </div>
               </th>

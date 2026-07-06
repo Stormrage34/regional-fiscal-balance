@@ -1,4 +1,7 @@
-import { useState, useEffect, useCallback, useRef } from 'react';
+import { useState, useEffect, useCallback } from 'react';
+
+// BackToTopButton moved to NakedBudget.jsx for reliable rendering.
+// See NakedBudget.jsx for the implementation.
 
 const NAV_ITEMS = [
   { id: 'section-skopje',       label: 'Скопје' },
@@ -9,45 +12,6 @@ const NAV_ITEMS = [
   { id: 'section-charts',       label: 'Графикони' },
   { id: 'section-table',        label: 'Табела' },
 ];
-
-function BackToTopButton() {
-  const [visible, setVisible] = useState(false);
-  const ticking = useRef(false);
-
-  useEffect(() => {
-    const onScroll = () => {
-      if (!ticking.current) {
-        requestAnimationFrame(() => {
-          setVisible(window.scrollY > 600);
-          ticking.current = false;
-        });
-        ticking.current = true;
-      }
-    };
-    window.addEventListener('scroll', onScroll, { passive: true });
-    return () => window.removeEventListener('scroll', onScroll);
-  }, []);
-
-  if (!visible) return null;
-
-  return (
-    <button
-      type="button"
-      onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-      className="fixed bottom-6 right-6 z-50 w-10 h-10 rounded-full 
-                 border border-slate-600/50 bg-slate-800/90 backdrop-blur-sm 
-                 text-slate-400 hover:text-amber-300 hover:border-amber-500/30 
-                 transition-all duration-200 flex items-center justify-center
-                 shadow-lg shadow-black/20"
-      aria-label="Врати се на почеток"
-      title="Врти се на почеток"
-    >
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-        <path d="M18 15l-6-6-6 6" strokeLinecap="round" strokeLinejoin="round" />
-      </svg>
-    </button>
-  );
-}
 
 function useScrollSpy(itemIds) {
   const [active, setActive] = useState(itemIds[0]);
@@ -158,7 +122,6 @@ export default function StickyNav() {
           </div>
         )}
       </nav>
-      <BackToTopButton />
     </>
   );
 }

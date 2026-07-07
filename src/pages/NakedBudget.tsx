@@ -395,6 +395,77 @@ export default function NakedBudget() {
   // ── Focused Municipality ──
   const focusedMuni = useMemo(() => results.find((r) => r.id === focusedMuniId) || null, [results, focusedMuniId]);
 
+  // ── Slugify helper (mirrors scripts/generate-og-images.mjs) ──
+  const slugify = useCallback((id) => {
+    return id.replace(/[^a-z0-9-]/g, '-').replace(/-+/g, '-').replace(/^-|-$/g, '');
+  }, []);
+
+  // ── SEO: sync <html lang> with active locale ──
+  useEffect(() => {
+    document.documentElement.lang = locale;
+  }, [locale]);
+
+  // ── SEO: update meta tags when a municipality is focused ──
+  useEffect(() => {
+    const setMeta = (attr, attrVal, content) => {
+      const selector = attr === 'name'
+        ? `meta[name="${attrVal}"]`
+        : `meta[property="${attrVal}"]`;
+      let el = document.querySelector(selector);
+      if (!el) {
+        el = document.createElement('meta');
+        el.setAttribute(attr, attrVal);
+        document.head.appendChild(el);
+      }
+      el.setAttribute('content', content);
+    };
+
+    const siteName = 'Open Fiscal Ledger | Macedonian Regional Ledger';
+
+    if (focusedMuni) {
+      const name = getMuniName(focusedMuni, locale);
+      const slug = slugify(focusedMuni.id);
+      const ogTitle = `${name} — ${siteName}`;
+      const ogImage = `https://fiskalenradar.org/assets/og/${slug}.png`;
+      document.title = ogTitle;
+      setMeta('property', 'og:title', ogTitle);
+      setMeta('property', 'og:image', ogImage);
+      setMeta('name', 'twitter:title', ogTitle);
+      setMeta('name', 'twitter:image', ogImage);
+    } else {
+      document.title = siteName;
+      setMeta('property', 'og:title', siteName);
+      setMeta('property', 'og:image', 'https://fiskalenradar.org/assets/og/og-default.png');
+      setMeta('name', 'twitter:title', siteName);
+      setMeta('name', 'twitter:image', 'https://fiskalenradar.org/assets/og/og-default.png');
+    }
+  }, [focusedMuni, locale, slugify]);
+
+  // ── URL sync: restore focused municipality from ?muni= on mount ──
+  useEffect(() => {
+    try {
+      const params = new URLSearchParams(window.location.search);
+      const muniSlug = params.get('muni');
+      if (muniSlug) {
+        const match = MUNICIPALITIES.find(m => slugify(m.id) === muniSlug);
+        if (match) setFocusedMuniId(match.id);
+      }
+    } catch {}
+  }, []);
+
+  // ── URL sync: update ?muni= when focused municipality changes ──
+  useEffect(() => {
+    try {
+      const url = new URL(window.location);
+      if (focusedMuniId) {
+        url.searchParams.set('muni', slugify(focusedMuniId));
+      } else {
+        url.searchParams.delete('muni');
+      }
+      window.history.replaceState({}, '', url);
+    } catch {}
+  }, [focusedMuniId, slugify]);
+
   // ── Chart segments ──
   const chartSegments = [
     { value: 'stacked', label: t('tab_bars') },
@@ -465,7 +536,8 @@ export default function NakedBudget() {
                 href="https://buymeacoffee.com/stefangel9b"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="btn-coffee inline-flex items-center gap-2 px-3 py-1.5 rounded-full font-mono text-sm font-semibold transition-all duration-200 group ml-4"
+                className="btn-coffee ml-4"
+                aria-label={t('buy_coffee') + ' — opens in new tab'}
               >
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" strokeWidth="1.5" className="flex-shrink-0" aria-hidden="true">
                   <path d="M18 8h1a4 4 0 0 1 0 8h-1" />
@@ -474,7 +546,7 @@ export default function NakedBudget() {
                   <line x1="10" y1="1" x2="10" y2="4" />
                   <line x1="14" y1="1" x2="14" y2="4" />
                 </svg>
-                <span className="text-amber-300 group-hover:text-amber-200 transition-colors">{t('buy_coffee')}</span>
+                <span>{t('buy_coffee')}</span>
               </a>
             </div>
             <button
@@ -913,12 +985,25 @@ export default function NakedBudget() {
           <p className="font-mono text-xs text-tertiary tracking-wide">
             {t('footer')}
           </p>
-          <p className="mt-5">
+          <p className="mt-5 flex items-center justify-center gap-3">
+            <a
+              href="https://x.com/CryptoStefTA"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn-coffee"
+              aria-label="@CryptoStefTA on X — opens in new tab"
+            >
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+              </svg>
+              <span>@CryptoStefTA</span>
+            </a>
             <a
               href="https://buymeacoffee.com/stefangel9b"
               target="_blank"
               rel="noopener noreferrer"
-              className="btn-coffee inline-flex items-center gap-2 px-3 py-1.5 rounded-full font-mono text-sm font-semibold transition-all duration-200 group"
+              className="btn-coffee"
+              aria-label={t('buy_coffee') + ' — opens in new tab'}
             >
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" strokeWidth="1.5" className="flex-shrink-0" aria-hidden="true">
                 <path d="M18 8h1a4 4 0 0 1 0 8h-1" />
@@ -927,7 +1012,7 @@ export default function NakedBudget() {
                 <line x1="10" y1="1" x2="10" y2="4" />
                 <line x1="14" y1="1" x2="14" y2="4" />
               </svg>
-              <span className="text-amber-300 group-hover:text-amber-200 transition-colors">{t('buy_coffee')}</span>
+              <span>{t('buy_coffee')}</span>
             </a>
           </p>
           <p className="mt-4 font-mono text-[11px] text-muted tracking-wide">

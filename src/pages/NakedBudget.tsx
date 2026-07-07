@@ -520,23 +520,23 @@ export default function NakedBudget() {
         </a>
         {/* ═══ HEADER ═══ */}
         <header className="pb-8 relative">
-          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
-            <div className="flex items-center gap-3">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2">
+            <div className="flex items-center gap-2.5">
               <svg width="20" height="20" viewBox="0 0 28 28" className="opacity-90" aria-hidden="true">
                 <polygon points="14,2 25,8 25,20 14,26 3,20 3,8" fill="none" stroke="#f59e0b" strokeWidth="1.5" />
                 <circle cx="14" cy="14" r="2.5" fill="#f59e0b" />
               </svg>
-              <h1 className="text-lg font-bold tracking-tight text-primary font-mono leading-none">
+              <h1 className="text-base font-bold tracking-tight text-primary font-mono leading-none">
                 {t('brand_title')}
               </h1>
-              <p className="text-xs font-mono flex-1" style={{ color: '#94a3b8' }}>
+              <span className="hidden sm:inline text-xs font-mono" style={{ color: '#94a3b8' }}>
                 {t('brand_sub')}
-              </p>
+              </span>
               <a
                 href="https://buymeacoffee.com/stefangel9b"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="btn-coffee ml-4"
+                className="btn-coffee sm:ml-3"
                 aria-label={t('buy_coffee') + ' — opens in new tab'}
               >
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" strokeWidth="1.5" className="flex-shrink-0" aria-hidden="true">
@@ -546,7 +546,7 @@ export default function NakedBudget() {
                   <line x1="10" y1="1" x2="10" y2="4" />
                   <line x1="14" y1="1" x2="14" y2="4" />
                 </svg>
-                <span>{t('buy_coffee')}</span>
+                <span className="hidden sm:inline">{t('buy_coffee')}</span>
               </a>
             </div>
             <button
@@ -575,17 +575,17 @@ export default function NakedBudget() {
           </div>
 
           {/* Source badges */}
-          <div className="flex flex-wrap gap-x-2 gap-y-1 mt-4">
+          <div className="flex flex-wrap gap-x-2 gap-y-1 mt-3">
             {[
-              { label: t('src_badge_1'), year: '', color: 'rgba(16,185,129,0.08)', dot: 'bg-emerald-500', borderColor: 'rgba(16,185,129,0.2)' },
-              { label: t('src_badge_2'), year: '', color: 'rgba(99,102,241,0.08)', dot: 'bg-indigo-500', borderColor: 'rgba(99,102,241,0.2)' },
-              { label: t('src_badge_3'), year: '', color: 'rgba(245,158,11,0.08)', dot: 'bg-amber-500', borderColor: 'rgba(245,158,11,0.2)' },
-              { label: t('source_badge_4'), year: '', color: 'rgba(139,92,246,0.08)', dot: 'bg-violet-500', borderColor: 'rgba(139,92,246,0.2)' },
-              { label: t('src_badge_5'), year: '', color: 'rgba(236,72,153,0.08)', dot: 'bg-pink-500', borderColor: 'rgba(236,72,153,0.2)' },
+              { label: t('src_badge_1'), color: 'rgba(16,185,129,0.08)', dot: 'bg-emerald-500', borderColor: 'rgba(16,185,129,0.2)' },
+              { label: t('src_badge_2'), color: 'rgba(99,102,241,0.08)', dot: 'bg-indigo-500', borderColor: 'rgba(99,102,241,0.2)' },
+              { label: t('src_badge_3'), color: 'rgba(245,158,11,0.08)', dot: 'bg-amber-500', borderColor: 'rgba(245,158,11,0.2)' },
+              { label: t('source_badge_4'), color: 'rgba(139,92,246,0.08)', dot: 'bg-violet-500', borderColor: 'rgba(139,92,246,0.2)' },
+              { label: t('src_badge_5'), color: 'rgba(236,72,153,0.08)', dot: 'bg-pink-500', borderColor: 'rgba(236,72,153,0.2)' },
             ].map((badge) => (
-              <div key={badge.label} className="flex items-center gap-1 px-2 py-0.5 rounded border" style={{ backgroundColor: badge.color, borderColor: badge.borderColor }}>
+              <div key={badge.label} className="flex items-center gap-1 px-2 py-0.5 rounded border bg-opacity-10">
                 <span className={`w-1 h-1 rounded-full ${badge.dot} flex-shrink-0`} />
-                <span className="text-[9px] font-mono" style={{ color: '#94a3b8' }}>{badge.label}</span>
+                <span className="text-[9px] font-mono text-secondary">{badge.label}</span>
               </div>
             ))}
           </div>
@@ -604,13 +604,13 @@ export default function NakedBudget() {
           <p className="text-[11px] font-mono uppercase tracking-widest text-secondary mb-4">
             {t('hero_label')}
           </p>
-          <p className="text-4xl md:text-6xl lg:text-8xl font-bold font-mono tabular-nums" style={{ color: '#F59E0B' }}>
+          <p className="text-4xl sm:text-5xl md:text-6xl lg:text-8xl font-bold font-mono tabular-nums" style={{ color: '#F59E0B' }}>
             €{Math.round(aggregates.totalYearlyDrain / 1_000_000)}M
           </p>
           <p className="text-xs font-mono text-tertiary mt-4">
             {results.length} {t('hero_municipalities').split('·')[0]?.trim() || ''} · {aggregates.totalPop.toLocaleString()} {t('hero_municipalities').split('·')[1]?.trim() || ''} · {t('hero_avg_prefix')} €{aggregates.weightedAvgDrain}{t('hero_per_person_suffix')}
           </p>
-          <p className="text-[11px] leading-relaxed text-secondary max-w-2xl mx-auto mt-6 px-4">
+          <p className="text-[11px] leading-relaxed text-secondary max-w-2xl mx-auto mt-6">
             {t('hero_description').replace('{n}', String(loserCount)).replace('{total}', String(MUNICIPALITIES.length))}
           </p>
         </section>
@@ -886,7 +886,7 @@ export default function NakedBudget() {
         {/* ═══ MUNICIPAL TABLE ═══ */}
         <ErrorBoundary>
         <React.Suspense fallback={<ChartFallback />}>
-        <section id="section-table" className="mb-10">
+        <section id="section-table" className="mb-10 overflow-x-auto -mx-6 px-6">
           <div className="flex items-center justify-between mb-3">
             <div>
               <div className="flex items-center gap-2">
@@ -985,7 +985,7 @@ export default function NakedBudget() {
           <p className="font-mono text-xs text-tertiary tracking-wide">
             {t('footer')}
           </p>
-          <p className="mt-5 flex items-center justify-center gap-3">
+          <p className="mt-5 flex flex-col sm:flex-row items-center justify-center gap-3">
             <a
               href="https://x.com/CryptoStefTA"
               target="_blank"
@@ -1015,13 +1015,13 @@ export default function NakedBudget() {
               <span>{t('buy_coffee')}</span>
             </a>
           </p>
-          <p className="mt-4 font-mono text-[11px] text-muted tracking-wide">
+          <p className="mt-5 font-mono text-xs text-muted tracking-wide">
             Built with{' '}
             <a
               href="https://opencode.ai/go?ref=PZBFA3PEMJ"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-tertiary hover:text-amber-400 transition-colors duration-200"
+              className="text-secondary hover:text-amber-400 transition-colors duration-200"
             >
               OpenCode Go
             </a>
@@ -1063,7 +1063,7 @@ export default function NakedBudget() {
               </svg>
             </button>
 
-            <div className="p-6 pt-12 space-y-6" style={{ paddingBottom: 'calc(1.5rem + env(safe-area-inset-bottom, 0px))' }}>
+            <div className="p-4 pt-12 sm:p-6 space-y-6" style={{ paddingBottom: 'calc(1rem + env(safe-area-inset-bottom, 0px))' }}>
               <div className="mb-6">
                 <h3 id="panel-title" className="text-xl font-bold font-mono text-primary tracking-tight">
                   {getMuniName(focusedMuni, locale)}
@@ -1082,18 +1082,23 @@ export default function NakedBudget() {
                 {(() => {
                   const flags = [];
                   if (['aerodrom','karpos'].includes(focusedMuni.id)) {
-                    flags.push(`⚠️ ${t('panel_flag_hq')}`);
+                    flags.push(t('panel_flag_hq'));
                   }
                   const nf = NET_FISCAL[focusedMuni.id];
                   if (nf && nf.utilityDebt > 0) {
-                    flags.push(`⚠️ ${t('panel_flag_debt')}`);
+                    flags.push(t('panel_flag_debt'));
                   }
                   if (!flags.length) return null;
                   return (
                     <div className="mb-4 space-y-1">
                       {flags.map((f, i) => (
-                        <div key={i} className="text-[10px] font-mono px-2 py-1 rounded" style={{ backgroundColor: 'rgba(251,191,36,0.1)', color: '#fbbf24' }}>
-                          {f}
+                        <div key={i} className="flex items-center gap-1.5 text-[10px] font-mono px-2 py-1 rounded" style={{ backgroundColor: 'rgba(251,191,36,0.1)', color: '#fbbf24' }}>
+                          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                            <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z" />
+                            <line x1="12" y1="9" x2="12" y2="13" />
+                            <line x1="12" y1="17" x2="12.01" y2="17" />
+                          </svg>
+                          <span>{f}</span>
                         </div>
                       ))}
                     </div>
@@ -1103,7 +1108,9 @@ export default function NakedBudget() {
 
               <div className="flex items-center justify-center mb-6">
                 <React.Suspense fallback={<div className="h-40 flex items-center justify-center"><span className="text-tertiary text-xs font-mono">Loading chart...</span></div>}>
-                  <LazyDonutChart data={focusedMuni} size={220} />
+                  <div className="w-full max-w-[220px]">
+                    <LazyDonutChart data={focusedMuni} size={220} />
+                  </div>
                 </React.Suspense>
               </div>
 

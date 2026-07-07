@@ -12,7 +12,7 @@ export default function KpiRibbon({
 }) {
   const { t } = useLocale();
   return (
-    <section className="grid grid-cols-1 md:grid-cols-[1.6fr_1fr_1fr_1fr] gap-3 mb-8">
+    <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-[1.6fr_1fr_1fr_1fr] gap-3 mb-8">
       {/* Hero tile — Net Annual Per Capita Drain */}
       <div
         className="rounded-xl relative overflow-hidden group hover:brightness-105 transition-all duration-200 kpi-tile-enter p-5 border border-card bg-card"

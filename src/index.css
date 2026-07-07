@@ -143,3 +143,37 @@
 .hover-text-primary:hover { color: var(--text-primary); }
 .hover-border-card:hover { border-color: var(--border-card); }
 .hover-border-section:hover { border-color: var(--border-section); }
+
+/* ═══════════════════════════════════════════
+   BUTTON UTILITIES — theme-aware components
+   ═══════════════════════════════════════════ */
+
+/* Buy me a coffee button — works in both dark/light modes */
+.btn-coffee {
+  background-color: rgba(245, 158, 11, 0.12);
+  border: 1px solid rgba(245, 158, 11, 0.35);
+  box-shadow: 0 0 12px rgba(245, 158, 11, 0.15);
+  color: var(--text-primary);
+  transition: all 200ms ease;
+}
+
+.btn-coffee:hover {
+  background-color: rgba(245, 158, 11, 0.22);
+  border-color: rgba(245, 158, 11, 0.6);
+  box-shadow: 0 0 20px rgba(245, 158, 11, 0.25);
+}
+
+/* Light mode override — invert to dark text on lighter amber bg */
+[data-theme="light"] .btn-coffee {
+  background-color: rgba(217, 119, 6, 0.1);
+  border-color: rgba(217, 119, 6, 0.4);
+  box-shadow: none;
+  color: #92400e;
+}
+
+[data-theme="light"] .btn-coffee:hover {
+  background-color: rgba(217, 119, 6, 0.18);
+  border-color: rgba(217, 119, 6, 0.7);
+  box-shadow: none;
+  color: #78350f;
+}

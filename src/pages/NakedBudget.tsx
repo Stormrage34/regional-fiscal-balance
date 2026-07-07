@@ -465,22 +465,7 @@ export default function NakedBudget() {
                 href="https://buymeacoffee.com/stefangel9b"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full font-mono text-sm font-semibold text-primary transition-all duration-200 group ml-4 border"
-                style={{
-                  backgroundColor: 'rgba(245,158,11,0.12)',
-                  borderColor: 'rgba(245,158,11,0.35)',
-                  boxShadow: '0 0 12px rgba(245,158,11,0.15)',
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.backgroundColor = 'rgba(245,158,11,0.22)';
-                  e.currentTarget.style.borderColor = 'rgba(245,158,11,0.6)';
-                  e.currentTarget.style.boxShadow = '0 0 20px rgba(245,158,11,0.25)';
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.backgroundColor = 'rgba(245,158,11,0.12)';
-                  e.currentTarget.style.borderColor = 'rgba(245,158,11,0.35)';
-                  e.currentTarget.style.boxShadow = '0 0 12px rgba(245,158,11,0.15)';
-                }}
+                className="btn-coffee inline-flex items-center gap-2 px-3 py-1.5 rounded-full font-mono text-sm font-semibold transition-all duration-200 group ml-4"
               >
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" strokeWidth="1.5" className="flex-shrink-0" aria-hidden="true">
                   <path d="M18 8h1a4 4 0 0 1 0 8h-1" />
@@ -933,22 +918,7 @@ export default function NakedBudget() {
               href="https://buymeacoffee.com/stefangel9b"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full font-mono text-sm font-semibold text-primary transition-all duration-200 group border"
-              style={{
-                backgroundColor: 'rgba(245,158,11,0.12)',
-                borderColor: 'rgba(245,158,11,0.35)',
-                boxShadow: '0 0 12px rgba(245,158,11,0.15)',
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.backgroundColor = 'rgba(245,158,11,0.22)';
-                e.currentTarget.style.borderColor = 'rgba(245,158,11,0.6)';
-                e.currentTarget.style.boxShadow = '0 0 20px rgba(245,158,11,0.25)';
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.backgroundColor = 'rgba(245,158,11,0.12)';
-                e.currentTarget.style.borderColor = 'rgba(245,158,11,0.35)';
-                e.currentTarget.style.boxShadow = '0 0 12px rgba(245,158,11,0.15)';
-              }}
+              className="btn-coffee inline-flex items-center gap-2 px-3 py-1.5 rounded-full font-mono text-sm font-semibold transition-all duration-200 group"
             >
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" strokeWidth="1.5" className="flex-shrink-0" aria-hidden="true">
                 <path d="M18 8h1a4 4 0 0 1 0 8h-1" />

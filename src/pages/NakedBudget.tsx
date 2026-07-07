@@ -42,10 +42,18 @@ import KpiRibbon from '../components/layout/KpiRibbon.jsx';
 import MethodologyPanel from '../components/layout/MethodologyPanel.jsx';
 import StickyNav from '../components/navigation/StickyNav.jsx';
 
-// ── Loading fallback ──
+// ── Chart skeleton fallback ──
 const ChartFallback = () => (
-  <div className="h-40 flex items-center justify-center">
-    <span className="text-tertiary text-xs font-mono">Loading...</span>
+  <div className="h-40 flex items-center justify-center" role="status" aria-label="Loading chart">
+    <div className="w-full max-w-md space-y-3 animate-pulse px-4">
+      <div className="h-3 w-1/3 rounded bg-white/10" />
+      <div className="h-28 rounded-xl bg-white/[0.06] border border-white/[0.04]" />
+      <div className="flex gap-2">
+        <div className="h-2 w-1/4 rounded bg-white/10" />
+        <div className="h-2 w-1/4 rounded bg-white/10" />
+      </div>
+    </div>
+    <span className="sr-only">Loading chart…</span>
   </div>
 );
 
@@ -100,7 +108,7 @@ function BackToTop() {
   const { t } = useLocale();
   const [showBackToTop, setShowBackToTop] = useState(false);
   useEffect(() => {
-    const onScroll = () => setShowBackToTop(window.scrollY > 400);
+    const onScroll = () => setShowBackToTop(window.scrollY > 800);
     window.addEventListener('scroll', onScroll, { passive: true });
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
@@ -600,17 +608,17 @@ export default function NakedBudget() {
         <Analytics />
 
         {/* ═══ HERO — TOTAL FISCAL DRAIN ═══ */}
-        <section id="section-hero" className="text-center py-12 md:py-16">
-          <p className="text-[11px] font-mono uppercase tracking-widest text-secondary mb-4">
+        <section id="section-hero" className="text-center py-10 md:py-14">
+          <p className="text-[11px] font-mono uppercase tracking-widest text-secondary mb-3">
             {t('hero_label')}
           </p>
-          <p className="text-4xl sm:text-5xl md:text-6xl lg:text-8xl font-bold font-mono tabular-nums" style={{ color: '#F59E0B' }}>
+          <p className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-bold font-mono tabular-nums" style={{ color: '#F59E0B' }}>
             €{Math.round(aggregates.totalYearlyDrain / 1_000_000)}M
           </p>
-          <p className="text-xs font-mono text-tertiary mt-4">
+          <p className="text-xs font-mono text-tertiary mt-3">
             {results.length} {t('hero_municipalities').split('·')[0]?.trim() || ''} · {aggregates.totalPop.toLocaleString()} {t('hero_municipalities').split('·')[1]?.trim() || ''} · {t('hero_avg_prefix')} €{aggregates.weightedAvgDrain}{t('hero_per_person_suffix')}
           </p>
-          <p className="text-[11px] leading-relaxed text-secondary max-w-2xl mx-auto mt-6">
+          <p className="text-[11px] leading-relaxed text-secondary max-w-2xl mx-auto mt-5">
             {t('hero_description').replace('{n}', String(loserCount)).replace('{total}', String(MUNICIPALITIES.length))}
           </p>
         </section>
@@ -650,17 +658,7 @@ export default function NakedBudget() {
             </span>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3">
-            <div className="rounded-lg px-4 py-3 border hover:bg-white/[0.03] transition-colors duration-200" style={{ backgroundColor: 'var(--bg-elevated-strong)', borderColor: 'var(--border-card)' }}>
-              <span className="text-xs font-mono" style={{ color: '#94a3b8' }}>{t('net_gainers')}</span>
-              <span className="block text-2xl font-bold font-mono mt-0.5" style={{ color: '#10B981' }}>{netFiscalAggs.gainers.length}</span>
-              <span className="text-xs font-mono" style={{ color: '#94a3b8' }}>{t('net_gainers').toLowerCase()} {t('surplus')}</span>
-            </div>
-            <div className="rounded-lg px-4 py-3 border hover:bg-white/[0.03] transition-colors duration-200" style={{ backgroundColor: 'var(--bg-elevated-strong)', borderColor: 'var(--border-card)' }}>
-              <span className="text-xs font-mono" style={{ color: '#94a3b8' }}>{t('net_losers')}</span>
-              <span className="block text-2xl font-bold font-mono mt-0.5" style={{ color: '#F59E0B' }}>{netFiscalAggs.losers.length}</span>
-              <span className="text-xs font-mono" style={{ color: '#94a3b8' }}>{t('net_losers').toLowerCase()} {t('deficit')}</span>
-            </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
             <div className="rounded-lg px-4 py-3 border hover:bg-white/[0.03] transition-colors duration-200" style={{ backgroundColor: 'var(--bg-elevated-strong)', borderColor: 'var(--border-card)' }}>
               <span className="text-xs font-mono" style={{ color: '#94a3b8' }}>{t('net_deficit')}</span>
               <span className="block text-2xl font-bold font-mono mt-0.5" style={{ color: '#F59E0B' }}>{fmt(Math.abs(netFiscalAggs.totalNet) / MKD_PER_EUR / 1_000_000)}</span>

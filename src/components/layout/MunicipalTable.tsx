@@ -1,6 +1,20 @@
 import { UNEMPLOYMENT_DATA, FISCAL_LOSS_PER_UNEMPLOYED, NET_FISCAL, MKD_PER_EUR, getMuniName, DECENTRALIZATION_PHASES, CREDIT_RATINGS, SKOPIE_BORROUGHS } from '../../data/fiscalData.js';
 import { useLocale } from '../../context/LocaleContext.jsx';
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
+
+// ── Responsive breakpoint helper ───────────────────────────────────────
+function useIsMobile(breakpoint = 768) {
+  const [isMobile, setIsMobile] = useState(() =>
+    typeof window !== 'undefined' ? window.innerWidth < breakpoint : false
+  );
+  useMemo(() => {
+    if (typeof window === 'undefined') return;
+    const onResize = () => setIsMobile(window.innerWidth < breakpoint);
+    window.addEventListener('resize', onResize, { passive: true });
+    return () => window.removeEventListener('resize', onResize);
+  }, [breakpoint]);
+  return isMobile;
+}
 
 function SortIcon({ columnKey, sortKey, sortAsc }) {
   if (sortKey !== columnKey) {
@@ -38,6 +52,8 @@ export default function MunicipalTable({
   showAdvancedColumns = false,
 }) {
   const { t, locale } = useLocale();
+  const isMobile = useIsMobile(768);
+  const [expandedRows, setExpandedRows] = useState(new Set());
 
   // ── National macro averages for twin-row header ──
   const totals = useMemo(() => {
@@ -81,7 +97,132 @@ export default function MunicipalTable({
         <span className="flex items-center gap-1"><span className="w-1.5 h-1.5 rounded-full bg-loser-rose flex-shrink-0" />Estimated</span>
       </div>
 
-      <div className="w-full overflow-x-auto overflow-y-auto max-h-[520px]" style={{ maskImage: 'linear-gradient(to right, black 95%, transparent 100%)', WebkitMaskImage: 'linear-gradient(to right, black 95%, transparent 100%)' }}>
+      {/* ═══ MOBILE CARD LAYOUT (hidden on md+) ═══ */}
+      <div className="md:hidden divide-y divide-border-light">
+        {sortedResults.map((muni, i) => {
+          const maxYearly = Math.max(...sortedResults.map(r => r.totalYearlyDrain));
+          const sparkWidth = (muni.totalYearlyDrain / maxYearly) * 60;
+          const isFocused = muni.id === focusedMuniId;
+          const nf = NET_FISCAL[muni.id];
+          const arrearsPC = nf?.arrears ? nf.arrears / MKD_PER_EUR / muni.workingAgePop : 0;
+          const ud = UNEMPLOYMENT_DATA[muni.id];
+          const unemployed = ud?.registered || 0;
+
+          return (
+            <div key={muni.id} className={`px-4 py-3 transition-colors duration-200 ${isFocused ? 'bg-amber-light/5' : 'hover-bg'}`} style={{ borderLeft: isFocused ? '2px solid #f59e0b' : undefined }}>
+              {/* Row header: name + key metrics */}
+              <div className="flex items-center justify-between mb-2">
+                <button
+                  type="button"
+                  onClick={() => setFocusedMuniId(prev => prev === muni.id ? null : muni.id)}
+                  className="flex items-center gap-2 text-left min-w-0 flex-1"
+                >
+                  <span className={`font-semibold text-sm truncate ${isFocused ? 'text-amber-light' : 'text-secondary group-hover-text-primary'}`}>
+                    {getMuniName(muni, locale)}
+                  </span>
+                  <svg className="w-3.5 h-3.5 text-muted flex-shrink-0 opacity-0 group-hover:opacity-100" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                  </svg>
+                </button>
+                <span className="text-sm font-bold text-drain-amber tabular-nums ml-2 flex-shrink-0">{fmt(muni.totalPerCapitaDrain, true)}</span>
+              </div>
+
+              {/* Key metrics row */}
+              <div className="grid grid-cols-3 gap-2 mb-2">
+                <div>
+                  <span className="text-[9px] uppercase tracking-wider text-muted block">Annual Drain</span>
+                  <span className="text-xs font-semibold tabular-nums text-loser-rose">{fmt(muni.totalYearlyDrain / 1_000_000, false)}</span>
+                </div>
+                <div>
+                  <span className="text-[9px] uppercase tracking-wider text-muted block">Leakage</span>
+                  <span className="text-xs font-semibold tabular-nums text-drain-amber">{fmt(muni.uncollectedLeakage, true)}</span>
+                </div>
+                <div>
+                  <span className="text-[9px] uppercase tracking-wider text-muted block">Welfare</span>
+                  <span className="text-xs font-semibold tabular-nums text-loser-rose">{fmt(muni.welfareBurden, true)}</span>
+                </div>
+              </div>
+
+              {/* Expandable detail row */}
+              <button
+                type="button"
+                onClick={() => setExpandedRows(prev => prev.has(muni.id) ? new Set([...prev].filter(id => id !== muni.id)) : new Set([muni.id]))}
+                className="w-full text-left py-1 text-[10px] font-mono text-secondary hover-text-primary transition-colors flex items-center gap-1"
+                aria-expanded={expandedRows.has(muni.id)}
+              >
+                <svg className={`w-3 h-3 transition-transform duration-200 ${expandedRows.has(muni.id) ? 'rotate-90' : ''}`} fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                </svg>
+                {expandedRows.has(muni.id) ? 'Hide details' : 'Show details'}
+              </button>
+
+              {expandedRows.has(muni.id) && (
+                <div className="mt-2 pt-2 border-t border-border-light space-y-1.5 animate-pulse-none">
+                  {/* Arrears */}
+                  <div className="flex justify-between text-xs">
+                    <span className="text-muted">Arrears</span>
+                    <span className="tabular-nums">{arrearsPC > 0 ? fmt(arrearsPC, true) : '—'}</span>
+                  </div>
+                  {/* Unemployed */}
+                  {ud && (
+                    <div className="flex justify-between text-xs">
+                      <span className="text-muted">Unemployed</span>
+                      <span className="tabular-nums text-sky-accent">{unemployed.toLocaleString()} / €{Math.round(ud.registered * FISCAL_LOSS_PER_UNEMPLOYED.totalAnnual / muni.workingAgePop).toLocaleString()}{t('pc_abbr')}</span>
+                    </div>
+                  )}
+                  {/* Structural */}
+                  <div className="flex justify-between text-xs">
+                    <span className="text-muted">Structural</span>
+                    <span className="tabular-nums"><span className="text-drain-amber">{muni.adjustedShadowEcon}%</span> <span className="text-muted mx-1">·</span> <span className="text-gainer-green">{muni.adjustedCompliance}%</span></span>
+                  </div>
+                  {/* Correction */}
+                  <div className="flex justify-between text-xs">
+                    <span className="text-muted">Correction</span>
+                    <span className="tabular-nums" style={{ color: applyCorrection ? '#34d399' : '#94a3b8' }}>
+                      {applyCorrection ? `€${muni.corporateRetraction.toLocaleString()}` : '—'}
+                    </span>
+                  </div>
+                  {/* Phase + Risk */}
+                  <div className="flex items-center gap-2 text-xs">
+                    {(() => {
+                      const phase = muni.phase || 1;
+                      return (
+                        <span title={phase === 2 ? t('phase_tooltip_2') : t('phase_tooltip_1')} className={`inline-flex px-1.5 py-0.5 rounded text-[10px] font-mono font-bold ${
+                          phase === 2 ? 'bg-gainer-green/10 text-gainer-green border-gainer-green/20' : 'bg-drain-amber/10 text-drain-amber border-drain-amber/20'
+                        }`}>P{phase}</span>
+                      );
+                    })()}
+                    <span className="text-muted">·</span>
+                    {(() => {
+                      const tier = muni.p2_risk_tier || '—';
+                      let colorClass;
+                      if (tier === t('risk_low')) colorClass = 'text-gainer-green';
+                      else if (tier === t('risk_watch')) colorClass = 'text-drain-amber';
+                      else if (tier === t('risk_high')) colorClass = 'text-loser-rose';
+                      else colorClass = 'text-muted';
+                      return <span className={colorClass}>{tier}</span>;
+                    })()}
+                  </div>
+                  {/* Model prediction */}
+                  {muni.inTrainingSet && (
+                    <div className="flex justify-between text-xs">
+                      <span className="text-muted">Model</span>
+                      <span className={`text-[10px] font-mono px-1.5 py-0.5 rounded border ${
+                        muni.predictedReduced === 'gainer' ? 'bg-gainer-green/10 text-gainer-green border-gainer-green/20' : 'bg-loser-rose/10 text-loser-rose border-loser-rose/20'
+                      }`}>
+                        {muni.predictedReduced === 'gainer' ? t('pred_gainer') : t('pred_loser')}
+                      </span>
+                    </div>
+                  )}
+                </div>
+              )}
+            </div>
+          );
+        })}
+      </div>
+
+      {/* ═══ DESKTOP TABLE (hidden on mobile) ═══ */}
+      <div className="hidden md:block w-full overflow-x-auto overflow-y-auto max-h-[520px]" style={{ maskImage: 'linear-gradient(to right, black 95%, transparent 100%)', WebkitMaskImage: 'linear-gradient(to right, black 95%, transparent 100%)' }}>
         <table className="w-full text-sm font-mono border-collapse table-auto">
           <thead>
             {/* ═══ Single Row Header with Macro Averages inline ═══ */}

@@ -38,7 +38,7 @@ export default function PieMatrix({ data, onMuniClick }) {
       let startAngle = -Math.PI / 2;
       const outerR = 48, innerR = 29;
       const paths = segs.map(seg => {
-        const sliceAngle = (seg.value / t) * 2 * Math.PI;
+        const sliceAngle = (seg.value / totalDrain) * 2 * Math.PI;
         const endAngle = startAngle + sliceAngle;
         const x1o = 50 + outerR * Math.cos(startAngle), y1o = 50 + outerR * Math.sin(startAngle);
         const x2o = 50 + outerR * Math.cos(endAngle),   y2o = 50 + outerR * Math.sin(endAngle);
@@ -47,7 +47,7 @@ export default function PieMatrix({ data, onMuniClick }) {
         const largeArc = sliceAngle > Math.PI ? 1 : 0;
         const es = sliceAngle > Math.PI ? 1 : 0;
         const d = `M${x1o},${y1o}A${outerR},${outerR} 0 ${largeArc},1 ${x2o},${y2o}L${x1i},${y1i}A${innerR},${innerR} 0 0,${es} ${x2i},${y2i}Z`;
-        const percentage = ((seg.value / t) * 100).toFixed(1);
+        const percentage = ((seg.value / totalDrain) * 100).toFixed(1);
         startAngle = endAngle;
         return { ...seg, d, percentage };
       });
@@ -68,7 +68,7 @@ export default function PieMatrix({ data, onMuniClick }) {
               onClick={() => onMuniClick?.(muni.id)}
               className={`flex flex-col items-center p-2 rounded-lg cursor-pointer hover:bg-white/[0.08] transition-all duration-200 group odd:bg-white/[0.05] bg-gradient-to-b from-transparent to-black/[0.02]`}
             >
-              <svg viewBox="0 0 100 100" width="112" height="112" role="img" aria-label={`${getMuniName(muni, locale)}: €${muni.totalDrain} ${t('modal_drain')} ${t('suffix_capita')}`}>
+              <svg viewBox="0 0 100 100" width="90" height="90" role="img" aria-label={`${getMuniName(muni, locale)}: €${muni.totalDrain} ${t('modal_drain')} ${t('suffix_capita')}`}>
                 {(() => {
                   const hid = `pm-hole-${muni.id}`;
                   return (

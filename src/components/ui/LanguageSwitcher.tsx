@@ -27,6 +27,7 @@ export default function LanguageSwitcher() {
             key={code}
             type="button"
             onClick={() => setLocale(code)}
+            aria-label={code === 'en' ? 'English' : code === 'mk' ? 'Македонски' : 'Shqip'}
             className={`
               flex-1 px-2 py-2.5 text-[11px] font-mono rounded-md transition-all duration-200 min-h-[44px]
               ${locale === code

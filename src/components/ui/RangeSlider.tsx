@@ -1,10 +1,13 @@
+import { useId } from 'react';
+
 export default function RangeSlider({ label, value, onChange, min, max, unit, accentColor }) {
+  const id = `slider-${label.replace(/\s+/g, '-').toLowerCase()}-${useId()}`;
   const pct = ((value - min) / (max - min)) * 100;
 
   return (
     <div className="flex flex-col gap-2">
       <div className="flex items-center justify-between">
-        <span className="text-secondary text-xs font-mono tracking-tight truncate">{label}</span>
+        <label htmlFor={id} className="text-secondary text-xs font-mono tracking-tight truncate">{label}</label>
         <span className="font-mono text-sm font-semibold ml-3 shrink-0" style={{ color: accentColor }}>
           {value.toFixed(1)}{unit}
         </span>
@@ -23,6 +26,7 @@ export default function RangeSlider({ label, value, onChange, min, max, unit, ac
           style={{ background: '#334155' }}
         />
         <input
+          id={id}
           type="range"
           min={min}
           max={max}
